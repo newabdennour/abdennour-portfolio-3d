@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { motion, useScroll, useSpring } from "framer-motion";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { label: "Work", href: "#work" },
@@ -25,27 +25,25 @@ export default function Navbar() {
 
   return (
     <>
-      <motion.div className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400" style={{ scaleX: progress }} />
-      <header
-        className={`fixed inset-x-0 top-0 z-[85] transition-all duration-500 ${
-          scrolled ? "py-3" : "py-5"
-        }`}
-      >
+      <motion.div className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600" style={{ scaleX: progress }} />
+      <header className={`fixed inset-x-0 top-0 z-[85] transition-all duration-300 ${scrolled ? "py-3" : "py-4"}`}>
         <div className="container-x">
           <nav
-            className={`flex items-center justify-between rounded-2xl px-5 py-3 transition-all duration-500 ${
-              scrolled ? "glass shadow-card" : "border border-transparent"
+            className={`flex items-center justify-between rounded-2xl px-5 py-3 transition-all duration-300 ${
+              scrolled
+                ? "border border-slate-200 bg-white/85 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-xl"
+                : "border border-transparent bg-transparent"
             }`}
           >
-            <a href="#top" className="group flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-cyan-400 via-indigo-500 to-fuchsia-500 font-display text-lg font-bold text-white shadow-glow transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
+            <a href="#top" className="flex items-center gap-3">
+              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 font-display text-lg font-bold text-white">
                 G
               </span>
               <span className="leading-tight">
-                <span className="block font-display text-sm font-bold tracking-wide text-white">
+                <span className="block font-display text-sm font-bold tracking-wide text-slate-900">
                   GUERROUDJ ABDENNOUR
                 </span>
-                <span className="block text-[11px] uppercase tracking-[0.24em] text-cyan-300/80">
+                <span className="block text-[11px] font-medium uppercase tracking-[0.2em] text-blue-600">
                   AI Engineer
                 </span>
               </span>
@@ -56,22 +54,21 @@ export default function Navbar() {
                 <a
                   key={l.href}
                   href={l.href}
-                  className="rounded-xl px-4 py-2 text-sm font-medium text-slate-300 transition hover:bg-white/10 hover:text-white"
+                  className="rounded-xl px-4 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
                 >
                   {l.label}
                 </a>
               ))}
               <a
                 href="#contact"
-                className="ml-2 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2 text-sm font-bold text-slate-950 transition hover:scale-105 hover:shadow-glow"
+                className="ml-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-slate-700"
               >
-                <Sparkles size={15} />
                 Hire Me
               </a>
             </div>
 
             <button
-              className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-white/5 text-white md:hidden"
+              className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 md:hidden"
               onClick={() => setOpen(!open)}
               aria-label="Menu"
             >
@@ -81,16 +78,16 @@ export default function Navbar() {
 
           {open && (
             <motion.div
-              initial={{ opacity: 0, y: -12 }}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="glass mt-2 flex flex-col gap-1 rounded-2xl p-3 md:hidden"
+              className="mt-2 flex flex-col gap-1 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl md:hidden"
             >
               {links.map((l) => (
                 <a
                   key={l.href}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="rounded-xl px-4 py-3 text-sm font-medium text-slate-200 hover:bg-white/10"
+                  className="rounded-xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-100"
                 >
                   {l.label}
                 </a>

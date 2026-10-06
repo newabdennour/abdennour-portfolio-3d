@@ -11,19 +11,16 @@ import Footer from "@/components/Footer";
 
 export default function Page() {
   return (
-    <main className="relative min-h-screen bg-void">
+    <main className="relative min-h-screen bg-white font-display text-slate-900">
       <Preloader />
       <CursorGlow />
       <Navbar />
       <Hero />
       <Marquee />
-      <div className="relative">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_50%_at_50%_0%,rgba(99,102,241,0.08),transparent_70%)]" />
-        <Projects />
-        <About />
-        <Timeline />
-        <Contact />
-      </div>
+      <Projects />
+      <About />
+      <Timeline />
+      <Contact />
       <Footer />
     </main>
   );

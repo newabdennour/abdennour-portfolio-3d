@@ -9,24 +9,18 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        void: "#030014",
-        abyss: "#0a0620",
-        panel: "#0d0a2a",
-        neon: {
-          blue: "#38bdf8",
-          violet: "#a78bfa",
-          fuchsia: "#e879f9",
-          cyan: "#22d3ee",
-        },
+        void: "#ffffff",
+        abyss: "#f8fafc",
+        panel: "#ffffff",
       },
       fontFamily: {
-        display: ["var(--font-display)", "system-ui", "sans-serif"],
-        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        display: ["'Space Grotesk'", "system-ui", "sans-serif"],
+        body: ["'Space Grotesk'", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 40px -8px rgba(56,189,248,0.5)",
-        "glow-lg": "0 0 80px -12px rgba(167,139,250,0.55)",
-        card: "0 20px 60px -20px rgba(0,0,0,0.7)",
+        glow: "0 12px 32px -12px rgba(37,99,235,0.35)",
+        "glow-lg": "0 24px 60px -20px rgba(79,70,229,0.4)",
+        card: "0 20px 50px -20px rgba(15,23,42,0.15)",
       },
       animation: {
         float: "float 7s ease-in-out infinite",

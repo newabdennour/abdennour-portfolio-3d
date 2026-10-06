@@ -4,7 +4,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float } from "@react-three/drei";
 import * as THREE from "three";
 
-function Starfield({ count = 1400 }: { count?: number }) {
+function Starfield({ count = 1100 }: { count?: number }) {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
     const arr = new Float32Array(count * 3);
@@ -30,7 +30,7 @@ function Starfield({ count = 1400 }: { count?: number }) {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.045} color="#7dd3fc" transparent opacity={0.75} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.05} color="#93c5fd" transparent opacity={0.5} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -68,19 +68,19 @@ function CoreShape() {
     <Float speed={1.6} rotationIntensity={0.4} floatIntensity={1.1}>
       <mesh ref={mesh}>
         <icosahedronGeometry args={[1.55, 1]} />
-        <meshStandardMaterial color="#1a1440" metalness={0.9} roughness={0.18} flatShading />
+        <meshStandardMaterial color="#dbeafe" metalness={0.35} roughness={0.45} flatShading />
       </mesh>
       <mesh ref={wire} scale={1.56}>
         <icosahedronGeometry args={[1.55, 1]} />
-        <meshBasicMaterial color="#38bdf8" wireframe transparent opacity={0.28} />
+        <meshBasicMaterial color="#2563eb" wireframe transparent opacity={0.18} />
       </mesh>
       <mesh ref={ring1}>
         <torusGeometry args={[2.7, 0.015, 16, 180]} />
-        <meshBasicMaterial color="#a78bfa" transparent opacity={0.7} />
+        <meshBasicMaterial color="#3b82f6" transparent opacity={0.45} />
       </mesh>
       <mesh ref={ring2}>
         <torusGeometry args={[3.3, 0.012, 16, 180]} />
-        <meshBasicMaterial color="#e879f9" transparent opacity={0.4} />
+        <meshBasicMaterial color="#8b5cf6" transparent opacity={0.3} />
       </mesh>
     </Float>
   );
@@ -89,8 +89,8 @@ function CoreShape() {
 function Particles() {
   const ref = useRef<THREE.Points>(null);
   const positions = useMemo(() => {
-    const arr = new Float32Array(220 * 3);
-    for (let i = 0; i < 220; i++) {
+    const arr = new Float32Array(200 * 3);
+    for (let i = 0; i < 200; i++) {
       arr[i * 3] = (Math.random() - 0.5) * 12;
       arr[i * 3 + 1] = (Math.random() - 0.5) * 8;
       arr[i * 3 + 2] = (Math.random() - 0.5) * 8;
@@ -111,7 +111,7 @@ function Particles() {
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.09} color="#e879f9" transparent opacity={0.65} depthWrite={false} />
+      <pointsMaterial size={0.09} color="#8b5cf6" transparent opacity={0.35} depthWrite={false} />
     </points>
   );
 }
@@ -124,15 +124,15 @@ export default function HeroCanvas() {
         dpr={[1, 1.75]}
         gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
       >
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[6, 6, 4]} intensity={1.6} color="#7dd3fc" />
-        <pointLight position={[-6, -3, 3]} intensity={30} color="#a855f7" />
-        <pointLight position={[4, -4, 2]} intensity={18} color="#22d3ee" />
+        <ambientLight intensity={1.1} />
+        <directionalLight position={[6, 6, 4]} intensity={1.1} color="#93c5fd" />
+        <pointLight position={[-6, -3, 3]} intensity={14} color="#818cf8" />
+        <pointLight position={[4, -4, 2]} intensity={10} color="#60a5fa" />
         <Starfield />
         <CoreShape />
         <Particles />
       </Canvas>
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,#030014_82%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_25%,rgba(255,255,255,0.72)_72%,#ffffff_88%)]" />
     </div>
   );
 }

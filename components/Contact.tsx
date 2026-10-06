@@ -27,65 +27,80 @@ export default function Contact() {
     setTimeout(() => {
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setStatus("idle"), 4000);
-    }, 1200);
+      setTimeout(() => setStatus("idle"), 4500);
+    }, 1100);
   };
 
   const cards = [
-    { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}`, grad: "from-cyan-500 to-blue-600" },
-    { icon: Github, label: "GitHub", value: "@AbdennourGuerroudj", href: profile.github, grad: "from-slate-600 to-slate-800" },
-    { icon: Linkedin, label: "LinkedIn", value: "Abdennour Guerroudj", href: profile.linkedin, grad: "from-blue-600 to-indigo-700" },
+    { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
+    { icon: Github, label: "GitHub", value: "@AbdennourGuerroudj", href: profile.github },
+    { icon: Linkedin, label: "LinkedIn", value: "Abdennour Guerroudj", href: profile.linkedin },
   ];
 
+  const inputCls = (bad: boolean) =>
+    `w-full rounded-xl border bg-white px-4 py-3 text-[15px] text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100 ${
+      bad ? "border-red-400" : "border-slate-200"
+    }`;
+
   return (
-    <section id="contact" className="relative overflow-hidden py-28">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0628] to-void" />
-      <div className="absolute left-1/2 top-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-violet-700/12 blur-[160px]" />
+    <section id="contact" className="relative bg-slate-50 py-24">
       <div className="container-x relative">
         <SectionHeading
           eyebrow="Contact"
-          title={<>Let&apos;s build <span className="text-gradient-neon">something epic</span></>}
+          title={<>Let&apos;s work together</>}
           subtitle="Have an AI product, RAG system or standout experience in mind? My inbox is always open."
         />
 
-        <div className="grid gap-8 lg:grid-cols-2">
+        <div className="grid gap-5 lg:grid-cols-5">
           <motion.form
             onSubmit={submit}
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="glass-deep rounded-3xl p-8 shadow-card"
+            transition={{ duration: 0.6 }}
+            className="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.1)] lg:col-span-3"
             noValidate
           >
-            {(["name", "email", "message"] as const).map((f) => (
-              <div key={f} className="mb-5">
-                <label className="mb-2 block text-sm font-semibold capitalize text-slate-200">{f}</label>
-                {f === "message" ? (
-                  <textarea
-                    rows={5}
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    placeholder="Tell me about your project..."
-                    className={`w-full resize-none rounded-2xl border bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400/60 focus:shadow-glow ${errors.message ? "border-red-500/70" : "border-white/10"}`}
-                  />
-                ) : (
-                  <input
-                    type={f === "email" ? "email" : "text"}
-                    value={form[f]}
-                    onChange={(e) => setForm({ ...form, [f]: e.target.value })}
-                    placeholder={f === "name" ? "Your name" : "your.email@example.com"}
-                    className={`w-full rounded-2xl border bg-white/5 px-4 py-3.5 text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400/60 focus:shadow-glow ${errors[f] ? "border-red-500/70" : "border-white/10"}`}
-                  />
-                )}
-                {errors[f] && <p className="mt-1.5 text-xs font-medium text-red-400">{errors[f]}</p>}
+            <div className="grid gap-5 sm:grid-cols-2">
+              <div>
+                <label className="mb-1.5 block text-sm font-semibold text-slate-700">Name</label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                  placeholder="Your name"
+                  className={inputCls(!!errors.name)}
+                />
+                {errors.name && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.name}</p>}
               </div>
-            ))}
-            <button type="submit" disabled={status === "sending"} className="btn-primary w-full disabled:opacity-60">
+              <div>
+                <label className="mb-1.5 block text-sm font-semibold text-slate-700">Email</label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  placeholder="your.email@example.com"
+                  className={inputCls(!!errors.email)}
+                />
+                {errors.email && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.email}</p>}
+              </div>
+            </div>
+            <div className="mt-5">
+              <label className="mb-1.5 block text-sm font-semibold text-slate-700">Message</label>
+              <textarea
+                rows={5}
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                placeholder="Tell me about your project..."
+                className={`${inputCls(!!errors.message)} resize-none`}
+              />
+              {errors.message && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.message}</p>}
+            </div>
+            <button type="submit" disabled={status === "sending"} className="btn-primary mt-6 w-full disabled:opacity-60">
               {status === "sending" ? (
                 <><Loader2 size={17} className="animate-spin" /> Sending...</>
               ) : status === "sent" ? (
-                <><CheckCircle2 size={17} /> Message Sent — I&apos;ll reply soon!</>
+                <><CheckCircle2 size={17} /> Message sent successfully</>
               ) : (
                 <><Send size={17} /> Send Message</>
               )}
@@ -96,48 +111,44 @@ export default function Contact() {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="mt-4 rounded-2xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-center text-sm font-medium text-emerald-300"
+                  className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-medium text-emerald-700"
                 >
-                  Thanks for reaching out — this demo stores nothing, but please email me directly at {profile.email}.
+                  Thank you — please also reach me directly at {profile.email}.
                 </motion.p>
               )}
             </AnimatePresence>
           </motion.form>
 
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="flex flex-col gap-4"
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex flex-col gap-4 lg:col-span-2"
           >
-            <div className="glass rounded-3xl p-7">
-              <h3 className="font-display text-xl font-bold text-white">Contact information</h3>
-              <p className="mt-2 text-slate-400">Prefer direct channels? Reach me here — I reply within 24h.</p>
-            </div>
             {cards.map((c) => (
-              <motion.a
+              <a
                 key={c.label}
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                whileHover={{ x: 6, scale: 1.01 }}
-                className="glass group flex items-center gap-4 rounded-3xl p-5 transition-all hover:border-cyan-400/30 hover:shadow-glow"
+                className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_24px_-14px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_40px_-16px_rgba(37,99,235,0.3)]"
               >
-                <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br ${c.grad} text-white shadow-lg`}>
-                  <c.icon size={20} />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-slate-900 text-white transition-colors group-hover:bg-blue-600">
+                  <c.icon size={19} />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-sm font-bold text-white">{c.label}</span>
-                  <span className="block truncate text-sm text-slate-400 group-hover:text-slate-200">{c.value}</span>
+                  <span className="block text-sm font-bold text-slate-900">{c.label}</span>
+                  <span className="block truncate text-sm text-slate-500">{c.value}</span>
                 </span>
-              </motion.a>
+              </a>
             ))}
-            <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-cyan-600 via-indigo-600 to-fuchsia-600 p-7 shadow-glow-lg">
-              <div className="absolute inset-0 grid-bg opacity-30" />
-              <p className="relative font-display text-2xl font-bold text-white">Have a role or freelance mission?</p>
-              <p className="relative mt-2 text-white/80">Download my resume and let&apos;s talk this week.</p>
-              <a href={profile.cv} download className="relative mt-5 inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3 text-sm font-bold text-slate-950 transition hover:scale-105">
+            <div className="rounded-2xl bg-slate-900 p-7 text-white">
+              <p className="font-display text-xl font-bold tracking-tight">Prefer the short version?</p>
+              <p className="mt-2 text-sm leading-relaxed text-slate-300">
+                Download my resume and let&apos;s schedule a call this week.
+              </p>
+              <a href={profile.cv} download className="mt-5 inline-flex items-center gap-2 rounded-xl bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 transition hover:bg-blue-50">
                 Download CV
               </a>
             </div>

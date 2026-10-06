@@ -13,10 +13,10 @@ export default function Preloader() {
       if (v >= 100) {
         v = 100;
         clearInterval(t);
-        setTimeout(() => setDone(true), 450);
+        setTimeout(() => setDone(true), 400);
       }
       setProgress(Math.min(100, Math.floor(v)));
-    }, 160);
+    }, 150);
     return () => clearInterval(t);
   }, []);
 
@@ -24,30 +24,28 @@ export default function Preloader() {
     <AnimatePresence>
       {!done && (
         <motion.div
-          exit={{ opacity: 0, scale: 1.08, filter: "blur(12px)" }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-void"
+          exit={{ opacity: 0, scale: 1.04 }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white"
         >
-          <div className="absolute inset-0 grid-bg opacity-60" />
-          <div className="absolute h-72 w-72 rounded-full bg-violet-600/25 blur-[120px] animate-aurora" />
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             className="relative text-center"
           >
-            <p className="text-[11px] font-bold uppercase tracking-[0.5em] text-cyan-300">
-              Initializing experience
+            <p className="text-[11px] font-semibold uppercase tracking-[0.4em] text-blue-600">
+              Guerroudj Abdennour
             </p>
-            <h1 className="mt-3 font-display text-5xl md:text-7xl font-bold text-white">
-              GA<span className="text-gradient-neon">.</span>
+            <h1 className="mt-3 font-display text-5xl md:text-6xl font-bold tracking-tight text-slate-900">
+              Portfolio<span className="text-blue-600">.</span>
             </h1>
-            <div className="mx-auto mt-8 h-[3px] w-56 overflow-hidden rounded-full bg-white/10">
+            <div className="mx-auto mt-8 h-[3px] w-56 overflow-hidden rounded-full bg-slate-100">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 transition-all duration-200"
+                className="h-full rounded-full bg-gradient-to-r from-blue-600 to-violet-600 transition-all duration-200"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="mt-3 font-mono text-sm text-slate-500">{progress}%</p>
+            <p className="mt-3 font-mono text-sm text-slate-400">{progress}%</p>
           </motion.div>
         </motion.div>
       )}

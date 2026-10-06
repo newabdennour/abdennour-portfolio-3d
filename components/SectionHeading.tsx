@@ -14,33 +14,32 @@ export default function SectionHeading({
 }) {
   const centered = align === "center";
   return (
-    <div className={`${centered ? "text-center mx-auto" : "text-left"} max-w-3xl mb-14`}>
-      <motion.div
-        initial={{ opacity: 0, y: 18 }}
+    <div className={`${centered ? "text-center mx-auto" : "text-left"} max-w-2xl mb-12`}>
+      <motion.p
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.6 }}
-        className={`inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-cyan-300 backdrop-blur-xl`}
+        transition={{ duration: 0.5 }}
+        className="text-xs font-semibold uppercase tracking-[0.28em] text-blue-600"
       >
-        <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-fuchsia-400 shadow-glow" />
         {eyebrow}
-      </motion.div>
+      </motion.p>
       <motion.h2
-        initial={{ opacity: 0, y: 28 }}
+        initial={{ opacity: 0, y: 22 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
-        transition={{ duration: 0.7, delay: 0.08 }}
-        className="mt-5 font-display text-4xl md:text-5xl font-bold leading-[1.05] text-white"
+        transition={{ duration: 0.6, delay: 0.06 }}
+        className="mt-3 font-display text-3xl md:text-[2.75rem] font-bold leading-[1.1] tracking-tight text-slate-900"
       >
         {title}
       </motion.h2>
       {subtitle && (
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.16 }}
-          className="mt-4 text-lg text-slate-400 leading-relaxed"
+          transition={{ duration: 0.5, delay: 0.12 }}
+          className="mt-4 text-base md:text-lg text-slate-600 leading-relaxed"
         >
           {subtitle}
         </motion.p>

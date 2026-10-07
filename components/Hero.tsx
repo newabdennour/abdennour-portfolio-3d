@@ -1,21 +1,78 @@
 "use client";
-import dynamic from "next/dynamic";
-import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight, Download, MapPin } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
-const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
-
 const ease = [0.22, 1, 0.36, 1] as const;
 
+function CountUp({ value, suffix = "", raw = false }: { value: number; suffix?: string; raw?: boolean }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-40px" });
+  const reduce = useReducedMotion();
+
+  useEffect(() => {
+    if (!inView || !ref.current) return;
+    if (reduce) {
+      ref.current.textContent = raw ? String(value) : `${value}${suffix}`;
+      return;
+    }
+    const controls = animate(0, value, {
+      duration: 1.8,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => {
+        if (ref.current)
+          ref.current.textContent = raw ? String(Math.round(v)) : `${Math.round(v)}${suffix}`;
+      },
+    });
+    return () => controls.stop();
+  }, [inView, reduce, value, suffix, raw]);
+
+  return <span ref={ref}>{raw ? "0" : `0${suffix}`}</span>;
+}
+
+function Magnetic({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const sx = useSpring(x, { stiffness: 180, damping: 16 });
+  const sy = useSpring(y, { stiffness: 180, damping: 16 });
+
+  return (
+    <motion.div
+      ref={ref}
+      style={{ x: sx, y: sy }}
+      className="w-full sm:w-auto"
+      onMouseMove={(e) => {
+        if (reduce || !ref.current) return;
+        const r = ref.current.getBoundingClientRect();
+        x.set((e.clientX - (r.left + r.width / 2)) * 0.18);
+        y.set((e.clientY - (r.top + r.height / 2)) * 0.28);
+      }}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Hero() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 600], [0, 80]);
+  const opacity = useTransform(scrollY, [0, 500], [1, 0.25]);
   return (
     <section id="top" className="relative overflow-hidden bg-white pt-32 pb-20 md:pt-40 md:pb-28">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgba(37,99,235,0.07),transparent_70%)]" />
-      <HeroCanvas />
-      <div className="absolute inset-0 grid-bg opacity-70" />
+      <div aria-hidden className="absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgba(37,99,235,0.08),transparent_70%)]" />
+        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl" />
+        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-violet-100/60 blur-3xl" />
+      </div>
 
-      <div className="container-x relative z-10 max-w-4xl text-center">
+      <motion.div style={{ y, opacity }} className="container-x relative z-10 max-w-4xl text-center">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -28,16 +85,6 @@ export default function Hero() {
           </span>
           Available for AI & Full-Stack missions
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mt-5 flex items-center justify-center gap-1.5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500"
-        >
-          <MapPin size={13} className="text-blue-500" />
-          {profile.location}
-        </motion.p>
 
         <h1 className="mt-4 font-display font-bold leading-[1.02] tracking-tight">
           <motion.span
@@ -52,7 +99,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.24, ease }}
-            className="text-gradient-neon block text-[clamp(1.5rem,3.5vw,2.25rem)] font-semibold tracking-tight"
+            className="block text-[clamp(1.5rem,3.5vw,2.25rem)] font-semibold tracking-tight text-blue-700"
           >
             AI Engineer & Full-Stack Developer
           </motion.span>
@@ -75,33 +122,48 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.52, ease }}
           className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3"
         >
-          <a href="#work" className="btn-primary group w-full sm:w-auto">
-            View My Work
-            <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
-          </a>
-          <a href={profile.cv} download className="btn-ghost w-full sm:w-auto">
-            <Download size={17} />
-            Download Resume
-          </a>
+          <Magnetic>
+            <a href="#work" className="btn-primary btn-shine group w-full sm:w-auto">
+              View My Work
+              <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a href={profile.cv} download className="btn-ghost w-full sm:w-auto">
+              <Download size={17} />
+              Download Resume
+            </a>
+          </Magnetic>
         </motion.div>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.62 }}
+          className="mt-5 flex items-center justify-center gap-1.5 text-sm font-medium text-slate-500"
+        >
+          <MapPin size={14} className="text-blue-500" aria-hidden />
+          {profile.location}
+        </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.68, ease }}
-          className="mx-auto mt-14 grid max-w-3xl grid-cols-2 gap-3 md:grid-cols-4"
+          className="mx-auto mt-14 max-w-3xl"
         >
-          {profile.stats.map((s, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-slate-200 bg-white px-4 py-5 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_-14px_rgba(37,99,235,0.3)]"
-            >
-              <p className="font-display text-3xl font-bold tracking-tight text-slate-900">
-                {s.raw ? s.value : `${s.value}${s.suffix}`}
-              </p>
-              <p className="mt-1 text-[11px] font-medium uppercase tracking-widest text-slate-500">{s.label}</p>
-            </div>
-          ))}
+          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200/70 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.12)] md:grid-cols-4">
+            {profile.stats.map((s, i) => (
+              <div key={i} className="bg-white px-4 py-5 text-center">
+                <dd className="font-display text-3xl font-bold tracking-tight text-slate-900">
+                  <CountUp value={s.value} suffix={s.suffix} raw={s.raw} />
+                </dd>
+                <dt className="mt-1 text-[11px] font-medium uppercase tracking-widest text-slate-500">
+                  {s.label}
+                </dt>
+              </div>
+            ))}
+          </dl>
         </motion.div>
 
         <motion.a
@@ -113,7 +175,7 @@ export default function Hero() {
         >
           <ArrowDown size={17} />
         </motion.a>
-      </div>
+      </motion.div>
     </section>
   );
 }

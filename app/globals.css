@@ -8,6 +8,7 @@
 
 html {
   scroll-behavior: smooth;
+  position: relative;
 }
 
 body {
@@ -38,37 +39,15 @@ body {
   .container-x {
     @apply w-[min(100%-2rem,80rem)] mx-auto;
   }
-  .glass {
-    background: rgba(255, 255, 255, 0.82);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid #e2e8f0;
-  }
-  .glass-deep {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 20px 50px -20px rgba(15, 23, 42, 0.15);
-  }
-  .text-gradient {
-    background: linear-gradient(92deg, #0f172a 0%, #1d4ed8 48%, #7c3aed 80%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .text-gradient-neon {
-    background: linear-gradient(92deg, #2563eb, #7c3aed 60%, #a21caf);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
   .btn-primary {
     @apply relative inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 font-semibold text-white transition-all duration-300;
-    background: linear-gradient(135deg, #2563eb, #4f46e5 55%, #7c3aed);
-    box-shadow: 0 12px 30px -10px rgba(37, 99, 235, 0.55), inset 0 1px 0 rgba(255,255,255,0.25);
+    background: #0f172a;
+    box-shadow: 0 12px 30px -10px rgba(15, 23, 42, 0.5), inset 0 1px 0 rgba(255,255,255,0.12);
   }
   .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 18px 40px -12px rgba(79, 70, 229, 0.6), inset 0 1px 0 rgba(255,255,255,0.3);
+    background: #1e293b;
+    box-shadow: 0 18px 40px -12px rgba(15, 23, 42, 0.5), inset 0 1px 0 rgba(255,255,255,0.15);
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-2xl px-7 py-4 font-semibold transition-all duration-300;
@@ -92,38 +71,46 @@ body {
     transform-style: preserve-3d;
     will-change: transform;
   }
+  .btn-shine {
+    overflow: hidden;
+  }
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgba(255, 255, 255, 0.35) 50%, transparent 60%);
+    transform: translateX(-130%);
+    pointer-events: none;
+  }
+  .btn-shine:hover::after {
+    transform: translateX(130%);
+    transition: transform 0.9s ease;
+  }
+  .webgl-fallback {
+    background:
+      radial-gradient(ellipse 60% 45% at 50% 0%, rgba(37,99,235,0.08), transparent 70%),
+      radial-gradient(600px 300px at 15% 20%, rgba(139,92,246,0.08), transparent 70%);
+  }
 }
 
-.noise::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 70;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+section[id] {
+  scroll-margin-top: 5.5rem;
 }
 
-.grid-bg {
-  background-image:
-    linear-gradient(rgba(15,23,42,0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(15,23,42,0.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-  mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 30%, transparent 75%);
+:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
 }
 
-.shimmer-text {
-  background: linear-gradient(110deg, #0f172a 30%, #2563eb 45%, #7c3aed 55%, #0f172a 70%);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: shimmer 3.5s linear infinite;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
-
-@keyframes shimmer {
-  to { background-position: -200% center; }
-}
-
-.perspective-1200 { perspective: 1200px; }
-.preserve-3d { transform-style: preserve-3d; }

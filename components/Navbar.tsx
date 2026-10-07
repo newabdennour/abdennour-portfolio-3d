@@ -23,12 +23,22 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
   return (
     <>
       <motion.div className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600" style={{ scaleX: progress }} />
       <header className={`fixed inset-x-0 top-0 z-[85] transition-all duration-300 ${scrolled ? "py-3" : "py-4"}`}>
         <div className="container-x">
           <nav
+            aria-label="Primary"
             className={`flex items-center justify-between rounded-2xl px-5 py-3 transition-all duration-300 ${
               scrolled
                 ? "border border-slate-200 bg-white/85 shadow-[0_8px_30px_-12px_rgba(15,23,42,0.15)] backdrop-blur-xl"
@@ -70,7 +80,9 @@ export default function Navbar() {
             <button
               className="grid h-10 w-10 place-items-center rounded-xl border border-slate-200 bg-white text-slate-700 md:hidden"
               onClick={() => setOpen(!open)}
-              aria-label="Menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              aria-controls="mobile-menu"
             >
               {open ? <X size={18} /> : <Menu size={18} />}
             </button>
@@ -78,6 +90,7 @@ export default function Navbar() {
 
           {open && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-2 flex flex-col gap-1 rounded-2xl border border-slate-200 bg-white p-3 shadow-xl md:hidden"
@@ -92,6 +105,13 @@ export default function Navbar() {
                   {l.label}
                 </a>
               ))}
+              <a
+                href="#contact"
+                onClick={() => setOpen(false)}
+                className="mt-1 rounded-xl bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white transition hover:bg-slate-700"
+              >
+                Hire Me
+              </a>
             </motion.div>
           )}
         </div>

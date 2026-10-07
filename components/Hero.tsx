@@ -62,10 +62,11 @@ function Magnetic({ children }: { children: React.ReactNode }) {
 
 export default function Hero() {
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 600], [0, 80]);
-  const opacity = useTransform(scrollY, [0, 500], [1, 0.25]);
+  const reduce = useReducedMotion();
+  const y = useTransform(scrollY, [0, 600], reduce ? [0, 0] : [0, 80]);
+  const opacity = useTransform(scrollY, [0, 500], reduce ? [1, 1] : [1, 0.25]);
   return (
-    <section id="top" className="relative overflow-hidden bg-white pt-32 pb-20 md:pt-40 md:pb-28">
+    <section id="top" className="relative overflow-hidden bg-transparent pt-32 pb-20 md:pt-40 md:pb-28">
       <div aria-hidden className="absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgba(37,99,235,0.08),transparent_70%)]" />
         <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl" />

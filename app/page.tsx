@@ -13,7 +13,7 @@ const GlobalBackdrop = dynamic(() => import("@/components/GlobalBackdrop"), { ss
 
 export default function Page() {
   return (
-    <main className="relative min-h-screen bg-white font-display text-slate-900">
+    <main className="relative min-h-screen bg-transparent font-display text-slate-900">
       <GlobalBackdrop />
       <Preloader />
       <CursorGlow />

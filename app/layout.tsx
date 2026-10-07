@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -19,11 +19,15 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${grotesk.variable}`}>
       <body
-        className="noise bg-white font-display text-slate-900 antialiased"
+        className="bg-white font-display text-slate-900 antialiased"
         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}
       >
         {children}

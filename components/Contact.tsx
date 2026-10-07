@@ -43,10 +43,9 @@ export default function Contact() {
     }`;
 
   return (
-    <section id="contact" className="relative bg-slate-50 py-24">
+    <section id="contact" className="relative bg-slate-50/80 py-24 backdrop-blur-sm">
       <div className="container-x relative">
         <SectionHeading
-          eyebrow="Contact"
           title={<>Let&apos;s work together</>}
           subtitle="Have an AI product, RAG system or standout experience in mind? My inbox is always open."
         />
@@ -58,45 +57,56 @@ export default function Contact() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-2xl border border-slate-200 bg-white p-7 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.1)] lg:col-span-3"
+            className="rounded-2xl bg-white p-7 shadow-[0_10px_28px_-14px_rgba(15,23,42,0.14)] lg:col-span-3"
             noValidate
           >
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-700">Name</label>
+                <label htmlFor="contact-name" className="mb-1.5 block text-sm font-semibold text-slate-700">Name</label>
                 <input
+                  id="contact-name"
                   type="text"
+                  autoComplete="name"
                   value={form.name}
                   onChange={(e) => setForm({ ...form, name: e.target.value })}
                   placeholder="Your name"
                   className={inputCls(!!errors.name)}
+                  aria-invalid={!!errors.name}
+                  aria-describedby={errors.name ? "contact-name-error" : undefined}
                 />
-                {errors.name && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.name}</p>}
+                {errors.name && <p id="contact-name-error" role="alert" className="mt-1.5 text-xs font-medium text-red-600">{errors.name}</p>}
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-semibold text-slate-700">Email</label>
+                <label htmlFor="contact-email" className="mb-1.5 block text-sm font-semibold text-slate-700">Email</label>
                 <input
+                  id="contact-email"
                   type="email"
+                  autoComplete="email"
                   value={form.email}
                   onChange={(e) => setForm({ ...form, email: e.target.value })}
                   placeholder="your.email@example.com"
                   className={inputCls(!!errors.email)}
+                  aria-invalid={!!errors.email}
+                  aria-describedby={errors.email ? "contact-email-error" : undefined}
                 />
-                {errors.email && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.email}</p>}
+                {errors.email && <p id="contact-email-error" role="alert" className="mt-1.5 text-xs font-medium text-red-600">{errors.email}</p>}
               </div>
             </div>
             <div className="mt-5">
-              <label className="mb-1.5 block text-sm font-semibold text-slate-700">Message</label>
+              <label htmlFor="contact-message" className="mb-1.5 block text-sm font-semibold text-slate-700">Message</label>
               <textarea
+                id="contact-message"
                 rows={5}
                 value={form.message}
                 onChange={(e) => setForm({ ...form, message: e.target.value })}
                 placeholder="Tell me about your project..."
                 className={`${inputCls(!!errors.message)} resize-none`}
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? "contact-message-error" : undefined}
               />
-              {errors.message && <p className="mt-1.5 text-xs font-medium text-red-500">{errors.message}</p>}
+              {errors.message && <p id="contact-message-error" role="alert" className="mt-1.5 text-xs font-medium text-red-600">{errors.message}</p>}
             </div>
-            <button type="submit" disabled={status === "sending"} className="btn-primary mt-6 w-full disabled:opacity-60">
+            <button type="submit" disabled={status === "sending"} className="btn-primary btn-shine mt-6 w-full disabled:opacity-60">
               {status === "sending" ? (
                 <><Loader2 size={17} className="animate-spin" /> Sending...</>
               ) : status === "sent" ? (
@@ -132,7 +142,7 @@ export default function Contact() {
                 href={c.href}
                 target={c.href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_8px_24px_-14px_rgba(15,23,42,0.12)] transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-[0_18px_40px_-16px_rgba(37,99,235,0.3)]"
+                className="group flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_10px_28px_-16px_rgba(15,23,42,0.16)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_40px_-16px_rgba(37,99,235,0.3)]"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-slate-900 text-white transition-colors group-hover:bg-blue-600">
                   <c.icon size={19} />

@@ -126,7 +126,7 @@ export default function Projects() {
   const filtered = cat === "All" ? projects : projects.filter((p) => p.category === cat);
 
   return (
-    <section id="work" className="relative bg-white py-24">
+    <section id="work" className="relative bg-white/80 py-24 backdrop-blur-sm">
       <div className="container-x">
         <SectionHeading
           title={<>Featured Projects</>}

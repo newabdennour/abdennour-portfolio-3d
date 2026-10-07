@@ -170,15 +170,6 @@ export const projects: Project[] = [
   },
 ];
 
-export const skills = [
-  { name: "Python", level: 97, tag: "Language" },
-  { name: "C++", level: 95, tag: "Language" },
-  { name: "Machine Learning", level: 92, tag: "AI" },
-  { name: "React / Next.js", level: 88, tag: "Frontend" },
-  { name: "AI Engineering", level: 94, tag: "LLM / RAG" },
-  { name: "Flutter", level: 93, tag: "Mobile" },
-];
-
 export const timeline = [
   { year: "2026", title: "Algeria Post Certificate", company: "Algeria Post", link: "/certificates/Algerie post.pdf" },
   { year: "2026", title: "BMS Certificate", company: "BMS", link: "/certificates/BMS.pdf" },

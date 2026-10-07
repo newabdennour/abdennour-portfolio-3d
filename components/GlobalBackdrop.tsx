@@ -40,19 +40,20 @@ function Particles({ count = 1200 }: { count?: number }) {
     return () => window.removeEventListener("mousemove", fn);
   }, []);
   useFrame((state, dt) => {
+    if (document.hidden) return;
     if (!ref.current) return;
     ref.current.rotation.y += dt * 0.02;
     ref.current.rotation.x += ((mouse.current.y * 0.15) - ref.current.rotation.x) * 0.03;
     ref.current.rotation.y += ((mouse.current.x * 0.2) - 0) * 0.002;
     const scroll = Math.min(window.scrollY / window.innerHeight, 1);
-    (ref.current.material as THREE.PointsMaterial).opacity = 0.55 - scroll * 0.3;
+    (ref.current.material as THREE.PointsMaterial).opacity = Math.max(0.15, 0.22 - scroll * 0.07);
   });
   return (
     <points ref={ref}>
       <bufferGeometry>
         <bufferAttribute attach="attributes-position" args={[positions, 3]} />
       </bufferGeometry>
-      <pointsMaterial size={0.035} color="#2563eb" transparent opacity={0.55} sizeAttenuation depthWrite={false} />
+      <pointsMaterial size={0.035} color="#2563eb" transparent opacity={0.22} sizeAttenuation depthWrite={false} />
     </points>
   );
 }
@@ -79,12 +80,24 @@ function Shapes() {
 export default function GlobalBackdrop() {
   const allowed = useWebGLAllowed();
   const [hidden, setHidden] = useState(false);
+  const [count, setCount] = useState(1200);
   useEffect(() => {
-    const onScroll = () => setHidden(window.scrollY > window.innerHeight * 3);
+    setCount(window.innerWidth < 640 ? 400 : 1200);
+    const onScroll = () => {
+      if (!document.hidden) setHidden(window.scrollY > window.innerHeight * 3);
+    };
+    const onVis = () => {
+      if (document.hidden) setHidden(true);
+      else setHidden(window.scrollY > window.innerHeight * 3);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, []);
-  if (!allowed || hidden) return <div aria-hidden className="webgl-fallback" />;
+  if (!allowed || hidden) return <div aria-hidden className="webgl-fallback pointer-events-none fixed inset-0 -z-10" />;
   return (
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
       <Canvas dpr={[1, 1.75]} camera={{ position: [0, 0, 6], fov: 55 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
@@ -92,7 +105,7 @@ export default function GlobalBackdrop() {
         el.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setHidden(true); });
       }}>
         <Suspense fallback={null}>
-          <Particles />
+          <Particles count={count} />
           <Shapes />
         </Suspense>
       </Canvas>

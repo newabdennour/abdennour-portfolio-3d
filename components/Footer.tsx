@@ -37,9 +37,9 @@ export default function Footer() {
             </button>
           </div>
         </div>
-        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-100 pt-6 text-xs text-slate-400 md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-2 border-t border-slate-100 pt-6 text-xs text-slate-500 md:flex-row">
           <p>© 2026 {profile.name}. All rights reserved.</p>
-          <p>Built with Next.js · Three.js · Space Grotesk</p>
+          <p>Built with Next.js · Space Grotesk</p>
         </div>
       </div>
     </footer>

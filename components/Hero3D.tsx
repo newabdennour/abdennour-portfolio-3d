@@ -43,6 +43,7 @@ export default function Hero3D() {
   const reduce = useReducedMotion();
   const { heroProgress } = useGlobalScrollSprings();
   const [visible, setVisible] = useState(true);
+  const [glLost, setGlLost] = useState(false);
   useEffect(() => {
     const el = document.getElementById("top");
     if (!el) return;
@@ -50,10 +51,16 @@ export default function Hero3D() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  if (!allowed || reduce || !visible) return null;
+  // Always render the wrapper so the grid column keeps its reserved height
+  // (no layout shift); gate only the Canvas. Ruling 2 fallback = empty div.
+  const show = allowed && !reduce && visible && !glLost;
   return (
     <motion.div aria-hidden className="hero-3d pointer-events-auto relative h-[240px] w-full md:h-[300px]">
-      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5.2], fov: 50 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
+      {show ? (
+      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0, 5.2], fov: 50 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
+        const el = gl.domElement;
+        el.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setGlLost(true); });
+      }}>
         <ambientLight intensity={0.9} />
         <directionalLight position={[3, 4, 5]} intensity={1.1} />
         <Suspense fallback={null}>
@@ -63,6 +70,7 @@ export default function Hero3D() {
           <ContactShadows position={[0, -1.6, 0]} opacity={0.32} scale={8} blur={2.2} far={4} resolution={256} color="#0f172a" />
         </Suspense>
       </Canvas>
+      ) : null}
     </motion.div>
   );
 }

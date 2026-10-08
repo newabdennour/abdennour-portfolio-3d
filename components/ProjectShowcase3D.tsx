@@ -65,10 +65,17 @@ export default function ProjectShowcase3D({ projects, activeId, onPick }: { proj
     return () => io.disconnect();
   }, []);
   const featured = projects.filter((p) => p.featured).slice(0, 5);
-  if (!allowed || reduce || !inView || featured.length === 0) return null;
+  const [glLost, setGlLost] = useState(false);
+  // Self-unmount fix: ALWAYS render the wrapper div with its reserved height
+  // classes (the observer target stays mounted); gate ONLY the Canvas.
+  const show = allowed && !reduce && inView && !glLost && featured.length > 0;
   return (
     <div ref={wrapRef} aria-hidden={false} className="showcase-3d relative mx-auto mb-10 h-[380px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 md:h-[440px]">
-      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.4, 7.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}>
+      {show ? (
+      <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.4, 7.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
+        const el = gl.domElement;
+        el.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setGlLost(true); });
+      }}>
         <ambientLight intensity={1} />
         <directionalLight position={[4, 5, 6]} intensity={1} />
         <Suspense fallback={null}>
@@ -78,6 +85,7 @@ export default function ProjectShowcase3D({ projects, activeId, onPick }: { proj
           <ContactShadows position={[0, -1.4, 0]} opacity={0.28} scale={12} blur={2.4} far={5} resolution={256} color="#0f172a" />
         </Suspense>
       </Canvas>
+      ) : null}
       <p className="pointer-events-none absolute bottom-3 left-0 right-0 text-center text-xs font-medium text-slate-400">Drag to spin · Click a panel to open details</p>
     </div>
   );

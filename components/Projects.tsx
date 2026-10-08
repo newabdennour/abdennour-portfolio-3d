@@ -1,10 +1,13 @@
 "use client";
 import { useState, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useSpring, useMotionTemplate, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Calendar } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import ProjectDialog from "./ProjectDialog";
+import dynamic from "next/dynamic";
 import { projects, categories, type Project } from "@/data/portfolio";
+
+const ProjectShowcase3D = dynamic(() => import("./ProjectShowcase3D"), { ssr: false });
 
 function TiltCard({
   project,
@@ -16,17 +19,26 @@ function TiltCard({
   onSelect: (p: Project) => void;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
+  const reduce = useReducedMotion();
+  const rx = useMotionValue(0);
+  const ry = useMotionValue(0);
+  const mx = useMotionValue(50);
+  const my = useMotionValue(50);
+  const srx = useSpring(rx, { stiffness: 260, damping: 22, mass: 0.6 });
+  const sry = useSpring(ry, { stiffness: 260, damping: 22, mass: 0.6 });
+  const transform = useMotionTemplate`perspective(1100px) rotateX(${srx}deg) rotateY(${sry}deg)`;
+  const glare = useMotionTemplate`radial-gradient(520px circle at ${mx}% ${my}%, rgba(37,99,235,0.12), transparent 65%)`;
 
   const onMove = (e: React.MouseEvent) => {
     const r = ref.current?.getBoundingClientRect();
     if (!r) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (reduce) return;
     const px = (e.clientX - r.left) / r.width;
     const py = (e.clientY - r.top) / r.height;
-    setTilt({ rx: (0.5 - py) * 10, ry: (px - 0.5) * 10 });
-    ref.current?.style.setProperty("--mx", `${px * 100}%`);
-    ref.current?.style.setProperty("--my", `${py * 100}%`);
+    rx.set((0.5 - py) * 10);
+    ry.set((px - 0.5) * 12);
+    mx.set(px * 100);
+    my.set(py * 100);
   };
 
   const inner = (
@@ -43,17 +55,18 @@ function TiltCard({
         }
       }}
       onMouseMove={onMove}
-      onMouseLeave={() => setTilt({ rx: 0, ry: 0 })}
-      initial={{ opacity: 0, y: 32 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      onMouseLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+      initial={{ opacity: 0, y: 32, scale: 0.98 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
       viewport={{ once: true, margin: "-60px" }}
       exit={{ opacity: 0, scale: 0.96 }}
+      whileHover={reduce ? undefined : { scale: 1.02, transition: { duration: 0.25 } }}
       transition={{ duration: 0.5, delay: Math.min(index * 0.05, 0.35) }}
       className="card-3d group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl bg-white shadow-[0_10px_28px_-14px_rgba(15,23,42,0.18)] transition-shadow duration-300 hover:shadow-[0_24px_50px_-20px_rgba(37,99,235,0.35)]"
-      style={{
-        transform: `perspective(1100px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(${tilt.rx === 0 && tilt.ry === 0 ? 1 : 1.02})`,
-        transition: "transform 0.15s ease-out, box-shadow 0.3s",
-      }}
+      style={{ transform }}
     >
       <div className="relative h-48 shrink-0 overflow-hidden bg-slate-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -102,13 +115,10 @@ function TiltCard({
           </div>
         </div>
       </div>
-      <div
+      <motion.div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background:
-            "radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(37,99,235,0.12), transparent 65%)",
-        }}
+        style={{ background: glare }}
       />
       <div className="absolute inset-x-0 bottom-0 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-blue-600 to-violet-600 transition-transform duration-500 group-hover:scale-x-100" />
       <span className="absolute bottom-5 right-5 grid h-9 w-9 place-items-center rounded-full bg-slate-900 text-white opacity-0 shadow-lg transition-all duration-300 group-hover:opacity-100">
@@ -133,6 +143,10 @@ export default function Projects() {
           subtitle="Production-grade builds across AI, full-stack, mobile and data — each with real-world impact."
         />
 
+        {cat === "All" && (
+          <ProjectShowcase3D projects={projects} activeId={selected?.id ?? null} onPick={setSelected} />
+        )}
+
         <div className="mb-10 flex flex-wrap justify-center gap-2">
           {categories.map((c) => {
             const count = c === "All" ? projects.length : projects.filter((p) => p.category === c).length;
@@ -154,7 +168,7 @@ export default function Projects() {
           })}
         </div>
 
-        <motion.div layout className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div layout className="grid items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3 [perspective:1400px]">
           <AnimatePresence>
             {filtered.map((p, i) => (
               <TiltCard key={p.id} project={p} index={i} onSelect={setSelected} />

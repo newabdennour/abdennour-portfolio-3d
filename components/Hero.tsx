@@ -2,7 +2,10 @@
 import { useEffect, useRef } from "react";
 import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
 import { ArrowDown, ArrowRight, Download, MapPin } from "lucide-react";
+import dynamic from "next/dynamic";
 import { profile } from "@/data/portfolio";
+
+const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false });
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -63,15 +66,12 @@ function Magnetic({ children }: { children: React.ReactNode }) {
 export default function Hero() {
   const { scrollY } = useScroll();
   const reduce = useReducedMotion();
-  const y = useTransform(scrollY, [0, 600], reduce ? [0, 0] : [0, 80]);
-  const opacity = useTransform(scrollY, [0, 500], reduce ? [1, 1] : [1, 0.25]);
+  const yRaw = useTransform(scrollY, [0, 600], reduce ? [0, 0] : [0, 80]);
+  const opacityRaw = useTransform(scrollY, [0, 500], reduce ? [1, 1] : [1, 0.25]);
+  const y = useSpring(yRaw, { stiffness: 120, damping: 24, mass: 0.6 });
+  const opacity = useSpring(opacityRaw, { stiffness: 120, damping: 24 });
   return (
-    <section id="top" className="relative overflow-hidden bg-transparent pt-32 pb-20 md:pt-40 md:pb-28">
-      <div aria-hidden className="absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_50%_0%,rgba(37,99,235,0.08),transparent_70%)]" />
-        <div className="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl" />
-        <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-violet-100/60 blur-3xl" />
-      </div>
+    <section id="top" className="relative bg-white pt-32 pb-20 md:pt-40 md:pb-28">
 
       <motion.div style={{ y, opacity }} className="container-x relative z-10 max-w-4xl text-center">
         <motion.div
@@ -147,12 +147,14 @@ export default function Hero() {
           {profile.location}
         </motion.p>
 
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.68, ease }}
-          className="mx-auto mt-14 max-w-3xl"
-        >
+        <div className="mx-auto mt-10 grid max-w-4xl items-center gap-6 md:grid-cols-[1.2fr_0.8fr]">
+          <div className="min-w-0">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.68, ease }}
+              className="mx-auto mt-0 max-w-3xl"
+            >
           <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200/70 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.12)] md:grid-cols-4">
             {profile.stats.map((s, i) => (
               <div key={i} className="bg-white px-4 py-5 text-center">
@@ -164,8 +166,11 @@ export default function Hero() {
                 </dt>
               </div>
             ))}
-          </dl>
-        </motion.div>
+            </dl>
+            </motion.div>
+          </div>
+          <Hero3D />
+        </div>
 
         <motion.a
           href="#work"

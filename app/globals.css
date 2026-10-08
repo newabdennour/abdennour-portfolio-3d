@@ -92,6 +92,11 @@ body {
       radial-gradient(ellipse 60% 45% at 50% 0%, rgba(37,99,235,0.08), transparent 70%),
       radial-gradient(600px 300px at 15% 20%, rgba(139,92,246,0.08), transparent 70%);
   }
+  .hero-3d canvas { display: block; }
+  .showcase-3d canvas { display: block; touch-action: pan-y; }
+  @media (max-width: 640px) {
+    .showcase-3d { height: 320px; }
+  }
 }
 
 section[id] {

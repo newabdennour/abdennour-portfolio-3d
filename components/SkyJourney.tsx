@@ -5,6 +5,7 @@ import { Sky, Sparkles } from "@react-three/drei";
 import { useReducedMotion, useScroll, useSpring, type MotionValue } from "framer-motion";
 import * as THREE from "three";
 import { useWebGLAllowed } from "./GlobalBackdrop";
+import FlyingObjects from "./FlyingObjects";
 import type { JourneyTheme } from "@/data/portfolio";
 
 const THEMES: Record<JourneyTheme, { line: [string, string]; fog: string; bg: string }> = {
@@ -177,6 +178,7 @@ export default function SkyJourney({ id, theme, stops, renderPanel }: {
               <Clouds />
               <Sparkles count={70} scale={[14, 20, 4]} size={2.5} speed={0.25} opacity={0.5} color="#ffffff" />
               <LineAndRig curve={curve} progress={progress} colors={t.line} />
+              <FlyingObjects theme={theme} />
             </Suspense>
           </Canvas>
         )}

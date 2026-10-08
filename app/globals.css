@@ -100,6 +100,13 @@ section[id] {
   scroll-margin-top: 5.5rem;
 }
 
+.journey-track { min-height: 200vh; }
+@media (max-width: 640px) {
+  .journey-track .sticky { position: static; height: auto; }
+  .journey-track .journey-stops { margin-top: 0; }
+  .journey-track .journey-stops > div { min-height: 0; }
+}
+
 :focus-visible {
   outline: 2px solid #2563eb;
   outline-offset: 3px;

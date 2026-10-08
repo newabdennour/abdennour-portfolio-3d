@@ -70,7 +70,7 @@ export default function ProjectShowcase3D({ projects, activeId, onPick }: { proj
   // classes (the observer target stays mounted); gate ONLY the Canvas.
   const show = allowed && !reduce && inView && !glLost && featured.length > 0;
   return (
-    <div ref={wrapRef} aria-hidden={false} className="showcase-3d relative mx-auto mb-10 h-[380px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 md:h-[440px]">
+    <div ref={wrapRef} aria-hidden={false} className="showcase-3d relative mx-auto mb-10 h-[380px] max-sm:h-[320px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 md:h-[440px]">
       {show ? (
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.4, 7.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
         const el = gl.domElement;

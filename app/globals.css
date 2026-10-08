@@ -94,9 +94,6 @@ body {
   }
   .hero-3d canvas { display: block; }
   .showcase-3d canvas { display: block; touch-action: pan-y; }
-  @media (max-width: 640px) {
-    .showcase-3d { height: 320px; }
-  }
 }
 
 section[id] {

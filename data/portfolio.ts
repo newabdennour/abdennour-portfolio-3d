@@ -197,3 +197,69 @@ export const profile = {
     { value: 2025, suffix: "", label: "Focused on LLM Era", raw: true },
   ],
 };
+
+export type Paper = {
+  id: number;
+  title: string;
+  venue: string;
+  year: string;
+  abstract: string;
+  tags: string[];
+  link: string;
+};
+
+export type JourneyTheme = "playful" | "academic";
+
+// EXAMPLE DATA (derived from existing projects) — owner rewrites with real papers later.
+export const papers: Paper[] = [
+  {
+    id: 101,
+    title: "ARIMA-Based Forecasting of Algeria's Oil & Gas Production",
+    venue: "Applied Energy Analytics — Working Paper",
+    year: "2025",
+    abstract:
+      "Time-series modeling of national hydrocarbon output and revenue with ARIMA baselines, exogenous regressors, and rolling-origin evaluation.",
+    tags: ["Time Series", "ARIMA", "Energy"],
+    link: "https://colab.research.google.com/drive/13N31tkvfJZf7nM9U0O8qBLgqnhOpqzue",
+  },
+  {
+    id: 102,
+    title: "Stacked Ensembles for Sleep-Stage Classification",
+    venue: "Biomedical Signal Processing — Preprint",
+    year: "2025",
+    abstract:
+      "Stacked ensemble learning over physiological time series with spectral and Hjorth features for five-stage sleep classification.",
+    tags: ["Ensembles", "Signal Processing", "Health"],
+    link: "https://colab.research.google.com/drive/1xOeaHCSjtY-pKOtnRnj6Sn94jL1Vw1Dp",
+  },
+  {
+    id: 103,
+    title: "Predicting News Popularity with NLP-Augmented Regression",
+    venue: "NLP Applications — Study Note",
+    year: "2025",
+    abstract:
+      "Regression models over UCI news-popularity features enriched with sentiment, entity, and readability signals.",
+    tags: ["Regression", "NLP", "Media"],
+    link: "https://www.kaggle.com/datasets/thehapyone/uci-online-news-popularity-data-set",
+  },
+  {
+    id: 104,
+    title: "Neural SMS Classification: Spam vs Ham at Scale",
+    venue: "Text Classification — Technical Report",
+    year: "2025",
+    abstract:
+      "Character- and word-level neural baselines for SMS spam detection with calibration and error analysis.",
+    tags: ["Neural Networks", "NLP", "Security"],
+    link: "https://colab.research.google.com/drive/1fFhr_RO3QnRGP2Stob-U0yF925FPjOii",
+  },
+  {
+    id: 105,
+    title: "MGRPO: Multi-Modal Group Relative Policy Optimization",
+    venue: "LLM Reasoning — Research Draft",
+    year: "2025",
+    abstract:
+      "Extending GRPO with multi-modal critics that fuse text, image, and structured evidence for advanced reasoning tasks.",
+    tags: ["RL", "Multi-modal", "Transformers"],
+    link: "#",
+  },
+];

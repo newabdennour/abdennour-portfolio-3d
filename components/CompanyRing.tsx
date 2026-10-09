@@ -48,7 +48,13 @@ export default function CompanyRing({ logos }: { logos: string[] }) {
   const reduce = useReducedMotion();
   const [inView, setInView] = useState(true);
   const [glLost, setGlLost] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches);
   const wrapRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
@@ -56,7 +62,7 @@ export default function CompanyRing({ logos }: { logos: string[] }) {
     io.observe(el);
     return () => io.disconnect();
   }, []);
-  const show = allowed && !reduce && !glLost && inView;
+  const show = allowed && !reduce && !glLost && inView && !isMobile;
   return (
     <div ref={wrapRef} className="relative mx-auto h-[380px] w-full overflow-hidden rounded-2xl border border-[#e5ddcc] bg-[#fffdf6] max-sm:h-[320px] md:h-[420px]">
       {show && (
@@ -73,7 +79,7 @@ export default function CompanyRing({ logos }: { logos: string[] }) {
           </Suspense>
         </Canvas>
       )}
-      <p className="pointer-events-none absolute bottom-3 left-0 right-0 text-center text-xs font-medium text-slate-400">Drag to spin</p>
+      {show && <p className="pointer-events-none absolute bottom-3 left-0 right-0 text-center text-xs font-medium text-slate-400">Drag to spin</p>}
     </div>
   );
 }

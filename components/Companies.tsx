@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useReducedMotion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
@@ -27,6 +28,13 @@ function LogoCard({ name, logo, tag }: { name: string; logo: string; tag: string
 
 export default function Companies() {
   const reduce = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  const staticMode = reduce || isMobile;
   const rowA = companies.slice(0, 6);
   const rowB = companies.slice(6);
   return (
@@ -37,7 +45,7 @@ export default function Companies() {
           subtitle="Ministries, telecoms, energy, research labs and enterprises across Algeria, France and Canada."
         />
       </div>
-      {reduce ? (
+      {staticMode ? (
         <div className="container-x flex flex-wrap justify-center gap-3">
           {companies.map((c) => (
             <LogoCard key={c.name} {...c} />
@@ -57,9 +65,11 @@ export default function Companies() {
           </div>
         </div>
       )}
-      <div className="container-x mt-8">
-        <CompanyRing logos={companies.map((c) => encodeURI(c.logo))} />
-      </div>
+      {!staticMode && (
+        <div className="container-x mt-8">
+          <CompanyRing logos={companies.map((c) => encodeURI(c.logo))} />
+        </div>
+      )}
     </section>
   );
 }

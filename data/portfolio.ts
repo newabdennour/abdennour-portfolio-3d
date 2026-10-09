@@ -263,3 +263,19 @@ export const papers: Paper[] = [
     link: "#",
   },
 ];
+
+export type Company = { name: string; logo: string; tag: string };
+
+export const companies: Company[] = [
+  { name: "FEMTO-ST Institute", logo: "/companies/FEMTO-ST.jpg", tag: "Research · France" },
+  { name: "Ministry of Higher Education (MESRS)", logo: "/companies/mesrs.png", tag: "Institution" },
+  { name: "Algerian People's National Assembly", logo: "/companies/Algerian People's National Assembly.png", tag: "Institution" },
+  { name: "Algérie Poste", logo: "/companies/algerie post.png", tag: "Post & Logistics" },
+  { name: "Algérie Télécom", logo: "/companies/algerie telecome.png", tag: "Telecom" },
+  { name: "Sonatrach", logo: "/companies/sonatrach.png", tag: "Energy" },
+  { name: "University of Montreal", logo: "/companies/UofMontreal_logo.jpg", tag: "Research · Canada" },
+  { name: "BMS", logo: "/companies/bms.png", tag: "Industry" },
+  { name: "Ramy", logo: "/companies/ramy.jpg", tag: "Enterprise" },
+  { name: "Iconnet", logo: "/companies/iconnet.jpg", tag: "Technology" },
+  { name: "Leaf Partner", logo: "/companies/Minimalist Black Leaf Emblem.png", tag: "Partner" },
+];

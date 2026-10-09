@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Companies from "@/components/Companies";
 import Projects from "@/components/Projects";
+import Research from "@/components/Research";
 import About from "@/components/About";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
@@ -22,6 +23,7 @@ export default function Page() {
       <Hero />
       <Companies />
       <Projects />
+      <Research />
       <About />
       <Timeline />
       <Contact />

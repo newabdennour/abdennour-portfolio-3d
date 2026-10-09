@@ -7,14 +7,12 @@ import ProjectDialog from "./ProjectDialog";
 import ChatPanel from "./ChatPanel";
 import TexaUI from "./TexaUI";
 import EPosteUI from "./EPosteUI";
-import { PaperPanel } from "./JourneyPanels";
-import { projects, papers, categories, type Project } from "@/data/portfolio";
+import { projects, categories, type Project } from "@/data/portfolio";
 
 const ProjectShowcase3D = dynamic(() => import("./ProjectShowcase3D"), { ssr: false });
 const BrowserFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.BrowserFrame })), { ssr: false });
 const MonitorFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.MonitorFrame })), { ssr: false });
 const PhoneFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.PhoneFrame })), { ssr: false });
-const SkyJourney = dynamic(() => import("./SkyJourney"), { ssr: false });
 
 const femtoLogo = encodeURI("/top-projects/tp2/logo.png");
 const femtoInst = encodeURI("/top-projects/tp2/FEMTO-ST.jpg");
@@ -237,22 +235,6 @@ export default function Projects() {
             </div>
           </div>
         </div>
-      </section>
-      <section id="research" className="relative bg-white/80 py-24 backdrop-blur-sm">
-        <div className="container-x">
-          <SectionHeading
-            title={<>Research & Papers</>}
-            subtitle="Academic writing and applied studies — early drafts, notes and reports you can edit freely later."
-          />
-        </div>
-        <SkyJourney
-          id="research-journey"
-          theme="academic"
-          stops={papers.length}
-          renderPanel={(i, progress) => (
-            <PaperPanel index={i} stops={papers.length} progress={progress} paper={papers[i]} />
-          )}
-        />
       </section>
       <AnimatePresence>
         {selected && <ProjectDialog project={selected} onClose={() => setSelected(null)} />}

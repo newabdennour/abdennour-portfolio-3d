@@ -234,3 +234,29 @@ section[id] {
 }
 
 .markdown p { margin: 0.35em 0; } .markdown ul { list-style: disc; padding-left: 1.1em; margin: 0.35em 0; } .markdown ol { list-style: decimal; padding-left: 1.1em; } .markdown code { background: #f1f5f9; border-radius: 4px; padding: 0 4px; font-size: 12px; } .markdown pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 8px; overflow-x: auto; font-size: 12px; } .markdown pre code { background: transparent; padding: 0; } .markdown strong { font-weight: 700; }
+
+.journal-bg {
+  background: linear-gradient(160deg, #2b1a08 0%, #4a2c0e 45%, #6b3f12 100%);
+}
+.journal-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(0deg, transparent 0 26px, rgba(255, 255, 255, 0.04) 26px 27px);
+  pointer-events: none;
+}
+.watermark {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(4rem, 14vw, 11rem);
+  letter-spacing: 0.08em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.14);
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}

@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, BookOpen, ChevronDown } from "lucide-react";
-import SectionHeading from "./SectionHeading";
 import { papers, featuredPapers, type Paper } from "@/data/portfolio";
 
 const tilts = ["md:-rotate-1", "md:rotate-1", "md:rotate-[0.6deg]"];
@@ -74,10 +73,26 @@ export default function Research() {
     <section id="research" className="journal-bg relative overflow-hidden py-20 md:py-24">
       <span aria-hidden className="watermark">RESEARCH</span>
       <div className="container-x relative">
-        <SectionHeading
-          title={<>Research & papers</>}
-          subtitle="Selected studies and drafts — examples being replaced with publications."
-        />
+        <div className="mx-auto mb-12 max-w-2xl text-center md:mb-14">
+          <motion.h2
+            initial={{ opacity: 0, y: 22, filter: "blur(6px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="font-display text-balance text-3xl font-bold leading-[1.1] tracking-tight text-amber-50 md:text-[2.75rem]"
+          >
+            Research & papers
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.12 }}
+            className="mt-4 text-base leading-relaxed text-amber-100/70 md:text-lg"
+          >
+            Selected studies and drafts — examples being replaced with publications.
+          </motion.p>
+        </div>
         <div className="grid gap-6 md:grid-cols-3 md:gap-5">
           {list.map((p, i) => (
             <PaperCard key={p.id} paper={p} tilt={tilts[i % tilts.length]} index={i} />

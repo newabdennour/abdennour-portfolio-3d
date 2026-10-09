@@ -149,18 +149,23 @@ export default function SkyJourney({ id, theme, stops, renderPanel }: {
   const trackRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(true);
   const [glLost, setGlLost] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches);
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
   const progress = useSpring(scrollYProgress, { stiffness: 70, damping: 22 });
   const t = THEMES[theme];
   const curve = useMemo(() => journeyCurve(Math.max(stops, 1)), [stops]);
   useEffect(() => {
     setIsMobile(window.innerWidth < 640);
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
     const el = trackRef.current;
-    if (!el) return;
+    if (!el) return () => window.removeEventListener("resize", onResize);
     const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0 });
     io.observe(el);
-    return () => io.disconnect();
+    return () => {
+      window.removeEventListener("resize", onResize);
+      io.disconnect();
+    };
   }, []);
   const showCanvas = allowed && !reduce && !glLost && inView && !isMobile;
   return (

@@ -75,9 +75,15 @@ export function PaperPanel({ index, stops, progress, paper }: {
       </div>
       <div className="mt-4 flex items-center justify-between">
         <span className="text-xs font-semibold text-slate-500">{paper.year}</span>
-        <a href={paper.link} target={paper.link.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-700">
-          Read <ArrowUpRight size={15} />
-        </a>
+        {paper.link === "#" ? (
+          <span className="inline-flex items-center gap-1.5 rounded-xl bg-slate-200 px-4 py-2 text-sm font-semibold text-slate-500 cursor-default">
+            Soon
+          </span>
+        ) : (
+          <a href={paper.link} target={paper.link.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer" className="inline-flex items-center gap-1.5 rounded-xl bg-amber-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-amber-700">
+            Read <ArrowUpRight size={15} />
+          </a>
+        )}
       </div>
     </PanelShell>
   );

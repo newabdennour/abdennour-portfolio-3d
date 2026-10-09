@@ -1,17 +1,11 @@
 "use client";
-import { Component, Suspense, useRef, type ReactNode } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { Float, useGLTF } from "@react-three/drei";
+import { Float } from "@react-three/drei";
 import * as THREE from "three";
 import type { JourneyTheme } from "@/data/portfolio";
 
-// Models: CC0 by Quaternius (https://quaternius.com), via Poly Pizza (https://poly.pizza), Public Domain CC0.
-
-class ModelBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
-  state = { failed: false };
-  static getDerivedStateFromError() { return { failed: true }; }
-  render() { return this.state.failed ? this.props.fallback : this.props.children; }
-}
+// Flyers are procedural stylized models. CC0 GLB vendoring (e.g. Quaternius via Poly Pizza) deferred — see plan Task 4 report.
 
 function ProceduralPlane({ position }: { position: [number, number, number] }) {
   const ref = useRef<THREE.Group>(null);
@@ -71,41 +65,14 @@ function ProceduralBalloon({ position }: { position: [number, number, number] })
   );
 }
 
-function GlbFlyer({ url, position, scale }: { url: string; position: [number, number, number]; scale: number }) {
-  const { scene } = useGLTF(url);
-  const ref = useRef<THREE.Group>(null);
-  useFrame((state) => {
-    if (!ref.current || document.hidden) return;
-    const t = state.clock.elapsedTime;
-    ref.current.position.y = position[1] + Math.sin(t * 1.1) * 0.25;
-    ref.current.rotation.y += 0.002;
-    ref.current.rotation.z = state.pointer.x * 0.15;
-  });
-  return (
-    <group ref={ref} position={position} scale={scale}>
-      <Float speed={1.3} rotationIntensity={0.3} floatIntensity={0.9}>
-        <primitive object={scene.clone()} />
-      </Float>
-    </group>
-  );
-}
-
 export default function FlyingObjects({ theme }: { theme: JourneyTheme }) {
   const playful = theme === "playful";
   const planePos: [number, number, number] = playful ? [-3.4, 2.2, -1.5] : [-3.6, 1.4, -2];
   const balloonPos: [number, number, number] = playful ? [3.6, -2.5, -2.5] : [3.8, -3.5, -3];
   return (
     <group>
-      <ModelBoundary fallback={<ProceduralPlane position={planePos} />}>
-        <Suspense fallback={<ProceduralPlane position={planePos} />}>
-          <GlbFlyer url="/models/paper-plane.glb" position={planePos} scale={playful ? 1 : 0.8} />
-        </Suspense>
-      </ModelBoundary>
-      <ModelBoundary fallback={<ProceduralBalloon position={balloonPos} />}>
-        <Suspense fallback={<ProceduralBalloon position={balloonPos} />}>
-          <GlbFlyer url="/models/hot-air-balloon.glb" position={balloonPos} scale={playful ? 1.1 : 0.9} />
-        </Suspense>
-      </ModelBoundary>
+      <ProceduralPlane position={planePos} />
+      <ProceduralBalloon position={balloonPos} />
     </group>
   );
 }

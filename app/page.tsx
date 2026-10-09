@@ -3,6 +3,7 @@ import Preloader from "@/components/Preloader";
 import CursorGlow from "@/components/CursorGlow";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import Companies from "@/components/Companies";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Timeline from "@/components/Timeline";
@@ -19,6 +20,7 @@ export default function Page() {
       <CursorGlow />
       <Navbar />
       <Hero />
+      <Companies />
       <Projects />
       <About />
       <Timeline />

@@ -212,3 +212,23 @@ section[id] {
     transition-duration: 0.01ms !important;
   }
 }
+
+.marquee-row {
+  display: flex;
+  gap: 12px;
+  width: max-content;
+  margin-inline: auto;
+  transform: rotateX(18deg);
+  transform-style: preserve-3d;
+}
+@keyframes marquee-left {
+  from { transform: rotateX(18deg) translateX(0); }
+  to { transform: rotateX(18deg) translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: rotateX(18deg) translateX(-50%); }
+  to { transform: rotateX(18deg) translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row { animation: none !important; transform: none; }
+}

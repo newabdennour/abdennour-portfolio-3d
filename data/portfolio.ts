@@ -209,8 +209,6 @@ export type Paper = {
   highlights: string[];
 };
 
-export type JourneyTheme = "playful" | "academic";
-
 // EXAMPLE DATA (derived from existing projects) — owner rewrites with real papers later.
 export const papers: Paper[] = [
   {

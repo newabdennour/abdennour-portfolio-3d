@@ -36,7 +36,7 @@ function PaperCard({ paper, tilt, index }: { paper: Paper; tilt: string; index: 
           <span key={t} className="rounded-md border border-amber-200 bg-white px-2 py-0.5 text-[11px] font-medium text-amber-900">{t}</span>
         ))}
       </div>
-      {open && (
+      {open && paper.highlights.length > 0 && (
         <div className="mt-4 rounded-lg border border-dashed border-amber-300 bg-white p-4">
           <p className="text-[11px] font-bold uppercase tracking-widest text-slate-500">Highlights</p>
           <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-slate-700">
@@ -48,6 +48,11 @@ function PaperCard({ paper, tilt, index }: { paper: Paper; tilt: string; index: 
             {paper.title} ({paper.year}). {paper.venue}.
           </p>
         </div>
+      )}
+      {open && paper.highlights.length === 0 && (
+        <p className="mt-4 font-mono text-[11px] leading-relaxed text-slate-500">
+          {paper.title} ({paper.year}). {paper.venue}.
+        </p>
       )}
       <div className="mt-4 flex items-center justify-between">
         {hasLink ? (

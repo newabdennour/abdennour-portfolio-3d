@@ -11,7 +11,7 @@ User request: journal-ish background, 3 example papers as first-pages with abstr
 1. `data/portfolio.ts` (edit): add `highlights: string[]` (3 bullets each) to papers 101, 102, 105; export `export const featuredPapers = [105, 102, 101]` (ids in display order: MGRPO, sleep, oil&gas).
 2. `components/Research.tsx` (new, `"use client"`, NO three.js): section `id="research"`, journal backdrop (deep espresso-to-amber gradient + giant outlined "RESEARCH" watermark + faint ruled texture via CSS). Heading "Research & papers" + subtitle "Selected studies — examples, being replaced with publications."
    - Grid of 3 `PaperCard`s, slight alternating rotation (-1.2deg/+1deg/0.6deg), tape strip on top + pin dot. Card = first page: journal kicker (venue), title (serif via font-display), authors line "Guerroudj Abdennour et al." (honest: et al. since co-authors vary — user edits), year, Abstract block (line-clamped, full on expand), Keywords chips, footer: Read link + "More info" toggle expanding highlights + venue + citation line (`{title} ({year}). {venue}.`).
-   - Entrance: `whileInView` rise + unrotate to 0, stagger; reduced-motion: opacity only.
+   - Entrance: `whileInView` rise while retaining tilt, stagger; reduced-motion: opacity only.
 3. `app/page.tsx` (edit): mount `<Research />` after `<Projects />` (Projects keeps `#work` only).
 4. `components/Projects.tsx` (edit): remove `#research` section + `PaperPanel`/`papers` usage (keep `papers` import? remove if unused — lint). Keep everything else byte-identical.
 5. Delete `components/SkyJourney.tsx`, `components/JourneyPanels.tsx`, `components/FlyingObjects.tsx` (verify no other importers first via grep; CompanyRing/GlobalBackdrop untouched).

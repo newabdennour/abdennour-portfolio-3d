@@ -101,7 +101,7 @@ export default function Projects() {
               <div className="min-w-0 overflow-x-auto order-2 md:order-1">
                 <BrowserFrame label="texa.demo/itinerary">
                   <div style={{ width: 980, height: 560 }} className="flex justify-center overflow-hidden bg-white">
-                    <div style={{ width: 1060, height: 640, transform: "scale(0.875)", transformOrigin: "top left" }}>
+                    <div style={{ width: 1060, height: 640, transform: "scale(0.875)", transformOrigin: "top center" }}>
                       <TexaUI />
                     </div>
                   </div>

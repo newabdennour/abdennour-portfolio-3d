@@ -45,7 +45,7 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           system: sysOverride ?? system,
-          messages: next.map((m) => ({ role: m.role, content: m.role === "user" ? m.text : m.text })),
+          messages: next.map((m) => ({ role: m.role, content: m.text })),
         }),
         signal: abort.current.signal,
       });

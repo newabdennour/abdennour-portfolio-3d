@@ -137,7 +137,7 @@ export default function Projects() {
                 </p>
                 <TechChips tech={["Flutter", "Firebase", "E-commerce"]} />
               </div>
-              <div className="min-w-0">
+              <div className="min-w-0 overflow-x-auto">
                 <PhoneFrame label="eposte.demo/store">
                   <EPosteUI />
                 </PhoneFrame>
@@ -146,7 +146,7 @@ export default function Projects() {
 
             {/* 4 — Ramy */}
             <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-2">
-              <div className="min-w-0 order-2 md:order-1">
+              <div className="min-w-0 overflow-x-auto order-2 md:order-1">
                 <PhoneFrame label="ramy.demo/sentiment">
                   <div style={{ width: 390, height: 760 }}>
                     <ChatPanel

@@ -135,7 +135,7 @@ export function PhoneFrame({ children, label }: { children: ReactNode; label: st
       label={label}
       chrome={
         <div className="mx-auto w-[300px] overflow-hidden rounded-[2rem] bg-slate-900 p-2 shadow-xl">
-          <div className="overflow-hidden rounded-[1.6rem] bg-white" style={{ height: 560 }}>{children}</div>
+          <div className="max-h-[560px] overflow-y-auto rounded-[1.6rem] bg-white">{children}</div>
         </div>
       }
       scene={

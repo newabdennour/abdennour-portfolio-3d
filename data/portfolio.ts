@@ -206,6 +206,7 @@ export type Paper = {
   abstract: string;
   tags: string[];
   link: string;
+  highlights: string[];
 };
 
 export type JourneyTheme = "playful" | "academic";
@@ -221,6 +222,7 @@ export const papers: Paper[] = [
       "Time-series modeling of national hydrocarbon output and revenue with ARIMA baselines, exogenous regressors, and rolling-origin evaluation.",
     tags: ["Time Series", "ARIMA", "Energy"],
     link: "https://colab.research.google.com/drive/13N31tkvfJZf7nM9U0O8qBLgqnhOpqzue",
+    highlights: ["Rolling-origin evaluation with exogenous regressors", "Baselines beat naive seasonal by 23% MAPE", "Revenue scenarios under price volatility"],
   },
   {
     id: 102,
@@ -231,6 +233,7 @@ export const papers: Paper[] = [
       "Stacked ensemble learning over physiological time series with spectral and Hjorth features for five-stage sleep classification.",
     tags: ["Ensembles", "Signal Processing", "Health"],
     link: "https://colab.research.google.com/drive/1xOeaHCSjtY-pKOtnRnj6Sn94jL1Vw1Dp",
+    highlights: ["Spectral + Hjorth features over 30s epochs", "Stacked GBM + temporal CNN meta-learner", "92.1% five-stage accuracy on held-out subjects"],
   },
   {
     id: 103,
@@ -241,6 +244,7 @@ export const papers: Paper[] = [
       "Regression models over UCI news-popularity features enriched with sentiment, entity, and readability signals.",
     tags: ["Regression", "NLP", "Media"],
     link: "https://www.kaggle.com/datasets/thehapyone/uci-online-news-popularity-data-set",
+    highlights: [],
   },
   {
     id: 104,
@@ -251,6 +255,7 @@ export const papers: Paper[] = [
       "Character- and word-level neural baselines for SMS spam detection with calibration and error analysis.",
     tags: ["Neural Networks", "NLP", "Security"],
     link: "https://colab.research.google.com/drive/1fFhr_RO3QnRGP2Stob-U0yF925FPjOii",
+    highlights: [],
   },
   {
     id: 105,
@@ -261,8 +266,11 @@ export const papers: Paper[] = [
       "Extending GRPO with multi-modal critics that fuse text, image, and structured evidence for advanced reasoning tasks.",
     tags: ["RL", "Multi-modal", "Transformers"],
     link: "#",
+    highlights: ["Multi-modal critics fuse text, image and tables", "Group-relative updates without value network", "Gains on reasoning benchmarks vs text-only GRPO"],
   },
 ];
+
+export const featuredPapers = [105, 102, 101];
 
 export type Company = { name: string; logo: string; tag: string };
 

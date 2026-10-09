@@ -1,38 +1,10 @@
 "use client";
-import { useEffect, useRef } from "react";
-import { animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from "framer-motion";
-import { ArrowDown, ArrowRight, Download, MapPin } from "lucide-react";
-import dynamic from "next/dynamic";
+import { useRef } from "react";
+import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import { ArrowDown, CalendarCheck, Download, Github, MapPin } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
-const Hero3D = dynamic(() => import("./Hero3D"), { ssr: false });
-
 const ease = [0.22, 1, 0.36, 1] as const;
-
-function CountUp({ value, suffix = "", raw = false }: { value: number; suffix?: string; raw?: boolean }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px" });
-  const reduce = useReducedMotion();
-
-  useEffect(() => {
-    if (!inView || !ref.current) return;
-    if (reduce) {
-      ref.current.textContent = raw ? String(value) : `${value}${suffix}`;
-      return;
-    }
-    const controls = animate(0, value, {
-      duration: 1.8,
-      ease: [0.22, 1, 0.36, 1],
-      onUpdate: (v) => {
-        if (ref.current)
-          ref.current.textContent = raw ? String(Math.round(v)) : `${Math.round(v)}${suffix}`;
-      },
-    });
-    return () => controls.stop();
-  }, [inView, reduce, value, suffix, raw]);
-
-  return <span ref={ref}>{raw ? "0" : `0${suffix}`}</span>;
-}
 
 function Magnetic({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -63,125 +35,180 @@ function Magnetic({ children }: { children: React.ReactNode }) {
   );
 }
 
+const nowBuilding = [
+  { title: "Medical multi-agent RAG platform", desc: "Grounded clinical answers — adaptive agent questioning for healthcare.", tag: "lab · FEMTO-ST" },
+  { title: "TEXA — tourism for Algeria", desc: "Multi-agent platform helping tourists discover cultural and natural sites.", tag: "production · Ministry of Tourism" },
+  { title: "E-store management app", desc: "Professional mobile app for e-store management at Algérie Poste scale.", tag: "production · Algérie Poste" },
+  { title: "Ramy — sentiment intelligence", desc: "LLM-powered opinions, emotions and insights from text.", tag: "enterprise · Ramy" },
+];
+
+const indexRows = [
+  { k: "now", v: "open for AI & full-stack missions" },
+  { k: "focus", v: "RAG systems · LLM apps · mobile AI" },
+  { k: "stack", v: "Next.js · Flutter · PyTorch · LangChain" },
+  { k: "open to", v: "AI products · RAG systems · engineering projects" },
+];
+
+function todayStamp() {
+  const d = new Date();
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())}`;
+}
+
 export default function Hero() {
-  const { scrollY } = useScroll();
-  const reduce = useReducedMotion();
-  const yRaw = useTransform(scrollY, [0, 600], reduce ? [0, 0] : [0, 80]);
-  const opacityRaw = useTransform(scrollY, [0, 500], reduce ? [1, 1] : [1, 0.25]);
-  const y = useSpring(yRaw, { stiffness: 120, damping: 24, mass: 0.6 });
-  const opacity = useSpring(opacityRaw, { stiffness: 120, damping: 24 });
   return (
-    <section id="top" className="relative bg-white pt-32 pb-20 md:pt-40 md:pb-28">
-
-      <motion.div style={{ y, opacity }} className="container-x relative z-10 max-w-4xl text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease }}
-          className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-1.5 text-sm font-medium text-blue-700"
-        >
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-blue-500 opacity-60" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-blue-600" />
-          </span>
-          Available for AI & Full-Stack missions
-        </motion.div>
-
-        <h1 className="mt-4 font-display font-bold leading-[1.02] tracking-tight">
-          <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.12, ease }}
-            className="block text-[clamp(2.75rem,7.5vw,5.25rem)] text-slate-900"
-          >
-            Guerroudj Abdennour
-          </motion.span>
-          <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.24, ease }}
-            className="block text-[clamp(1.5rem,3.5vw,2.25rem)] font-semibold tracking-tight text-blue-700"
-          >
-            AI Engineer & Full-Stack Developer
-          </motion.span>
-        </h1>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.4, ease }}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-slate-600"
-        >
-          I transform complex challenges into elegant{" "}
-          <span className="font-semibold text-slate-900">AI-powered solutions</span> — RAG
-          systems, LLM apps, mobile experiences and data intelligence.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.52, ease }}
-          className="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3"
-        >
-          <Magnetic>
-            <a href="#work" className="btn-primary btn-shine group w-full sm:w-auto">
-              View My Work
-              <ArrowRight size={17} className="transition-transform group-hover:translate-x-1" />
-            </a>
-          </Magnetic>
-          <Magnetic>
-            <a href={profile.cv} download className="btn-ghost w-full sm:w-auto">
-              <Download size={17} />
-              Download Resume
-            </a>
-          </Magnetic>
-        </motion.div>
-
+    <section id="top" className="paper-bg relative pt-28 pb-16 md:pt-36 md:pb-20">
+      <div className="container-x relative z-10">
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.62 }}
-          className="mt-5 flex items-center justify-center gap-1.5 text-sm font-medium text-slate-500"
+          className="font-mono text-xs tracking-widest text-slate-500"
         >
-          <MapPin size={14} className="text-blue-500" aria-hidden />
-          {profile.location}
+          [ lab notes — {todayStamp()} ]
         </motion.p>
 
-        <div className="mx-auto mt-10 grid max-w-4xl items-center gap-6 md:grid-cols-[1.2fr_0.8fr]">
-          <div className="min-w-0">
+        <div className="mt-6 grid items-start gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+          <div>
             <motion.div
-              initial={{ opacity: 0, y: 24 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.68, ease }}
-              className="mx-auto mt-0 max-w-3xl"
+              transition={{ duration: 0.6, ease }}
+              className="flex flex-wrap items-center gap-5"
             >
-          <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-slate-200 bg-slate-200/70 shadow-[0_8px_24px_-12px_rgba(15,23,42,0.12)] md:grid-cols-4">
-            {profile.stats.map((s, i) => (
-              <div key={i} className="bg-white px-4 py-5 text-center">
-                <dd className="font-display text-3xl font-bold tracking-tight text-slate-900">
-                  <CountUp value={s.value} suffix={s.suffix} raw={s.raw} />
-                </dd>
-                <dt className="mt-1 text-[11px] font-medium uppercase tracking-widest text-slate-500">
-                  {s.label}
-                </dt>
+              <div className="polaroid w-36 shrink-0 -rotate-3 md:w-44">
+                <div className="grid aspect-square place-items-center bg-slate-900 font-display text-4xl font-bold text-white md:text-5xl">
+                  GA
+                </div>
+                <p className="font-hand mt-2 text-center text-lg text-slate-700">Abdennour G.</p>
               </div>
-            ))}
-            </dl>
+              <div className="min-w-0">
+                <p className="font-hand text-3xl text-orange-700 md:text-4xl">Hey, I&apos;m Abdennour</p>
+                <h1 className="mt-1 font-display text-4xl font-bold leading-[1.05] tracking-tight text-slate-900 md:text-6xl">
+                  AI engineer &<br />full-stack developer.
+                </h1>
+              </div>
             </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.12, ease }}
+              className="mt-5 text-sm font-medium text-slate-600"
+            >
+              {profile.role} · <span className="underline decoration-orange-300 decoration-2 underline-offset-4">{profile.location}</span>
+            </motion.p>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease }}
+              className="mt-4 max-w-xl leading-relaxed text-slate-700"
+            >
+              I transform complex challenges into elegant{" "}
+              <span className="font-semibold text-slate-900">AI-powered solutions</span> — RAG
+              systems, LLM apps, mobile experiences and data intelligence.
+            </motion.p>
+
+            <motion.dl
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.28, ease }}
+              className="index-card mt-7 max-w-xl"
+            >
+              <dt className="index-card-title">index card</dt>
+              {indexRows.map((r) => (
+                <div key={r.k} className="index-row">
+                  <dt>{r.k}</dt>
+                  <dd>{r.v}</dd>
+                </div>
+              ))}
+            </motion.dl>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.36, ease }}
+              className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center"
+            >
+              <Magnetic>
+                <a href={`mailto:${profile.email}`} className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-orange-700 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_10px_24px_-10px_rgba(154,52,18,0.6)] transition hover:-translate-y-0.5 hover:bg-orange-800 sm:w-auto">
+                  <CalendarCheck size={17} />
+                  Schedule a call
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={profile.cv} download className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5 hover:border-slate-400 sm:w-auto">
+                  <Download size={17} />
+                  CV
+                </a>
+              </Magnetic>
+              <Magnetic>
+                <a href={profile.github} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white px-6 py-3.5 text-sm font-semibold text-slate-800 transition hover:-translate-y-0.5 hover:border-slate-400 sm:w-auto">
+                  <Github size={17} />
+                  GitHub
+                </a>
+              </Magnetic>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              className="font-hand mt-3 text-lg text-slate-500"
+            >
+              ↩ quickest way to reach me
+            </motion.p>
           </div>
-          <Hero3D />
+
+          <motion.aside
+            initial={{ opacity: 0, y: 24, rotate: 2 }}
+            animate={{ opacity: 1, y: 0, rotate: 1.5 }}
+            transition={{ duration: 0.7, delay: 0.3, ease }}
+            className="lined-paper relative mx-auto w-full max-w-md p-6 pt-8 md:mx-0"
+            aria-label="What I'm building right now"
+          >
+            <p className="font-mono text-[11px] tracking-widest text-slate-500">{todayStamp()} · in progress</p>
+            <h2 className="font-hand mt-1 text-3xl text-slate-900">What I&apos;m building right now</h2>
+            <ul className="mt-5 space-y-5">
+              {nowBuilding.map((b) => (
+                <li key={b.title} className="border-b border-dashed border-slate-300 pb-4 last:border-0 last:pb-0">
+                  <p className="font-semibold text-slate-900">{b.title}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-slate-600">{b.desc}</p>
+                  <p className="mt-1.5 font-mono text-[11px] tracking-wide text-orange-700">{b.tag}</p>
+                </li>
+              ))}
+            </ul>
+            <a href="#work" className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-slate-900 underline decoration-orange-300 decoration-2 underline-offset-4 hover:text-orange-800">
+              See the work below <ArrowDown size={15} />
+            </a>
+          </motion.aside>
         </div>
 
-        <motion.a
-          href="#work"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.8 }}
-          className="mx-auto mt-12 grid h-11 w-11 place-items-center rounded-full border border-slate-200 bg-white text-slate-400 shadow-sm transition hover:text-blue-600"
-          aria-label="Scroll to work"
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mt-12"
         >
-          <ArrowDown size={17} />
-        </motion.a>
-      </motion.div>
+          <p className="font-hand text-2xl text-slate-600">what are you looking for?</p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {[
+              { label: "Top projects", href: "#work" },
+              { label: "Companies", href: "#companies" },
+              { label: "Research", href: "#research" },
+              { label: "Journey", href: "#journey" },
+              { label: "Contact", href: "#contact" },
+            ].map((l) => (
+              <a key={l.href} href={l.href} className="rounded-full border border-slate-300 bg-white px-4 py-1.5 text-sm font-medium text-slate-700 transition hover:-translate-y-0.5 hover:border-orange-400 hover:text-orange-800">
+                {l.label}
+              </a>
+            ))}
+          </div>
+          <p className="mt-5 flex items-center gap-1.5 text-sm font-medium text-slate-500">
+            <MapPin size={14} className="text-orange-600" aria-hidden />
+            {profile.location}
+          </p>
+        </motion.div>
+      </div>
     </section>
   );
 }

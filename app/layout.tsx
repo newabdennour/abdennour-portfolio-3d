@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk } from "next/font/google";
+import { Space_Grotesk, Caveat } from "next/font/google";
 import "./globals.css";
 
 const grotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-display",
   weight: ["400", "500", "600", "700"],
+});
+
+const hand = Caveat({
+  subsets: ["latin"],
+  variable: "--font-hand",
+  weight: ["500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${grotesk.variable}`}>
+      <html lang="en" className={`${grotesk.variable} ${hand.variable}`}>
       <body
         className="bg-white font-display text-slate-900 antialiased"
         style={{ fontFamily: "'Space Grotesk', system-ui, sans-serif" }}

@@ -6,7 +6,6 @@ import Hero from "@/components/Hero";
 import Companies from "@/components/Companies";
 import Projects from "@/components/Projects";
 import Research from "@/components/Research";
-import About from "@/components/About";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -24,7 +23,6 @@ export default function Page() {
       <Companies />
       <Projects />
       <Research />
-      <About />
       <Timeline />
       <Contact />
       <Footer />

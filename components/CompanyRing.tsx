@@ -144,6 +144,7 @@ export default function CompanyRing({ logos }: { logos: string[] }) {
   return (
     <div ref={wrapRef} className="relative mx-auto h-[380px] w-full overflow-hidden rounded-2xl border border-[#e5ddcc] bg-[#fffdf6] max-sm:h-[320px] md:h-[420px]">
       {show && (
+        <Suspense fallback={<div className="h-[380px] w-full rounded-2xl border border-[#e5ddcc] bg-[#fffdf6] max-sm:h-[320px] md:h-[420px] animate-pulse" />}>
         <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.4, 8], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
           gl.domElement.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setGlLost(true); });
         }}>
@@ -156,6 +157,7 @@ export default function CompanyRing({ logos }: { logos: string[] }) {
             <ContactShadows position={[0, -1.2, 0]} opacity={0.25} scale={13} blur={2.4} far={5} resolution={256} color="#0f172a" />
           </Suspense>
         </Canvas>
+        </Suspense>
       )}
       {show && <p className="pointer-events-none absolute bottom-3 left-0 right-0 text-center text-xs font-medium text-slate-400">Drag to spin</p>}
     </div>

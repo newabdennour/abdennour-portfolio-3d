@@ -155,6 +155,7 @@ export default function ProjectShowcase3D({ projects, activeId, onPick }: { proj
   return (
     <div ref={wrapRef} aria-hidden="true" className="showcase-3d relative mx-auto mb-10 h-[380px] max-sm:h-[320px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-gradient-to-b from-white to-slate-50 md:h-[440px]">
       {show ? (
+      <Suspense fallback={<div className="h-[380px] max-sm:h-[320px] w-full rounded-2xl border border-slate-200 bg-slate-100 md:h-[440px] animate-pulse" />}>
       <Canvas dpr={[1, 1.5]} camera={{ position: [0, 0.4, 7.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }} onCreated={({ gl }) => {
         const el = gl.domElement;
         el.addEventListener("webglcontextlost", (e) => { e.preventDefault(); setGlLost(true); });
@@ -168,6 +169,7 @@ export default function ProjectShowcase3D({ projects, activeId, onPick }: { proj
           <ContactShadows position={[0, -1.4, 0]} opacity={0.28} scale={12} blur={2.4} far={5} resolution={256} color="#0f172a" />
         </Suspense>
       </Canvas>
+      </Suspense>
       ) : null}
       {show ? <p className="pointer-events-none absolute bottom-3 left-0 right-0 text-center text-xs font-medium text-slate-400">Drag to spin · Click a panel to open details</p> : null}
     </div>

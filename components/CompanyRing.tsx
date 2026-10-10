@@ -1,19 +1,94 @@
 "use client";
-import { Suspense, useRef, useState, useEffect } from "react";
+import { Suspense, useRef, useState, useEffect, useMemo, Component, type ReactNode } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { ContactShadows, PresentationControls, useTexture, Edges } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
 import * as THREE from "three";
 import { useWebGLAllowed } from "./GlobalBackdrop";
 
+function getInitialFromUrl(url: string): string {
+  try {
+    const base = decodeURI(url).split("/").pop()?.trim() ?? "";
+    const m = base.match(/[A-Za-z0-9]/);
+    return m ? m[0].toUpperCase() : "?";
+  } catch {
+    return "?";
+  }
+}
+
+function makeFallbackTexture(letter: string): THREE.CanvasTexture {
+  const c = document.createElement("canvas");
+  c.width = 512;
+  c.height = 336;
+  const ctx = c.getContext("2d");
+  if (ctx) {
+    ctx.fillStyle = "#334155";
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "#f1f5f9";
+    ctx.font = "bold 170px system-ui, -apple-system, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText((letter || "?").slice(0, 1).toUpperCase(), c.width / 2, c.height / 2 + 8);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+class TileErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {}
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
+
+function LogoFallbackMesh({ position, rotation, scale, letter, onOver, onOut }: {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+  letter: string;
+  onOver: (e: ThreeEvent<PointerEvent>) => void;
+  onOut: () => void;
+}) {
+  const tex = useMemo(() => makeFallbackTexture(letter), [letter]);
+  useEffect(() => () => { tex.dispose(); }, [tex]);
+  return (
+    <mesh position={position} rotation={rotation} scale={scale} onPointerOver={onOver} onPointerOut={onOut}>
+      <planeGeometry args={[1.7, 1.1]} />
+      <meshBasicMaterial map={tex} toneMapped={false} transparent />
+    </mesh>
+  );
+}
+
+function LogoTile({ url, position, rotation, scale, hovered, onOver, onOut }: {
+  url: string;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+  hovered: boolean;
+  onOver: (e: ThreeEvent<PointerEvent>) => void;
+  onOut: () => void;
+}) {
+  const texture = useTexture(encodeURI(url)) as THREE.Texture;
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+  }, [texture]);
+  return (
+    <mesh position={position} rotation={rotation} scale={scale} onPointerOver={onOver} onPointerOut={onOut}>
+      <planeGeometry args={[1.7, 1.1]} />
+      <meshBasicMaterial map={texture} toneMapped={false} transparent />
+      {hovered ? <Edges scale={1.02} threshold={15} color="#b45309" /> : null}
+    </mesh>
+  );
+}
+
 function Ring({ logos }: { logos: string[] }) {
   const group = useRef<THREE.Group>(null);
-  const textures = useTexture(logos);
   const [hovered, setHovered] = useState<number | null>(null);
-  const arr = (Array.isArray(textures) ? textures : [textures]) as THREE.Texture[];
-  useEffect(() => {
-    arr.forEach((t) => { t.colorSpace = THREE.SRGBColorSpace; });
-  }, [arr]);
   useFrame((state, dt) => {
     if (!group.current || document.hidden) return;
     if (hovered === null) group.current.rotation.y += dt * 0.15;
@@ -24,19 +99,22 @@ function Ring({ logos }: { logos: string[] }) {
     <group ref={group}>
       {logos.map((url, i) => {
         const a = (i / n) * Math.PI * 2;
+        const position: [number, number, number] = [Math.sin(a) * 3.6, 0, Math.cos(a) * 3.6];
+        const rotation: [number, number, number] = [0, a, 0];
+        const scale = hovered === i ? 1.18 : 1;
+        const isHovered = hovered === i;
+        const onOver = (e: ThreeEvent<PointerEvent>) => { e.stopPropagation(); setHovered(i); };
+        const onOut = () => setHovered(null);
+        const letter = getInitialFromUrl(url);
+        const fallback = (
+          <LogoFallbackMesh position={position} rotation={rotation} scale={scale} letter={letter} onOver={onOver} onOut={onOut} />
+        );
         return (
-          <mesh
-            key={url}
-            position={[Math.sin(a) * 3.6, 0, Math.cos(a) * 3.6]}
-            rotation={[0, a, 0]}
-            scale={hovered === i ? 1.18 : 1}
-            onPointerOver={(e: ThreeEvent<PointerEvent>) => { e.stopPropagation(); setHovered(i); }}
-            onPointerOut={() => setHovered(null)}
-          >
-            <planeGeometry args={[1.7, 1.1]} />
-            <meshBasicMaterial map={arr[i]} toneMapped={false} transparent />
-            {hovered === i ? <Edges scale={1.02} threshold={15} color="#b45309" /> : null}
-          </mesh>
+          <TileErrorBoundary key={url} fallback={fallback}>
+            <Suspense fallback={fallback}>
+              <LogoTile url={url} position={position} rotation={rotation} scale={scale} hovered={isHovered} onOver={onOver} onOut={onOut} />
+            </Suspense>
+          </TileErrorBoundary>
         );
       })}
     </group>

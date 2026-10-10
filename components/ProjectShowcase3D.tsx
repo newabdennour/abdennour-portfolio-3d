@@ -1,5 +1,5 @@
 "use client";
-import { Suspense, useRef, useState, useEffect } from "react";
+import { Suspense, useRef, useState, useEffect, useMemo, Component, type ReactNode } from "react";
 import { Canvas, useFrame, type ThreeEvent } from "@react-three/fiber";
 import { Float, ContactShadows, PresentationControls, useTexture, Edges } from "@react-three/drei";
 import { useReducedMotion } from "framer-motion";
@@ -7,16 +7,97 @@ import * as THREE from "three";
 import type { Project } from "@/data/portfolio";
 import { useWebGLAllowed } from "./GlobalBackdrop";
 
+function getInitial(label: string): string {
+  try {
+    const s = decodeURI(label).trim();
+    const m = s.match(/[A-Za-z0-9]/);
+    return m ? m[0].toUpperCase() : "?";
+  } catch {
+    return "?";
+  }
+}
+
+function makeFallbackTexture(letter: string): THREE.CanvasTexture {
+  const c = document.createElement("canvas");
+  c.width = 512;
+  c.height = 336;
+  const ctx = c.getContext("2d");
+  if (ctx) {
+    ctx.fillStyle = "#334155";
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.fillStyle = "#f1f5f9";
+    ctx.font = "bold 170px system-ui, -apple-system, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText((letter || "?").slice(0, 1).toUpperCase(), c.width / 2, c.height / 2 + 8);
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+class TileErrorBoundary extends Component<{ fallback: ReactNode; children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  componentDidCatch() {}
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
+
+function ProjectFallbackMesh({ position, rotation, scale, letter, active, onOver, onOut, onClick }: {
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+  letter: string;
+  active: boolean;
+  onOver: (e: ThreeEvent<PointerEvent>) => void;
+  onOut: () => void;
+  onClick: (e: ThreeEvent<MouseEvent>) => void;
+}) {
+  const tex = useMemo(() => makeFallbackTexture(letter), [letter]);
+  useEffect(() => () => { tex.dispose(); }, [tex]);
+  return (
+    <Float speed={1.2} rotationIntensity={0.25} floatIntensity={0.7}>
+      <mesh position={position} rotation={rotation} scale={scale} onPointerOver={onOver} onPointerOut={onOut} onClick={onClick}>
+        <planeGeometry args={[2, 1.3]} />
+        <meshBasicMaterial map={tex} toneMapped={false} />
+        {active ? <Edges scale={1.02} threshold={15} color="#2563eb" /> : null}
+      </mesh>
+    </Float>
+  );
+}
+
+function ProjectTile({ url, position, rotation, scale, active, onOver, onOut, onClick }: {
+  url: string;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  scale: number;
+  active: boolean;
+  onOver: (e: ThreeEvent<PointerEvent>) => void;
+  onOut: () => void;
+  onClick: (e: ThreeEvent<MouseEvent>) => void;
+}) {
+  const texture = useTexture(encodeURI(url)) as THREE.Texture;
+  useEffect(() => {
+    texture.colorSpace = THREE.SRGBColorSpace;
+  }, [texture]);
+  return (
+    <Float speed={1.2} rotationIntensity={0.25} floatIntensity={0.7}>
+      <mesh position={position} rotation={rotation} scale={scale} onPointerOver={onOver} onPointerOut={onOut} onClick={onClick}>
+        <planeGeometry args={[2, 1.3]} />
+        <meshBasicMaterial map={texture} toneMapped={false} />
+        {active ? <Edges scale={1.02} threshold={15} color="#2563eb" /> : null}
+      </mesh>
+    </Float>
+  );
+}
+
 function Ring({ projects, activeId, onPick }: { projects: Project[]; activeId: number | null; onPick: (p: Project) => void }) {
   const group = useRef<THREE.Group>(null);
-  const urls = projects.map((p) => p.image);
-  const textures = useTexture(urls);
   const [hovered, setHovered] = useState<number | null>(null);
-  const arr = Array.isArray(textures) ? textures : [textures];
-  arr.forEach((t) => {
-    const tex = t as THREE.Texture;
-    tex.colorSpace = THREE.SRGBColorSpace;
-  });
   useFrame((state, dt) => {
     if (!group.current || document.hidden) return;
     const dragging = hovered !== null;
@@ -31,21 +112,22 @@ function Ring({ projects, activeId, onPick }: { projects: Project[]; activeId: n
         const x = Math.sin(a) * 3.2;
         const z = Math.cos(a) * 3.2;
         const isActive = p.id === activeId || hovered === p.id;
+        const position: [number, number, number] = [x, 0, z];
+        const rotation: [number, number, number] = [0, a, 0];
+        const scale = isActive ? 1.18 : 1;
+        const onOver = (e: ThreeEvent<PointerEvent>) => { e.stopPropagation(); setHovered(p.id); document.body.style.cursor = "pointer"; };
+        const onOut = () => { setHovered(null); document.body.style.cursor = "auto"; };
+        const onClick = (e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); onPick(p); };
+        const letter = getInitial(p.title || p.image);
+        const fallback = (
+          <ProjectFallbackMesh position={position} rotation={rotation} scale={scale} letter={letter} active={isActive} onOver={onOver} onOut={onOut} onClick={onClick} />
+        );
         return (
-          <Float key={p.id} speed={1.2} rotationIntensity={0.25} floatIntensity={0.7}>
-            <mesh
-              position={[x, 0, z]}
-              rotation={[0, a, 0]}
-              scale={isActive ? 1.18 : 1}
-              onPointerOver={(e: ThreeEvent<PointerEvent>) => { e.stopPropagation(); setHovered(p.id); document.body.style.cursor = "pointer"; }}
-              onPointerOut={() => { setHovered(null); document.body.style.cursor = "auto"; }}
-              onClick={(e: ThreeEvent<MouseEvent>) => { e.stopPropagation(); onPick(p); }}
-            >
-              <planeGeometry args={[2, 1.3]} />
-              <meshBasicMaterial map={arr[i] as THREE.Texture} toneMapped={false} />
-              {isActive ? <Edges scale={1.02} threshold={15} color="#2563eb" /> : null}
-            </mesh>
-          </Float>
+          <TileErrorBoundary key={p.id} fallback={fallback}>
+            <Suspense fallback={fallback}>
+              <ProjectTile url={p.image} position={position} rotation={rotation} scale={scale} active={isActive} onOver={onOver} onOut={onOut} onClick={onClick} />
+            </Suspense>
+          </TileErrorBoundary>
         );
       })}
     </group>

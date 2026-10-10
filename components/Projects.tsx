@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import ProjectDialog from "./ProjectDialog";
+import ProjectScroller from "./ProjectScroller";
 import ChatPanel from "./ChatPanel";
 import TexaUI from "./TexaUI";
 import EPosteUI from "./EPosteUI";
@@ -197,42 +198,7 @@ export default function Projects() {
                 );
               })}
             </div>
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {developed.map((p) => (
-                <button
-                  key={p.id}
-                  onClick={() => setSelected(p)}
-                  className="group overflow-hidden rounded-2xl border border-slate-200 bg-white text-left shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg"
-                >
-                  <div className="h-40 overflow-hidden bg-slate-100">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={p.image}
-                      alt={p.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
-                      onError={hideImg}
-                    />
-                  </div>
-                  <div className="p-5">
-                    <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
-                      <span>{p.category}</span>
-                      <span aria-hidden="true">·</span>
-                      <span>{p.year}</span>
-                    </div>
-                    <p className="font-display mt-1.5 line-clamp-2 font-bold leading-snug text-slate-900">{p.title}</p>
-                    <p className="mt-1.5 line-clamp-2 text-[13px] leading-relaxed text-slate-500">{p.description}</p>
-                    <div className="mt-3 flex flex-wrap gap-1.5">
-                      {p.technologies.slice(0, 3).map((t) => (
-                        <span key={t} className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-medium text-slate-600">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
+            <ProjectScroller key={cat} projects={developed} resetKey={cat} onSelect={setSelected} />
           </div>
         </div>
       </section>

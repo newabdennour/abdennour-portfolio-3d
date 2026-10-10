@@ -1,6 +1,5 @@
 "use client";
-import { useState, type SyntheticEvent } from "react";
-import dynamic from "next/dynamic";
+import { useEffect, useRef, useState, type SyntheticEvent } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import ProjectDialog from "./ProjectDialog";
@@ -8,12 +7,9 @@ import ProjectScroller from "./ProjectScroller";
 import ChatPanel from "./ChatPanel";
 import TexaUI from "./TexaUI";
 import EPosteUI from "./EPosteUI";
+import VoxtraUI from "./VoxtraUI";
+import { BrowserFrame, PhoneFrame } from "./DeviceFrame";
 import { projects, categories, type Project } from "@/data/portfolio";
-
-const ProjectShowcase3D = dynamic(() => import("./ProjectShowcase3D"), { ssr: false });
-const BrowserFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.BrowserFrame })), { ssr: false });
-const MonitorFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.MonitorFrame })), { ssr: false });
-const PhoneFrame = dynamic(() => import("./DeviceFrame").then((m) => ({ default: m.PhoneFrame })), { ssr: false });
 
 const femtoLogo = encodeURI("/top-projects/tp2/logo.png");
 const femtoInst = encodeURI("/top-projects/tp2/FEMTO-ST.jpg");
@@ -48,10 +44,71 @@ const rise = {
   transition: { duration: 0.5 },
 } as const;
 
+// Presents a fixed-size desktop design (TexaUI 1060x640) inside an exact
+// 16:9 box: scales to the box width, crops top/bottom equally — no cut-off
+// on the sides, browsers stay exactly 16:9 at every screen size.
+function FitCover16x9({
+  designWidth,
+  designHeight,
+  children,
+}: {
+  designWidth: number;
+  designHeight: number;
+  children: React.ReactNode;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [boxW, setBoxW] = useState(0);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const update = () => setBoxW(el.clientWidth);
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const scale = boxW > 0 ? boxW / designWidth : 0;
+  const top = ((boxW * 9) / 16 - designHeight * scale) / 2;
+  return (
+    <div ref={ref} className="relative w-full overflow-hidden bg-white" style={{ aspectRatio: "16 / 9" }}>
+      {boxW > 0 && (
+        <div
+          style={{
+            width: designWidth,
+            height: designHeight,
+            transform: `scale(${scale})`,
+            transformOrigin: "top left",
+            top,
+          }}
+          className="absolute left-0"
+        >
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Projects() {
   const [cat, setCat] = useState("All");
   const [selected, setSelected] = useState<Project | null>(null);
-  const developed = cat === "All" ? projects : projects.filter((p) => p.category === cat);
+  // Archive excludes anything already showcased above (Featured Projects)
+  // to avoid duplication: featured flag + keyword match for the live demos.
+  const archive = projects.filter((p) => {
+    if (p.featured) return false;
+    const t = `${p.title} ${p.description}`.toLowerCase();
+    return !(
+      t.includes("voxtra") ||
+      t.includes("ramy") ||
+      t.includes("e-commerce") ||
+      t.includes("ecommerce") ||
+      t.includes("femto") ||
+      t.includes("texa") ||
+      t.includes("e-store") ||
+      t.includes("eposte")
+    );
+  });
+  const developed = cat === "All" ? archive : archive.filter((p) => p.category === cat);
 
   return (
     <>
@@ -61,11 +118,10 @@ export default function Projects() {
             title={<>Featured Projects</>}
             subtitle="Production-grade builds across AI, full-stack, mobile and data — each with real-world impact."
           />
-          <ProjectShowcase3D projects={projects} activeId={selected?.id ?? null} onPick={setSelected} />
 
-          <div className="mx-auto mt-4 flex max-w-5xl flex-col gap-16 md:gap-20">
-            {/* 1 — FemtoCare */}
-            <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-2">
+          <div className="mx-auto mt-4 flex w-full max-w-7xl flex-col gap-16 md:gap-20">
+            {/* 1 — FemtoCare (side 3D browser, wider than text, 16:9) */}
+            <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-[2fr_3fr]">
               <div className="min-w-0">
                 <div className="flex items-center gap-3">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,9 +136,9 @@ export default function Projects() {
                 </p>
                 <TechChips tech={["Multi-agent", "RAG", "Gemini", "Next.js"]} />
               </div>
-              <div className="min-w-0 overflow-x-auto">
-                <MonitorFrame label="femtocare.demo/chat">
-                  <div style={{ width: 1060, height: 640 }}>
+              <div className="min-w-0">
+                <BrowserFrame label="femtocare.demo/chat" tilt="left">
+                  <div className="aspect-video min-h-[380px] w-full">
                     <ChatPanel
                       system="You are FemtoCare, a medical multi-agent demo assistant. Answer concisely with markdown. You coordinate triage, literature, and safety agents."
                       title="FemtoCare — Medical Agents"
@@ -96,19 +152,17 @@ export default function Projects() {
                       ]}
                     />
                   </div>
-                </MonitorFrame>
+                </BrowserFrame>
               </div>
             </motion.div>
 
-            {/* 2 — TEXA */}
-            <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-2">
-              <div className="min-w-0 overflow-x-auto order-2 md:order-1">
-                <BrowserFrame label="texa.demo/itinerary">
-                  <div style={{ width: 980, height: 560 }} className="flex justify-center overflow-hidden bg-white">
-                    <div style={{ width: 1060, height: 640, transform: "scale(0.875)", transformOrigin: "top center" }}>
-                      <TexaUI />
-                    </div>
-                  </div>
+            {/* 2 — TEXA (side 3D browser, wider than text, 16:9) */}
+            <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
+              <div className="min-w-0 order-2 md:order-1">
+                <BrowserFrame label="texa.demo/itinerary" tilt="right">
+                  <FitCover16x9 designWidth={1060} designHeight={640}>
+                    <TexaUI />
+                  </FitCover16x9>
                 </BrowserFrame>
               </div>
               <div className="order-1 min-w-0 md:order-2">
@@ -141,8 +195,8 @@ export default function Projects() {
                 </p>
                 <TechChips tech={["Flutter", "Firebase", "E-commerce"]} />
               </div>
-              <div className="min-w-0 overflow-x-auto">
-                <PhoneFrame label="eposte.demo/store">
+              <div className="min-w-0">
+                <PhoneFrame label="eposte.demo/store" tilt="right">
                   <EPosteUI />
                 </PhoneFrame>
               </div>
@@ -150,9 +204,9 @@ export default function Projects() {
 
             {/* 4 — Ramy */}
             <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-2">
-              <div className="min-w-0 overflow-x-auto order-2 md:order-1">
-                <PhoneFrame label="ramy.demo/sentiment">
-                  <div style={{ width: 390, height: 760 }}>
+              <div className="min-w-0 order-2 md:order-1">
+                <PhoneFrame label="ramy.demo/sentiment" tilt="left">
+                  <div className="h-[600px] w-full">
                     <ChatPanel
                       system="You are Ramy Insights, a sentiment-analysis engine. Analyze the user's text and always end with: Verdict: <positive|negative|neutral|mixed> (<score>%)"
                       title="Ramy Insights"
@@ -177,6 +231,28 @@ export default function Projects() {
                 <TechChips tech={["LLMs", "NLP", "Transformers", "Python"]} />
               </div>
             </motion.div>
+
+            {/* 5 — Voxtra (web, browser STT) */}
+            <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-2">
+              <div className="min-w-0">
+                <div className="flex items-center gap-3">
+                  <span className="grid h-10 w-10 place-items-center rounded-lg bg-violet-600 text-white">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3" /><path d="M5 10a7 7 0 0 0 14 0" /><path d="M12 17v4" /></svg>
+                  </span>
+                  <span className="rounded-full bg-violet-50 px-2.5 py-1 text-[11px] font-bold text-violet-700">Web · Speech AI</span>
+                </div>
+                <h3 className="font-display mt-4 text-2xl font-bold tracking-tight text-slate-900">Voxtra — Speech Transcription</h3>
+                <p className="mt-2 leading-relaxed text-slate-600">
+                  Browser-native speech-to-text — press Dictate, speak, watch words appear live, then summarize with AI. No upload, nothing stored.
+                </p>
+                <TechChips tech={["Web Speech API", "STT", "LLMs", "Next.js"]} />
+              </div>
+              <div className="min-w-0">
+                <BrowserFrame label="voxtra.demo/transcribe" tilt="right">
+                  <VoxtraUI />
+                </BrowserFrame>
+              </div>
+            </motion.div>
           </div>
 
           {/* More projects */}
@@ -185,7 +261,7 @@ export default function Projects() {
             <p className="mt-2 text-center text-sm text-slate-500">Filter the archive — click any card for details.</p>
             <div className="mb-8 mt-6 flex flex-wrap justify-center gap-2">
               {categories.map((c) => {
-                const count = c === "All" ? projects.length : projects.filter((p) => p.category === c).length;
+                const count = c === "All" ? archive.length : archive.filter((p) => p.category === c).length;
                 return (
                   <button
                     key={c}

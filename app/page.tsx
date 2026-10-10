@@ -6,9 +6,11 @@ import Hero from "@/components/Hero";
 import Companies from "@/components/Companies";
 import Projects from "@/components/Projects";
 import Research from "@/components/Research";
+import Venues from "@/components/Venues";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AssistantFab from "@/components/AssistantFab";
 
 const GlobalBackdrop = dynamic(() => import("@/components/GlobalBackdrop"), { ssr: false });
 
@@ -23,9 +25,11 @@ export default function Page() {
       <Companies />
       <Projects />
       <Research />
+      <Venues />
       <Timeline />
       <Contact />
       <Footer />
+      <AssistantFab />
     </main>
   );
 }

@@ -37,8 +37,7 @@ const nav = [
 export default function EPosteUI(): JSX.Element {
   return (
     <div
-      style={{ width: 390, height: 760 }}
-      className="flex flex-col overflow-hidden bg-slate-50 text-left text-slate-800"
+      className="flex h-[600px] w-full flex-col overflow-hidden bg-slate-50 text-left text-slate-800"
     >
       {/* Header */}
       <div className="flex shrink-0 items-center gap-2 bg-white px-3 py-2.5 shadow-sm">

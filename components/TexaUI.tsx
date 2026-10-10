@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TexaMap from "./TexaMap";
 import {
   Search,
   MapPin,
@@ -76,12 +77,6 @@ const cityPins = [
 const southPins = [
   { name: "Ghardaïa", x: "58%", y: "52%" },
   { name: "Tamanrasset", x: "62%", y: "78%" },
-];
-
-const routeBadges = [
-  { n: "1", x: "38%", y: "30%", label: "Chlef" },
-  { n: "2", x: "24%", y: "38%", label: "Tlemcen" },
-  { n: "3", x: "48%", y: "66%", label: "Adrar" },
 ];
 
 export default function TexaUI(): JSX.Element {
@@ -188,72 +183,13 @@ export default function TexaUI(): JSX.Element {
           </ul>
         </aside>
 
-        {/* Center map panel */}
+        {/* Center map panel — real open-source map (OpenStreetMap + Leaflet) */}
         {tab === "itineraire" && (
         <section className="relative min-w-0 flex-1 overflow-hidden bg-slate-100">
-          <span className="pointer-events-none absolute left-[8%] top-[10%] select-none text-[28px] font-extrabold tracking-widest text-slate-300/70">
-            MOROCCO
-          </span>
-          <span className="pointer-events-none absolute left-[42%] top-[34%] select-none text-[34px] font-extrabold tracking-widest text-slate-300/80">
-            ALGERIA
-          </span>
-          <span className="pointer-events-none absolute bottom-[8%] right-[6%] select-none text-[11px] font-semibold tracking-widest text-slate-300">
-            SAHARA
-          </span>
-
-          {/* decorative terrain blobs */}
-          <div className="absolute left-[10%] top-[30%] h-40 w-56 rounded-full bg-emerald-100/60 blur-sm" />
-          <div className="absolute bottom-[6%] left-[30%] h-44 w-72 rounded-full bg-amber-100/80 blur-sm" />
-
-          {/* dashed route path Chlef -> Tlemcen -> Adrar */}
-          <svg className="absolute inset-0 h-full w-full" viewBox="0 0 500 560" fill="none">
-            <path
-              d="M190 170 C 150 190, 120 210, 120 215 M120 215 C 140 280, 180 340, 240 370"
-              stroke="#2563eb"
-              strokeWidth={2.5}
-              strokeDasharray="7 6"
-              strokeLinecap="round"
-            />
-          </svg>
-
-          {/* blue city pins */}
-          {cityPins.map((p) => (
-            <span key={p.name} className="absolute" style={{ left: p.x, top: p.y }}>
-              <span className="flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-blue-600 text-white shadow">
-                <MapPin size={10} />
-              </span>
-              <span className="absolute left-2 top-0 whitespace-nowrap rounded bg-white/90 px-1 text-[10px] font-medium text-slate-600 shadow-sm">
-                {p.name}
-              </span>
-            </span>
-          ))}
-
-          {/* amber south pins */}
-          {southPins.map((p) => (
-            <span key={p.name} className="absolute" style={{ left: p.x, top: p.y }}>
-              <span className="flex h-4 w-4 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-amber-500 text-white shadow">
-                <MapPin size={10} />
-              </span>
-              <span className="absolute left-2 top-0 whitespace-nowrap rounded bg-white/90 px-1 text-[10px] font-medium text-slate-600 shadow-sm">
-                {p.name}
-              </span>
-            </span>
-          ))}
-
-          {/* numbered route badges 1/2/3 */}
-          {routeBadges.map((b) => (
-            <span key={b.n} className="absolute" style={{ left: b.x, top: b.y }}>
-              <span className="flex h-6 w-6 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-slate-900 text-[11px] font-bold text-white ring-2 ring-white">
-                {b.n}
-              </span>
-              <span className="absolute left-4 top-0 whitespace-nowrap rounded bg-slate-900 px-1 py-px text-[10px] font-semibold text-white">
-                {b.label}
-              </span>
-            </span>
-          ))}
+          <TexaMap />
 
           {/* bottom Plan/Carte toggle */}
-          <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center rounded-full border border-slate-200 bg-white p-0.5 text-[11px] font-semibold shadow">
+          <div className="absolute bottom-3 left-1/2 z-[500] flex -translate-x-1/2 items-center rounded-full border border-slate-200 bg-white p-0.5 text-[11px] font-semibold shadow">
             <span className="rounded-full bg-slate-900 px-3 py-1 text-white">Plan</span>
             <button onClick={() => setTab("carte")} className="rounded-full px-3 py-1 text-slate-500 hover:text-slate-800">Carte</button>
           </div>

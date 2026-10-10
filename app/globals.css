@@ -213,8 +213,7 @@ section[id] {
   margin-inline: auto;
   transform: rotateX(18deg);
   transform-style: preserve-3d;
-}
-@keyframes marquee-left {
+}@keyframes marquee-left {
   from { transform: rotateX(18deg) translateX(0); }
   to { transform: rotateX(18deg) translateX(-50%); }
 }
@@ -224,6 +223,86 @@ section[id] {
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee-row { animation: none !important; transform: none; }
+}
+
+/* ---------- CSS-only 3D device frames (no WebGL) ---------- */
+.noscroll { scrollbar-width: none; -ms-overflow-style: none; }
+.noscroll::-webkit-scrollbar { display: none; }
+
+.browser3d-scene { perspective: 1600px; }
+.browser3d {
+  overflow: hidden;
+  border-radius: 1rem;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow:
+    0 30px 60px -20px rgba(15, 23, 42, 0.28),
+    0 12px 24px -12px rgba(15, 23, 42, 0.18);
+}
+.browser3d-left { transform: rotateY(-9deg) rotateX(4deg); }
+.browser3d-right { transform: rotateY(9deg) rotateX(4deg); }
+.browser3d-scene:hover .browser3d { transform: rotateY(0deg) rotateX(0deg); }
+.browser3d-screen { overflow: hidden; background: #fff; }
+
+.phone3d-scene { perspective: 1200px; }
+.phone3d {
+  position: relative;
+  width: 300px;
+  border-radius: 3rem;
+  background: #0f172a;
+  padding: 0.5rem;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+  box-shadow:
+    0 30px 60px -20px rgba(15, 23, 42, 0.4),
+    0 12px 24px -12px rgba(15, 23, 42, 0.3),
+    inset 0 1px 1px rgba(255, 255, 255, 0.15);
+}
+.phone3d-right { transform: rotateY(11deg) rotateX(2deg); }
+.phone3d-left { transform: rotateY(-11deg) rotateX(2deg); }
+.phone3d-scene:hover .phone3d { transform: rotateY(0deg) rotateX(0deg); }
+.phone3d-btn { position: absolute; background: #334155; border-radius: 999px; }
+.phone3d-btn-left { left: -2px; top: 120px; width: 3px; height: 56px; }
+.phone3d-btn-right { right: -2px; top: 100px; width: 3px; height: 80px; }
+.phone3d-screen { height: 600px; overflow: hidden; border-radius: 2.2rem; background: #fff; }
+
+/* ---------- CSS-only 3D rotating ring for venues ---------- */
+.venue3d-scene {
+  perspective: 1400px;
+  height: 380px;
+  overflow: hidden;
+}
+.venue3d-ring {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  animation: venue-spin 30s linear infinite;
+}
+.venue3d-scene:hover .venue3d-ring { animation-play-state: paused; }
+.venue3d-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 270px;
+  height: 300px;
+  margin: -150px 0 0 -135px;
+  transform:
+    rotateY(calc(var(--i, 0) / var(--n, 6) * 360deg))
+    translateZ(400px);
+  backface-visibility: hidden;
+}
+@keyframes venue-spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .browser3d, .browser3d-left, .browser3d-right,
+  .phone3d, .phone3d-left, .phone3d-right { transform: none; transition: none; }
+  .venue3d-ring { animation: none; }
+  .venue3d-scene { display: none; }
 }
 
 .markdown p { margin: 0.35em 0; } .markdown ul { list-style: disc; padding-left: 1.1em; margin: 0.35em 0; } .markdown ol { list-style: decimal; padding-left: 1.1em; } .markdown code { background: #f1f5f9; border-radius: 4px; padding: 0 4px; font-size: 12px; } .markdown pre { background: #0f172a; color: #e2e8f0; border-radius: 8px; padding: 8px; overflow-x: auto; font-size: 12px; } .markdown pre code { background: transparent; padding: 0; } .markdown strong { font-weight: 700; }

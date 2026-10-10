@@ -1,11 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
 import { useReducedMotion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 import { companies } from "@/data/portfolio";
-
-const CompanyRing = dynamic(() => import("./CompanyRing"), { ssr: false });
 
 function LogoCard({ name, logo, tag }: { name: string; logo: string; tag: string }) {
   return (
@@ -65,11 +62,8 @@ export default function Companies() {
           </div>
         </div>
       )}
-      {!staticMode && (
-        <div className="container-x mt-8">
-          <CompanyRing logos={companies.map((c) => encodeURI(c.logo))} />
-        </div>
-      )}
     </section>
   );
 }
+
+

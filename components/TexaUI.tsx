@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Search,
   MapPin,
@@ -84,6 +85,11 @@ const routeBadges = [
 ];
 
 export default function TexaUI(): JSX.Element {
+  const [tab, setTab] = useState<"itineraire" | "carte">("itineraire");
+  const tabBtn = (active: boolean) =>
+    `flex items-center justify-center gap-1 rounded-md px-1 py-1 text-[10px] font-semibold ${
+      active ? "bg-slate-900 text-white" : "border border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+    }`;
   return (
     <div
       style={{ width: 1060, height: 640 }}
@@ -120,10 +126,10 @@ export default function TexaUI(): JSX.Element {
           </label>
 
           <div className="grid grid-cols-2 gap-1">
-            <button className="flex items-center justify-center gap-1 rounded-md bg-slate-900 px-1 py-1 text-[10px] font-semibold text-white">
+            <button onClick={() => setTab("itineraire")} aria-pressed={tab === "itineraire"} className={tabBtn(tab === "itineraire")}>
               <Footprints size={11} /> Itinéraire (3)
             </button>
-            <button className="flex items-center justify-center gap-1 rounded-md border border-slate-200 bg-white px-1 py-1 text-[10px] font-semibold text-slate-600">
+            <button onClick={() => setTab("carte")} aria-pressed={tab === "carte"} className={tabBtn(tab === "carte")}>
               <MapIcon size={11} /> Carte (69)
             </button>
           </div>
@@ -183,6 +189,7 @@ export default function TexaUI(): JSX.Element {
         </aside>
 
         {/* Center map panel */}
+        {tab === "itineraire" && (
         <section className="relative min-w-0 flex-1 overflow-hidden bg-slate-100">
           <span className="pointer-events-none absolute left-[8%] top-[10%] select-none text-[28px] font-extrabold tracking-widest text-slate-300/70">
             MOROCCO
@@ -248,9 +255,26 @@ export default function TexaUI(): JSX.Element {
           {/* bottom Plan/Carte toggle */}
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center rounded-full border border-slate-200 bg-white p-0.5 text-[11px] font-semibold shadow">
             <span className="rounded-full bg-slate-900 px-3 py-1 text-white">Plan</span>
-            <span className="px-3 py-1 text-slate-500">Carte</span>
+            <button onClick={() => setTab("carte")} className="rounded-full px-3 py-1 text-slate-500 hover:text-slate-800">Carte</button>
           </div>
         </section>
+        )}
+        {tab === "carte" && (
+          <section className="min-w-0 flex-1 overflow-y-auto bg-slate-50 p-3">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500">69 places · Algeria</p>
+            <div className="mt-2 grid grid-cols-3 gap-2">
+              {[...myPlan, ...cityPins.map((p) => ({ name: p.name, count: 1 })), ...southPins.map((p) => ({ name: p.name, count: 1 }))].map((p) => (
+                <div key={p.name} className="rounded-lg border border-slate-200 bg-white p-2">
+                  <div className="flex h-12 items-center justify-center rounded-md bg-gradient-to-br from-sky-100 to-blue-200">
+                    <MapPin size={16} className="text-blue-600" />
+                  </div>
+                  <p className="mt-1 truncate text-[11px] font-bold text-slate-800">{p.name}</p>
+                  <p className="text-[10px] text-slate-500">{p.count} {p.count === 1 ? "place" : "places"}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* Right journey panel 300px */}
         <aside className="flex w-[300px] shrink-0 flex-col gap-2 overflow-hidden border-l border-slate-200 bg-white p-2.5">

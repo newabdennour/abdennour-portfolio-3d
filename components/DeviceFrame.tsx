@@ -9,8 +9,17 @@ import { useWebGLAllowed } from "./GlobalBackdrop";
 function useShowCanvas() {
   const allowed = useWebGLAllowed();
   const reduce = useReducedMotion();
-  const [inView, setInView] = useState(true);
+  const [inView, setInView] = useState(false);
   const [glLost, setGlLost] = useState(false);
+  const lostCount = useRef(0);
+  // Context loss unmounts the Canvas (freeing the slot); retry remount a few
+  // times with backoff so transient loss self-heals instead of staying dead.
+  useEffect(() => {
+    if (!glLost || lostCount.current >= 3) return;
+    lostCount.current += 1;
+    const t = setTimeout(() => setGlLost(false), 2500 * lostCount.current);
+    return () => clearTimeout(t);
+  }, [glLost]);
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(max-width: 639px)").matches
   );
@@ -26,14 +35,16 @@ function useShowCanvas() {
     }
     return () => { window.removeEventListener("resize", onR); io?.disconnect(); };
   }, []);
-  return { ref, show: allowed && !reduce && !glLost && inView && !isMobile, setGlLost };
+  const show = allowed && !reduce && !glLost && inView && !isMobile;
+  return { ref, show, setGlLost };
 }
 
-const YAW_LIMIT = 0.75;
+const YAW_LIMIT = 0.52; // ±30° user drag + ±10° sway = ±40° total, never 360°
+const FREE_ZONE = 0.17; // ±10° hands-free sway
 const PITCH_LIMIT = 0.35;
 const DRAG_YAW_SPEED = 0.008;
 const DRAG_PITCH_SPEED = 0.005;
-const BUTTON_STEP = 0.35;
+const BUTTON_STEP = 0.26;
 
 function clamp(v: number, min: number, max: number) {
   return Math.min(max, Math.max(min, v));
@@ -234,7 +245,7 @@ function Shell({ height, chrome, scene, label }: { height: string; chrome: React
             <ambientLight intensity={1} />
             <directionalLight position={[4, 5, 6]} intensity={1} />
             <Suspense fallback={null}>
-              <PresentationControls enabled global={false} snap cursor speed={1.1} polar={[-0.3, 0.3]} azimuth={[-0.35, 0.35]} config={{ mass: 1, tension: 170, friction: 26 }}>
+              <PresentationControls enabled global={false} snap cursor speed={1.1} polar={[-0.25, 0.25]} azimuth={[-0.15, 0.15]} config={{ mass: 1, tension: 170, friction: 26 }}>
                 {scene}
               </PresentationControls>
               <ContactShadows position={[0, -2.2, 0]} opacity={0.25} scale={12} blur={2.4} far={5} resolution={256} color="#0f172a" />
@@ -251,16 +262,15 @@ function Shell({ height, chrome, scene, label }: { height: string; chrome: React
 
 function SlowSpin({ children }: { children: ReactNode }) {
   const ref = useRef<THREE.Group>(null);
-  const auto = useRef(0);
   const spin = useSpin();
-  useFrame((state, dt) => {
+  useFrame((state) => {
     if (!ref.current || document.hidden) return;
     const paused = spin?.pausedRef.current ?? false;
     const dragging = spin?.draggingRef.current ?? false;
-    if (!paused && !dragging) {
-      auto.current += dt * 0.08 + state.pointer.x * dt * 0.05;
-    }
-    ref.current.rotation.y = auto.current + (spin?.yawRef.current ?? 0);
+    // Gentle hands-free sway inside the ±10° free zone; user drag adds yaw
+    // clamped to ±40°. No unbounded spinning — the device never turns away.
+    const sway = !paused && !dragging ? Math.sin(state.clock.elapsedTime * 0.35) * FREE_ZONE : 0;
+    ref.current.rotation.y = sway + (spin?.yawRef.current ?? 0);
     ref.current.rotation.x = spin?.pitchRef.current ?? 0;
   });
   return <group ref={ref}>{children}</group>;

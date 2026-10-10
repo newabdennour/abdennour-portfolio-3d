@@ -11,13 +11,14 @@ function parseVerdict(text: string): { label: string; score: number } | null {
   return { label: m[1].toLowerCase(), score: Math.min(100, parseInt(m[2], 10)) };
 }
 
-export default function ChatPanel({ system, title, subtitle, accent = "blue", placeholder = "Ask something to try it live…", samples = [], mode = "chat" }: {
-  system: string; title: string; subtitle?: string; accent?: "blue" | "amber"; placeholder?: string; samples?: string[]; mode?: "chat" | "sentiment";
+export default function ChatPanel({ system, title, subtitle, accent = "blue", placeholder = "Ask something to try it live…", samples = [], mode = "chat", agents = [] }: {
+  system: string; title: string; subtitle?: string; accent?: "blue" | "amber"; placeholder?: string; samples?: string[]; mode?: "chat" | "sentiment"; agents?: { name: string; desc: string }[];
 }) {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [tab, setTab] = useState<"chat" | "agents">("chat");
   const abort = useRef<AbortController | null>(null);
   const bottom = useRef<HTMLDivElement>(null);
   const isAmber = accent === "amber";
@@ -119,6 +120,41 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
         </span>
       </div>
 
+      {agents.length > 0 && (
+        <div className="grid grid-cols-2 gap-1 border-b border-slate-200 bg-slate-50 px-3 py-1.5">
+          {(["chat", "agents"] as const).map((t) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              aria-pressed={tab === t}
+              className={`flex items-center justify-center gap-1 rounded-md px-1 py-1 text-[10px] font-semibold ${
+                tab === t ? "bg-slate-900 text-white" : "border border-slate-200 bg-white text-slate-600 hover:border-slate-300"
+              }`}
+            >
+              {t === "chat" ? "Chat" : `Agents (${agents.length})`}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {tab === "agents" && agents.length > 0 ? (
+        <div className="min-h-0 flex-1 space-y-2 overflow-y-auto px-4 py-3">
+          {agents.map((a) => (
+            <div key={a.name} className="flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3">
+              <span className="relative mt-1 flex h-2.5 w-2.5 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-60" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+              </span>
+              <span>
+                <span className="block text-[13px] font-bold text-slate-900">{a.name}</span>
+                <span className="mt-0.5 block text-[12px] leading-snug text-slate-600">{a.desc}</span>
+              </span>
+            </div>
+          ))}
+          <p className="pt-1 text-center text-[11px] text-slate-400">All agents online · switch back to Chat to talk to them</p>
+        </div>
+      ) : (
+      <>
       {mode === "sentiment" && (
         <div className="border-b border-amber-200 bg-white px-4 py-2.5">
           <div className="flex items-center justify-between text-[11px] font-bold text-slate-600">
@@ -191,7 +227,10 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
           {error} <button onClick={() => { const l = [...msgs].reverse().find((m) => m.role === "user"); if (l) send(l.text); }} className="underline">Retry</button>
         </p>
       )}
+      </>
+      )}
 
+      {!(tab === "agents" && agents.length > 0) && (
       <form
         onSubmit={(e) => { e.preventDefault(); send(input); }}
         className="flex items-center gap-2 border-t border-slate-200 bg-white px-3 py-2.5"
@@ -214,6 +253,7 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
           </button>
         )}
       </form>
+      )}
     </div>
   );
 }

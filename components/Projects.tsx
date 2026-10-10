@@ -89,6 +89,11 @@ export default function Projects() {
                       subtitle="Multi-agent clinical demo"
                       accent="blue"
                       samples={["What are first-line options for community pneumonia?", "Summarize RAG safety guardrails"]}
+                      agents={[
+                        { name: "Triage Agent", desc: "Routes symptoms to urgency levels and the right specialist path." },
+                        { name: "Literature Agent", desc: "Grounds every answer in retrieved clinical guidelines and papers." },
+                        { name: "Safety Agent", desc: "Screens outputs for contraindications and safe-dosage guardrails." },
+                      ]}
                     />
                   </div>
                 </MonitorFrame>

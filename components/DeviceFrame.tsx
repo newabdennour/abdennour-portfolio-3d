@@ -29,7 +29,7 @@ function useShowCanvas() {
   return { ref, show: allowed && !reduce && !glLost && inView && !isMobile, setGlLost };
 }
 
-const YAW_LIMIT = 1.1;
+const YAW_LIMIT = 0.75;
 const PITCH_LIMIT = 0.35;
 const DRAG_YAW_SPEED = 0.008;
 const DRAG_PITCH_SPEED = 0.005;
@@ -82,48 +82,85 @@ function useCreateSpinControls(): SpinControls {
   );
 }
 
-// Non-interactive chrome strip that starts a manual rotate. Lives inside the
-// drei Html overlay (which otherwise swallows all pointer events before
-// PresentationControls can see them). Interactive siblings stay untouched.
-function ChromeGrip({ children, className, style, label }: { children: ReactNode; className?: string; style?: CSSProperties; label?: string }) {
+// Screen-level drag-to-rotate. The drei Html overlay sits above the canvas and
+// swallows every pointer event, so canvas-level controls go dead once the UI
+// mounts. This wrapper rotates on drags that start on non-interactive
+// background, while inputs/buttons/links and vertical scroll regions behave
+// natively (vertical drags inside scrollable areas scroll; horizontal drags
+// anywhere rotate).
+function ScreenDrag({ children, className, style }: { children: ReactNode; className?: string; style?: CSSProperties }) {
   const spin = useSpin();
-  const start = useRef<{ x: number; y: number; yaw: number; pitch: number } | null>(null);
+  const gesture = useRef<{ x: number; y: number; yaw: number; pitch: number; moved: boolean } | null>(null);
+  const suppressClick = useRef(false);
   if (!spin) {
     return <div className={className} style={style}>{children}</div>;
   }
   const controls = spin;
   const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
     if (e.pointerType === "mouse" && e.button !== 0) return;
-    try {
-      e.currentTarget.setPointerCapture(e.pointerId);
-    } catch {
-      // noop: capture is best-effort
-    }
-    start.current = { x: e.clientX, y: e.clientY, yaw: controls.yawRef.current, pitch: controls.pitchRef.current };
-    controls.setDragging(true);
+    suppressClick.current = false;
+    gesture.current = { x: e.clientX, y: e.clientY, yaw: controls.yawRef.current, pitch: controls.pitchRef.current, moved: false };
   };
   const onPointerMove = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (!start.current) return;
-    if (e.pointerType === "mouse" && e.buttons === 0) return;
-    const dx = e.clientX - start.current.x;
-    const dy = e.clientY - start.current.y;
-    controls.yawRef.current = clamp(start.current.yaw + dx * DRAG_YAW_SPEED, -YAW_LIMIT, YAW_LIMIT);
-    controls.pitchRef.current = clamp(start.current.pitch - dy * DRAG_PITCH_SPEED, -PITCH_LIMIT, PITCH_LIMIT);
+    const g = gesture.current;
+    if (!g) return;
+    const dx = e.clientX - g.x;
+    const dy = e.clientY - g.y;
+    if (!g.moved) {
+      if (Math.hypot(dx, dy) < 8) return;
+      const target = e.target as Element | null;
+      const interactive = target?.closest?.("input,textarea,select,button,a,[contenteditable],[data-nodrag]") ?? null;
+      if (interactive) {
+        const root = e.currentTarget;
+        let sp: Element | null = interactive;
+        let scrollEl: Element | null = null;
+        while (sp && sp !== root) {
+          const cs = window.getComputedStyle(sp);
+          if ((cs.overflowY === "auto" || cs.overflowY === "scroll") && sp.scrollHeight > sp.clientHeight + 4) {
+            scrollEl = sp;
+            break;
+          }
+          sp = sp.parentElement;
+        }
+        if (scrollEl && Math.abs(dy) >= Math.abs(dx)) {
+          gesture.current = null; // native vertical scroll wins
+          return;
+        }
+      }
+      g.moved = true;
+      try {
+        e.currentTarget.setPointerCapture(e.pointerId);
+      } catch {
+        // noop: capture is best-effort
+      }
+      controls.setDragging(true);
+    }
+    if (e.pointerType === "mouse" && e.buttons === 0 && !g.moved) return;
+    controls.yawRef.current = clamp(g.yaw + dx * DRAG_YAW_SPEED, -YAW_LIMIT, YAW_LIMIT);
+    controls.pitchRef.current = clamp(g.pitch - dy * DRAG_PITCH_SPEED, -PITCH_LIMIT, PITCH_LIMIT);
   };
   const end = () => {
-    start.current = null;
+    const g = gesture.current;
+    if (g?.moved) suppressClick.current = true;
+    gesture.current = null;
     controls.setDragging(false);
   };
   return (
     <div
-      aria-label={label}
-      className={className}
-      style={{ ...style, touchAction: "none", cursor: "grab", userSelect: "none" }}
+      className={className ? `screendrag-root ${className}` : "screendrag-root"}
+      style={{ ...style, touchAction: "pan-y", userSelect: "none" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={end}
       onPointerCancel={end}
       onLostPointerCapture={end}
+      onClickCapture={(e) => {
+        if (suppressClick.current) {
+          suppressClick.current = false;
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }}
       onDragStart={(e) => e.preventDefault()}
     >
       {children}
@@ -197,7 +234,7 @@ function Shell({ height, chrome, scene, label }: { height: string; chrome: React
             <ambientLight intensity={1} />
             <directionalLight position={[4, 5, 6]} intensity={1} />
             <Suspense fallback={null}>
-              <PresentationControls enabled global={false} snap cursor speed={1.1} polar={[-0.3, 0.3]} azimuth={[-0.6, 0.6]} config={{ mass: 1, tension: 170, friction: 26 }}>
+              <PresentationControls enabled global={false} snap cursor speed={1.1} polar={[-0.3, 0.3]} azimuth={[-0.35, 0.35]} config={{ mass: 1, tension: 170, friction: 26 }}>
                 {scene}
               </PresentationControls>
               <ContactShadows position={[0, -2.2, 0]} opacity={0.25} scale={12} blur={2.4} far={5} resolution={256} color="#0f172a" />
@@ -231,16 +268,16 @@ function SlowSpin({ children }: { children: ReactNode }) {
 
 export function BrowserFrame({ children, label }: { children: ReactNode; label: string }) {
   const screen = (
-    <div style={{ width: 980, height: 600 }} className="overflow-hidden rounded-lg bg-white shadow-2xl">
-      <ChromeGrip label={`${label} drag to rotate`} className="flex items-center gap-1.5 border-b border-slate-200 bg-slate-100 px-3 py-2">
+    <ScreenDrag className="overflow-hidden rounded-lg bg-white shadow-2xl" style={{ width: 980, height: 600 }}>
+      <div className="flex items-center gap-1.5 border-b border-slate-200 bg-slate-100 px-3 py-2">
         <span className="h-2.5 w-2.5 rounded-full bg-red-400" />
         <span className="h-2.5 w-2.5 rounded-full bg-amber-400" />
         <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
         <span className="ml-2 flex-1 truncate rounded-md bg-white px-2 py-0.5 text-[10px] text-slate-400">{label}</span>
         <span className="hidden select-none text-[10px] uppercase tracking-widest text-slate-400 md:inline">drag to rotate</span>
-      </ChromeGrip>
+      </div>
       <div style={{ height: 560 }} className="overflow-hidden">{children}</div>
-    </div>
+    </ScreenDrag>
   );
   return (
     <Shell
@@ -287,16 +324,16 @@ export function MonitorFrame({ children, label }: { children: ReactNode; label: 
               <meshStandardMaterial color="#1e293b" roughness={0.5} />
             </mesh>
             <Html transform position={[0, 0.35, 0]} distanceFactor={1.6} occlude="blending">
-              <div style={{ width: 1060 }} className="overflow-hidden rounded-lg bg-slate-900 p-2 shadow-2xl">
-                <ChromeGrip label={`${label} drag to rotate`} className="flex items-center justify-center gap-2 px-2 py-1.5">
+              <ScreenDrag className="overflow-hidden rounded-lg bg-slate-900 p-2 shadow-2xl" style={{ width: 1060 }}>
+                <div className="flex items-center justify-center gap-2 px-2 py-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-slate-600" />
                   <span className="select-none text-[10px] uppercase tracking-widest text-slate-400">drag to rotate</span>
-                </ChromeGrip>
+                </div>
                 <div style={{ width: 1044, height: 640 }} className="overflow-hidden bg-white">{children}</div>
-                <ChromeGrip label={`${label} drag to rotate`} className="flex items-center justify-center px-2 py-1.5">
+                <div className="flex items-center justify-center px-2 py-1.5">
                   <span className="h-1 w-16 rounded-full bg-slate-700" />
-                </ChromeGrip>
-              </div>
+                </div>
+              </ScreenDrag>
             </Html>
           </Float>
         </SlowSpin>
@@ -327,15 +364,15 @@ export function PhoneFrame({ children, label }: { children: ReactNode; label: st
               <meshStandardMaterial color="#020617" roughness={0.4} />
             </mesh>
             <Html transform position={[0, -0.05, 0.02]} distanceFactor={1.35} occlude="blending">
-              <div style={{ width: 390 }} className="overflow-hidden rounded-[2rem] bg-slate-900 p-2 shadow-2xl">
-                <ChromeGrip label={`${label} drag to rotate`} className="flex items-center justify-center gap-2 px-2 py-2">
+              <ScreenDrag className="overflow-hidden rounded-[2rem] bg-slate-900 p-2 shadow-2xl" style={{ width: 390 }}>
+                <div className="flex items-center justify-center gap-2 px-2 py-2">
                   <span className="h-1.5 w-16 rounded-full bg-slate-700" />
-                </ChromeGrip>
+                </div>
                 <div style={{ width: 374, height: 760 }} className="overflow-hidden rounded-[1.4rem] bg-white">{children}</div>
-                <ChromeGrip label={`${label} drag to rotate`} className="flex items-center justify-center px-2 py-2">
+                <div className="flex items-center justify-center px-2 py-2">
                   <span className="h-1 w-24 rounded-full bg-slate-700" />
-                </ChromeGrip>
-              </div>
+                </div>
+              </ScreenDrag>
             </Html>
           </Float>
         </SlowSpin>

@@ -46,16 +46,18 @@ const rise = {
   transition: { duration: 0.5 },
 } as const;
 
-// Presents a fixed-size desktop design (TexaUI 1060x640) inside an exact
-// 16:9 box: scales to the box width, crops top/bottom equally — no cut-off
-// on the sides, browsers stay exactly 16:9 at every screen size.
+// Presents a fixed-size desktop design inside an exact 16:9 box.
+// cover (default): scales to the box width, crops top/bottom equally.
+// contain: shrinks the whole design to fit with nothing cropped.
 function FitCover16x9({
   designWidth,
   designHeight,
+  fit = "cover",
   children,
 }: {
   designWidth: number;
   designHeight: number;
+  fit?: "cover" | "contain";
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -69,8 +71,12 @@ function FitCover16x9({
     ro.observe(el);
     return () => ro.disconnect();
   }, []);
-  const scale = boxW > 0 ? boxW / designWidth : 0;
-  const top = ((boxW * 9) / 16 - designHeight * scale) / 2;
+  const boxH = (boxW * 9) / 16;
+  const scale = fit === "contain"
+    ? Math.min(boxW / designWidth, boxH / designHeight)
+    : boxW > 0 ? boxW / designWidth : 0;
+  const top = (boxH - designHeight * scale) / 2;
+  const left = fit === "contain" ? (boxW - designWidth * scale) / 2 : 0;
   return (
     <div ref={ref} className="relative w-full overflow-hidden bg-white" style={{ aspectRatio: "16 / 9" }}>
       {boxW > 0 && (
@@ -81,8 +87,9 @@ function FitCover16x9({
             transform: `scale(${scale})`,
             transformOrigin: "top left",
             top,
+            left,
           }}
-          className="absolute left-0"
+          className="absolute"
         >
           {children}
         </div>
@@ -156,7 +163,7 @@ export default function Projects() {
             <motion.div {...rise} className="grid items-center gap-8 md:grid-cols-[3fr_2fr]">
               <div className="min-w-0 order-2 md:order-1">
                 <BrowserFrame label="texa.demo/itinerary" tilt="right">
-                  <FitCover16x9 designWidth={1060} designHeight={640}>
+                  <FitCover16x9 designWidth={1060} designHeight={640} fit="contain">
                     <TexaUI />
                   </FitCover16x9>
                 </BrowserFrame>

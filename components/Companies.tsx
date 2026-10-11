@@ -56,12 +56,12 @@ export default function Companies() {
         </div>
       ) : (
         <div className="marquee-mask [perspective:1200px]">
-          <div className="marquee-row animate-[marquee-left_42s_linear_infinite] hover:[animation-play-state:paused]">
+          <div className="marquee-row animate-[marquee-left_75s_linear_infinite] hover:[animation-play-state:paused]">
             {loopA.map((c, i) => (
               <LogoCard key={`${c.name}-${i}`} {...c} />
             ))}
           </div>
-          <div className="marquee-row mt-4 animate-[marquee-right_48s_linear_infinite] hover:[animation-play-state:paused]">
+          <div className="marquee-row mt-4 animate-[marquee-right_85s_linear_infinite] hover:[animation-play-state:paused]">
             {loopB.map((c, i) => (
               <LogoCard key={`${c.name}-${i}`} {...c} />
             ))}

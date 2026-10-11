@@ -11,8 +11,8 @@ function parseVerdict(text: string): { label: string; score: number } | null {
   return { label: m[1].toLowerCase(), score: Math.min(100, parseInt(m[2], 10)) };
 }
 
-export default function ChatPanel({ system, title, subtitle, accent = "blue", placeholder = "Ask something to try it live…", samples = [], mode = "chat", agents = [] }: {
-  system: string; title: string; subtitle?: string; accent?: "blue" | "amber"; placeholder?: string; samples?: string[]; mode?: "chat" | "sentiment"; agents?: { name: string; desc: string }[];
+export default function ChatPanel({ system, title, subtitle, accent = "blue", placeholder = "Ask something to try it live…", samples = [], mode = "chat", agents = [], bare = false }: {
+  system: string; title: string; subtitle?: string; accent?: "blue" | "amber"; placeholder?: string; samples?: string[]; mode?: "chat" | "sentiment"; agents?: { name: string; desc: string }[]; bare?: boolean;
 }) {
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
@@ -106,7 +106,8 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
     : null;
 
   return (
-    <div className={`flex h-full flex-col overflow-hidden rounded-xl text-left ${isAmber ? "bg-amber-50/60" : "bg-slate-50"}`}>
+    <div className={`flex h-full flex-col overflow-hidden text-left ${bare ? "" : "rounded-xl"} ${isAmber ? "bg-amber-50/60" : "bg-slate-50"}`}>
+      {!bare && (
       <div className={`flex items-center gap-2 border-b px-4 py-2.5 ${isAmber ? "border-amber-200 bg-amber-100/60" : "border-slate-200 bg-white"}`}>
         <span className={`grid h-7 w-7 place-items-center rounded-lg text-white ${isAmber ? "bg-amber-600" : "bg-blue-600"}`}>
           <Bot size={15} />
@@ -119,6 +120,7 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> LIVE
         </span>
       </div>
+      )}
 
       {agents.length > 0 && (
         <div className="grid grid-cols-2 gap-1 border-b border-slate-200 bg-slate-50 px-3 py-1.5">
@@ -176,7 +178,7 @@ export default function ChatPanel({ system, title, subtitle, accent = "blue", pl
       )}
 
       <div className="min-h-0 flex-1 space-y-3 overflow-y-auto px-4 py-3">
-        {msgs.length === 0 && (
+        {msgs.length === 0 && !bare && (
           <div className="mt-6 text-center">
             <p className="text-[13px] text-slate-500">Try it — messages stay in this session only.</p>
             {samples.length > 0 && (

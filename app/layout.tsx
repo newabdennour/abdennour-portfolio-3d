@@ -24,7 +24,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Must run before paint: tell the browser not to restore scroll,
+            otherwise it jumps back to mid-page (e.g. E-Store) on reload. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `try{if('scrollRestoration' in history)history.scrollRestoration='manual';}catch(e){}try{if(location.hash){history.replaceState(null,'',location.pathname+location.search);}window.scrollTo(0,0);}catch(e){}`,
+          }}
+        />
+      </head>
       <body
         className="bg-white font-display text-slate-900 antialiased"
         style={{ fontFamily: "system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" }}

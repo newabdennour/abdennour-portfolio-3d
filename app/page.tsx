@@ -11,12 +11,14 @@ import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import AssistantFab from "@/components/AssistantFab";
+import ScrollTop from "@/components/ScrollTop";
 
 const GlobalBackdrop = dynamic(() => import("@/components/GlobalBackdrop"), { ssr: false });
 
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-transparent font-display text-slate-900">
+      <ScrollTop />
       <GlobalBackdrop />
       <Preloader />
       <CursorGlow />

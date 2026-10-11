@@ -79,8 +79,9 @@ export default function AssistantFab() {
                 title="Ask about Abdennour"
                 subtitle="Portfolio assistant"
                 accent="blue"
+                bare
+                samples={[]}
                 placeholder="Ask about projects, skills, contact…"
-                samples={["What are his top AI projects?", "What certifications does he have?", "How do I contact him?"]}
               />
             </div>
           </motion.div>

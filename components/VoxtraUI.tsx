@@ -72,6 +72,8 @@ function getRecognition(): (new () => SR) | null {
   return (w.SpeechRecognition as new () => SR) ?? (w.webkitSpeechRecognition as new () => SR) ?? null;
 }
 
+const VOXTRA_LOGO = encodeURI("/top-projects/tp5/voxtra black.png");
+
 function Waveform({ playing }: { playing: boolean }) {
   const bars = useMemo(
     () =>
@@ -225,8 +227,9 @@ export default function VoxtraUI() {
   /* ---------- detail view ---------- */
   if (open) {
     return (
-      <div className="flex h-[600px] w-full flex-col overflow-y-auto bg-[#F7F7F8] p-3 text-left text-slate-800">
-        <div className="mx-auto w-full max-w-xl">
+      <div style={{ width: 1060, height: 596 }} className="flex flex-col overflow-hidden bg-[#F7F7F8] text-left text-slate-800">
+        <div className="min-h-0 flex-1 overflow-y-auto p-4">
+        <div className="mx-auto w-full max-w-3xl">
           <div className="flex items-center justify-between">
             <button onClick={() => { stopRec(); setOpenId(null); }} className="flex items-center gap-1 rounded-md border border-slate-300 bg-white px-2 py-1 text-[10px] font-semibold text-slate-700">
               <ArrowLeft size={11} /> Back to Audio Files
@@ -297,18 +300,20 @@ export default function VoxtraUI() {
             {error && <p className="mt-2 rounded-md bg-red-50 px-2 py-1 text-[10px] font-medium text-red-700">{error}</p>}
           </div>
         </div>
+        </div>
       </div>
     );
   }
 
   /* ---------- list view ---------- */
   return (
-    <div className="flex h-[600px] w-full flex-col overflow-y-auto bg-[#F7F7F8] p-3 text-left text-slate-800">
-      <div className="mx-auto w-full max-w-xl rounded-lg border border-slate-200 bg-white px-3 py-2">
+    <div style={{ width: 1060, height: 596 }} className="flex flex-col overflow-hidden bg-[#F7F7F8] text-left text-slate-800">
+      <div className="min-h-0 flex-1 overflow-y-auto p-4">
+      <div className="mx-auto w-full max-w-3xl">
+      <div className="rounded-lg border border-slate-200 bg-white px-3 py-2">
         <div className="flex items-center">
-          <p className="text-[15px] font-black italic tracking-tight text-slate-900">
-            <span className="not-italic">V</span>oxtra
-          </p>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={VOXTRA_LOGO} alt="Voxtra" className="h-7 w-auto object-contain" onError={(e) => { e.currentTarget.style.display = "none"; }} />
           <div className="ml-auto flex items-center gap-1.5" ref={menuRef}>
             <div className="relative">
               <button onClick={() => setMenu((m) => !m)} aria-label="Add audio" className="grid h-7 w-7 place-items-center rounded-md bg-black text-white">
@@ -344,7 +349,7 @@ export default function VoxtraUI() {
         </div>
       </div>
 
-      <div className="mx-auto mt-2 w-full max-w-xl rounded-lg border border-slate-200 bg-white p-3">
+      <div className="mt-2 w-full rounded-lg border border-slate-200 bg-white p-3">
         <p className="text-[13px] font-bold text-slate-900">Audio Files</p>
         <p className="text-[10px] text-slate-500">{files.length} files total</p>
 
@@ -385,6 +390,8 @@ export default function VoxtraUI() {
         <p className="mt-2 flex items-center justify-end gap-1 text-[9px] text-slate-400">
           <ArrowLeft size={10} /> <ArrowRight size={10} /> Click a file to open its transcript
         </p>
+      </div>
+      </div>
       </div>
     </div>
   );

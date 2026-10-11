@@ -20,19 +20,20 @@ export default function ProjectScroller({
   onSelect: (p: Project) => void;
   resetKey?: string;
 }) {
-  const [index, setIndex] = useState(0);
+  // Spotlight the 5th project by default (index 4), clamped when filtered.
+  const [index, setIndex] = useState(() => Math.min(4, Math.max(0, projects.length - 1)));
   const [fallback, setFallback] = useState(false);
   const startX = useRef<number | null>(null);
   const count = projects.length;
 
-  // Reset to first card whenever the filter changes.
+  // Reset to the spotlight card whenever the filter changes.
   useEffect(() => {
-    setIndex(0);
-  }, [resetKey]);
+    setIndex(Math.min(4, Math.max(0, count - 1)));
+  }, [resetKey, count]);
 
   // Clamp if the filtered list shrinks below the current index.
   useEffect(() => {
-    if (index >= count) setIndex(0);
+    if (index >= count) setIndex(Math.max(0, count - 1));
   }, [index, count]);
 
   // Reduced-motion / small-screen: render a clean vertical list instead.

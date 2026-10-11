@@ -34,7 +34,7 @@ export default function Navbar() {
   return (
     <>
       <motion.div className="fixed left-0 top-0 z-[90] h-[2px] w-full origin-left bg-gradient-to-r from-blue-600 via-indigo-500 to-violet-600" style={{ scaleX: progress }} />
-      <header className={`fixed inset-x-0 top-0 z-[85] transition-all duration-300 ${scrolled ? "py-3" : "py-4"}`}>
+      <header className={`relative inset-x-0 top-0 z-[85] transition-all duration-300 ${scrolled ? "py-3" : "py-4"}`}>
         <div className="container-x">
           <nav
             aria-label="Primary"
@@ -45,9 +45,6 @@ export default function Navbar() {
             }`}
           >
             <a href="#top" className="flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-violet-600 font-display text-lg font-bold text-white">
-                G
-              </span>
               <span className="leading-tight">
                 <span className="block font-display text-sm font-bold tracking-wide text-slate-900">
                   GUERROUDJ ABDENNOUR

@@ -208,12 +208,20 @@ section[id] {
 
 .marquee-row {
   display: flex;
-  gap: 12px;
   width: max-content;
   margin-inline: auto;
   transform: rotateX(18deg);
   transform-style: preserve-3d;
-}@keyframes marquee-left {
+}
+/* Viewport-width wrapper: edge fade lives here so cards dissolve at the
+   screen edges (mask on the moving row would travel with the cards) */
+.marquee-mask {
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+/* margin (not gap) so each duplicated half is exactly 50% wide → seamless loop */
+.marquee-row > * { margin-right: 12px; }@keyframes marquee-left {
   from { transform: rotateX(18deg) translateX(0); }
   to { transform: rotateX(18deg) translateX(-50%); }
 }
@@ -293,6 +301,21 @@ section[id] {
     rotateY(calc(var(--i, 0) / var(--n, 6) * 360deg))
     translateZ(400px);
   backface-visibility: hidden;
+}
+/* Logo-only orbit: no card chrome, just the venue logos circling.
+   Counter-rotation keeps every logo facing the viewer so all
+   of them stay visible instead of hiding on the far side. */
+.venue3d-logo {
+  width: 120px;
+  height: 120px;
+  margin: -60px 0 0 -60px;
+  display: grid;
+  place-items: center;
+  transform:
+    rotateY(calc(var(--i, 0) / var(--n, 6) * 360deg))
+    translateZ(400px)
+    rotateY(calc(var(--i, 0) / var(--n, 6) * -360deg));
+  backface-visibility: visible;
 }
 @keyframes venue-spin {
   from { transform: rotateY(0deg); }

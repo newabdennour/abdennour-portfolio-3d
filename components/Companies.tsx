@@ -49,7 +49,7 @@ export default function Companies() {
           ))}
         </div>
       ) : (
-        <div className="[perspective:1200px]">
+        <div className="marquee-mask [perspective:1200px]">
           <div className="marquee-row animate-[marquee-left_42s_linear_infinite] hover:[animation-play-state:paused]">
             {[...rowA, ...rowA].map((c, i) => (
               <LogoCard key={`${c.name}-${i}`} {...c} />

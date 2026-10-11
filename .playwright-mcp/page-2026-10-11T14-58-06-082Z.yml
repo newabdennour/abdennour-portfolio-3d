@@ -1,0 +1,895 @@
+- generic [active] [ref=f2e1]:
+  - main [ref=f2e2]:
+    - navigation "Primary" [ref=f2e11]:
+      - link "GUERROUDJ ABDENNOUR AI Engineer" [ref=f2e12] [cursor=pointer]:
+        - /url: "#top"
+        - generic [ref=f2e13]:
+          - generic [ref=f2e14]: GUERROUDJ ABDENNOUR
+          - generic [ref=f2e15]: AI Engineer
+      - generic [ref=f2e16]:
+        - link "Work" [ref=f2e17] [cursor=pointer]:
+          - /url: "#work"
+        - link "Journey" [ref=f2e18] [cursor=pointer]:
+          - /url: "#journey"
+        - link "Contact" [ref=f2e19] [cursor=pointer]:
+          - /url: "#contact"
+        - link "Hire Me" [ref=f2e20] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=f2e22]:
+      - paragraph [ref=f2e23]: "[ lab notes — 2026.10.11 ]"
+      - generic [ref=f2e24]:
+        - generic [ref=f2e25]:
+          - generic [ref=f2e26]:
+            - generic [ref=f2e27]:
+              - generic [ref=f2e28]: GA
+              - paragraph [ref=f2e29]: Abdennour G.
+            - generic [ref=f2e30]:
+              - paragraph [ref=f2e31]: Hey, I'm Abdennour
+              - heading "AI engineer & full-stack developer." [level=1] [ref=f2e32]: AI engineer &full-stack developer.
+          - paragraph [ref=f2e33]: AI & Full-Stack Developer · Algeria — Remote Worldwide
+          - paragraph [ref=f2e34]: I transform complex challenges into elegant AI-powered solutions — RAG systems, LLM apps, mobile experiences and data intelligence.
+          - generic [ref=f2e35]:
+            - term [ref=f2e36]: index card
+            - generic [ref=f2e37]:
+              - term [ref=f2e38]: now
+              - definition [ref=f2e39]: open for AI & full-stack missions
+            - generic [ref=f2e40]:
+              - term [ref=f2e41]: focus
+              - definition [ref=f2e42]: RAG systems · LLM apps · mobile AI
+            - generic [ref=f2e43]:
+              - term [ref=f2e44]: stack
+              - definition [ref=f2e45]: Next.js · Flutter · PyTorch · LangChain
+            - generic [ref=f2e46]:
+              - term [ref=f2e47]: open to
+              - definition [ref=f2e48]: AI products · RAG systems · engineering projects
+          - generic [ref=f2e49]:
+            - link "Schedule a call" [ref=f2e51] [cursor=pointer]:
+              - /url: mailto:guerroudjabdennour1@gmail.com
+            - link "CV" [ref=f2e56] [cursor=pointer]:
+              - /url: /assets/docs/cv.pdf
+            - link "GitHub" [ref=f2e61] [cursor=pointer]:
+              - /url: https://github.com/AbdennourGuerroudj
+          - paragraph [ref=f2e65]: ↩ quickest way to reach me
+        - complementary "What I'm building right now" [ref=f2e66]:
+          - paragraph [ref=f2e67]: 2026.10.11 · in progress
+          - heading "What I'm building right now" [level=2] [ref=f2e68]
+          - list [ref=f2e69]:
+            - listitem [ref=f2e70]:
+              - paragraph [ref=f2e71]: Medical multi-agent RAG platform
+              - paragraph [ref=f2e72]: Grounded clinical answers — adaptive agent questioning for healthcare.
+              - paragraph [ref=f2e73]: lab · FEMTO-ST
+            - listitem [ref=f2e74]:
+              - paragraph [ref=f2e75]: TEXA — tourism for Algeria
+              - paragraph [ref=f2e76]: Multi-agent platform helping tourists discover cultural and natural sites.
+              - paragraph [ref=f2e77]: production · Ministry of Tourism
+            - listitem [ref=f2e78]:
+              - paragraph [ref=f2e79]: E-store management app
+              - paragraph [ref=f2e80]: Professional mobile app for e-store management at Algérie Poste scale.
+              - paragraph [ref=f2e81]: production · Algérie Poste
+            - listitem [ref=f2e82]:
+              - paragraph [ref=f2e83]: Ramy — sentiment intelligence
+              - paragraph [ref=f2e84]: LLM-powered opinions, emotions and insights from text.
+              - paragraph [ref=f2e85]: enterprise · Ramy
+          - link "See the work below" [ref=f2e86] [cursor=pointer]:
+            - /url: "#work"
+      - generic [ref=f2e90]:
+        - paragraph [ref=f2e91]: what are you looking for?
+        - generic [ref=f2e92]:
+          - link "Top projects" [ref=f2e93] [cursor=pointer]:
+            - /url: "#work"
+          - link "Companies" [ref=f2e94] [cursor=pointer]:
+            - /url: "#companies"
+          - link "Research" [ref=f2e95] [cursor=pointer]:
+            - /url: "#research"
+          - link "Journey" [ref=f2e96] [cursor=pointer]:
+            - /url: "#journey"
+          - link "Contact" [ref=f2e97] [cursor=pointer]:
+            - /url: "#contact"
+        - paragraph [ref=f2e98]: Algeria — Remote Worldwide
+    - generic [ref=f2e102]:
+      - generic [ref=f2e104]:
+        - heading "Companies & institutes I've worked with" [level=2] [ref=f2e105]
+        - paragraph [ref=f2e106]: Ministries, telecoms, energy, research labs and enterprises across Algeria, France and Canada.
+      - generic [ref=f2e107]:
+        - generic [ref=f2e108]:
+          - generic [ref=f2e109]:
+            - img "FEMTO-ST Institute" [ref=f2e110]
+            - generic [ref=f2e111]:
+              - generic [ref=f2e112]: FEMTO-ST Institute
+              - generic [ref=f2e113]: Research · France
+          - generic [ref=f2e114]:
+            - img "Ministry of Higher Education (MESRS)" [ref=f2e115]
+            - generic [ref=f2e116]:
+              - generic [ref=f2e117]: Ministry of Higher Education (MESRS)
+              - generic [ref=f2e118]: Institution
+          - generic [ref=f2e119]:
+            - img "Algerian People's National Assembly" [ref=f2e120]
+            - generic [ref=f2e121]:
+              - generic [ref=f2e122]: Algerian People's National Assembly
+              - generic [ref=f2e123]: Institution
+          - generic [ref=f2e124]:
+            - img "Algérie Poste" [ref=f2e125]
+            - generic [ref=f2e126]:
+              - generic [ref=f2e127]: Algérie Poste
+              - generic [ref=f2e128]: Post & Logistics
+          - generic [ref=f2e129]:
+            - img "Algérie Télécom" [ref=f2e130]
+            - generic [ref=f2e131]:
+              - generic [ref=f2e132]: Algérie Télécom
+              - generic [ref=f2e133]: Telecom
+          - generic [ref=f2e134]:
+            - img "Sonatrach" [ref=f2e135]
+            - generic [ref=f2e136]:
+              - generic [ref=f2e137]: Sonatrach
+              - generic [ref=f2e138]: Energy
+          - generic [ref=f2e139]:
+            - img "FEMTO-ST Institute" [ref=f2e140]
+            - generic [ref=f2e141]:
+              - generic [ref=f2e142]: FEMTO-ST Institute
+              - generic [ref=f2e143]: Research · France
+          - generic [ref=f2e144]:
+            - img "Ministry of Higher Education (MESRS)" [ref=f2e145]
+            - generic [ref=f2e146]:
+              - generic [ref=f2e147]: Ministry of Higher Education (MESRS)
+              - generic [ref=f2e148]: Institution
+          - generic [ref=f2e149]:
+            - img "Algerian People's National Assembly" [ref=f2e150]
+            - generic [ref=f2e151]:
+              - generic [ref=f2e152]: Algerian People's National Assembly
+              - generic [ref=f2e153]: Institution
+          - generic [ref=f2e154]:
+            - img "Algérie Poste" [ref=f2e155]
+            - generic [ref=f2e156]:
+              - generic [ref=f2e157]: Algérie Poste
+              - generic [ref=f2e158]: Post & Logistics
+          - generic [ref=f2e159]:
+            - img "Algérie Télécom" [ref=f2e160]
+            - generic [ref=f2e161]:
+              - generic [ref=f2e162]: Algérie Télécom
+              - generic [ref=f2e163]: Telecom
+          - generic [ref=f2e164]:
+            - img "Sonatrach" [ref=f2e165]
+            - generic [ref=f2e166]:
+              - generic [ref=f2e167]: Sonatrach
+              - generic [ref=f2e168]: Energy
+        - generic [ref=f2e169]:
+          - generic [ref=f2e170]:
+            - img "University of Montreal" [ref=f2e171]
+            - generic [ref=f2e172]:
+              - generic [ref=f2e173]: University of Montreal
+              - generic [ref=f2e174]: Research · Canada
+          - generic [ref=f2e175]:
+            - img "BMS" [ref=f2e176]
+            - generic [ref=f2e177]:
+              - generic [ref=f2e178]: BMS
+              - generic [ref=f2e179]: Industry
+          - generic [ref=f2e180]:
+            - img "Ramy" [ref=f2e181]
+            - generic [ref=f2e182]:
+              - generic [ref=f2e183]: Ramy
+              - generic [ref=f2e184]: Enterprise
+          - generic [ref=f2e185]:
+            - img "Iconnet" [ref=f2e186]
+            - generic [ref=f2e187]:
+              - generic [ref=f2e188]: Iconnet
+              - generic [ref=f2e189]: Technology
+          - generic [ref=f2e190]:
+            - img "Leaf Partner" [ref=f2e191]
+            - generic [ref=f2e192]:
+              - generic [ref=f2e193]: Leaf Partner
+              - generic [ref=f2e194]: Partner
+          - generic [ref=f2e195]:
+            - img "University of Montreal" [ref=f2e196]
+            - generic [ref=f2e197]:
+              - generic [ref=f2e198]: University of Montreal
+              - generic [ref=f2e199]: Research · Canada
+          - generic [ref=f2e200]:
+            - img "BMS" [ref=f2e201]
+            - generic [ref=f2e202]:
+              - generic [ref=f2e203]: BMS
+              - generic [ref=f2e204]: Industry
+          - generic [ref=f2e205]:
+            - img "Ramy" [ref=f2e206]
+            - generic [ref=f2e207]:
+              - generic [ref=f2e208]: Ramy
+              - generic [ref=f2e209]: Enterprise
+          - generic [ref=f2e210]:
+            - img "Iconnet" [ref=f2e211]
+            - generic [ref=f2e212]:
+              - generic [ref=f2e213]: Iconnet
+              - generic [ref=f2e214]: Technology
+          - generic [ref=f2e215]:
+            - img "Leaf Partner" [ref=f2e216]
+            - generic [ref=f2e217]:
+              - generic [ref=f2e218]: Leaf Partner
+              - generic [ref=f2e219]: Partner
+    - generic [ref=f2e221]:
+      - generic [ref=f2e222]:
+        - heading "Featured Projects" [level=2] [ref=f2e223]
+        - paragraph [ref=f2e224]: Production-grade builds across AI, full-stack, mobile and data — each with real-world impact.
+      - generic [ref=f2e225]:
+        - generic [ref=f2e226]:
+          - generic [ref=f2e227]:
+            - generic [ref=f2e228]:
+              - img "FemtoCare" [ref=f2e229]
+              - img "FEMTO-ST" [ref=f2e230]
+              - generic [ref=f2e231]: AI · Multi-agent
+            - heading "FemtoCare — Medical Agents" [level=3] [ref=f2e232]
+            - paragraph [ref=f2e233]: MedRAG clinical demo coordinating triage, literature, and safety agents — try it live, nothing is stored.
+            - generic [ref=f2e234]:
+              - generic [ref=f2e235]: Multi-agent
+              - generic [ref=f2e236]: RAG
+              - generic [ref=f2e237]: Gemini
+              - generic [ref=f2e238]: Next.js
+          - generic "femtocare.demo/chat" [ref=f2e240]:
+            - generic [ref=f2e241]:
+              - generic [ref=f2e242]: femtocare.demo/chat
+              - generic [ref=f2e249]:
+                - complementary [ref=f2e250]:
+                  - generic [ref=f2e256]:
+                    - generic [ref=f2e257]: MedRAG
+                    - generic [ref=f2e258]: Your health companion
+                  - navigation [ref=f2e259]:
+                    - button "New Conversation" [ref=f2e260] [cursor=pointer]
+                    - generic [ref=f2e264]: Library
+                    - generic [ref=f2e270]: Leave a Note
+                  - paragraph [ref=f2e278]:
+                    - text: Conversations
+                    - generic [ref=f2e279]: ▫
+                  - list [ref=f2e280]:
+                    - listitem [ref=f2e281]:
+                      - generic [ref=f2e285]: Psa Result Discussion
+                    - listitem [ref=f2e286]:
+                      - generic [ref=f2e290]: Initial Consultation Di…
+                    - listitem [ref=f2e291]:
+                      - generic [ref=f2e295]: Psa Trend Chart
+                    - listitem [ref=f2e296]:
+                      - generic [ref=f2e300]: Give Me Histogram Ch…
+                    - listitem [ref=f2e301]:
+                      - generic [ref=f2e305]: Psa Trend Chart
+                    - listitem [ref=f2e306]:
+                      - generic [ref=f2e310]: Symptoms Discussion
+                    - listitem [ref=f2e311]:
+                      - generic [ref=f2e315]: Understanding PSA an…
+                    - listitem [ref=f2e316]:
+                      - generic [ref=f2e320]: Conversation, 22 Sept
+                    - listitem [ref=f2e321]:
+                      - generic [ref=f2e325]: Conversation, 21 Sept
+                    - listitem [ref=f2e326]:
+                      - generic [ref=f2e330]: Imaging Report Review
+                    - listitem [ref=f2e331]:
+                      - generic [ref=f2e335]: First Thing I Asked Dis…
+                    - listitem [ref=f2e336]:
+                      - generic [ref=f2e340]: First Message On Chat…
+                  - generic [ref=f2e341]:
+                    - generic [ref=f2e342]: SG
+                    - generic [ref=f2e343]:
+                      - generic [ref=f2e344]: Samir Guenchi
+                      - generic [ref=f2e345]: Patient
+                - generic [ref=f2e346]:
+                  - generic [ref=f2e347]:
+                    - generic [ref=f2e348]:
+                      - button "Voice mode" [ref=f2e349] [cursor=pointer]
+                      - button "Text" [pressed] [ref=f2e354] [cursor=pointer]
+                    - generic [ref=f2e358]: Appointment
+                  - generic [ref=f2e379]:
+                    - heading "Good afternoon, Samir." [level=4] [ref=f2e386]
+                    - paragraph [ref=f2e387]: Last time you mentioned dizziness. How is it now?
+                    - paragraph [ref=f2e388]: "I remember: PSA 6.8 ng/mL · dizziness, headache +10 more"
+                    - generic [ref=f2e389]:
+                      - button "My PSA of 6.8" [ref=f2e390] [cursor=pointer]
+                      - button "Update on dizziness" [ref=f2e391] [cursor=pointer]
+                      - button "Prepare my visit" [ref=f2e392] [cursor=pointer]
+                  - generic [ref=f2e393]:
+                    - generic [ref=f2e394]:
+                      - textbox "Ask MedRAG" [ref=f2e398]:
+                        - /placeholder: Ask about a recent test or result…
+                      - button "Send" [disabled] [ref=f2e399]
+                    - paragraph [ref=f2e403]: Live demo · triage + literature + safety agents · nothing is stored
+        - generic [ref=f2e404]:
+          - generic "texa.demo/itinerary" [ref=f2e406]:
+            - generic [ref=f2e407]:
+              - generic [ref=f2e408]: texa.demo/itinerary
+              - generic [ref=f2e1130]:
+                - generic [ref=f2e1131]:
+                  - img "Ministry of Tourism and Handicrafts" [ref=f2e1132]
+                  - img "TEXA" [ref=f2e1133]
+                  - paragraph [ref=f2e1134]: TEXA — Tourism Explorer
+                  - generic [ref=f2e1135]: Algeria · live demo
+                - generic [ref=f2e1136]:
+                  - complementary [ref=f2e1137]:
+                    - generic [ref=f2e1138]: Search places, circuits…
+                    - generic [ref=f2e1143]:
+                      - button "Itinéraire (3)" [pressed] [ref=f2e1144] [cursor=pointer]
+                      - button "Carte (69)" [ref=f2e1150] [cursor=pointer]
+                    - paragraph [ref=f2e1154]: Map layers
+                    - generic [ref=f2e1155]:
+                      - generic [ref=f2e1156]: UNESCO Sites
+                      - generic [ref=f2e1164]: Historical
+                      - generic [ref=f2e1175]: National Parks
+                      - generic [ref=f2e1179]: Beaches
+                      - generic [ref=f2e1184]: Ski Stations
+                      - generic [ref=f2e1188]: Airports
+                      - generic [ref=f2e1191]: Train Stations
+                    - paragraph [ref=f2e1199]: Suggested circuits
+                    - generic [ref=f2e1200]:
+                      - generic [ref=f2e1201]: Roman Circuit
+                      - generic [ref=f2e1208]: Sahara Route
+                      - generic [ref=f2e1215]: Mediterranean Coast
+                    - paragraph [ref=f2e1222]: My Plan
+                    - list [ref=f2e1223]:
+                      - listitem [ref=f2e1224]:
+                        - generic [ref=f2e1225]: Ouled Djellal
+                        - generic [ref=f2e1228]: "4"
+                      - listitem [ref=f2e1229]:
+                        - generic [ref=f2e1230]: Médéa
+                        - generic [ref=f2e1233]: "6"
+                      - listitem [ref=f2e1234]:
+                        - generic [ref=f2e1235]: Dar El Ghaba
+                        - generic [ref=f2e1238]: "2"
+                      - listitem [ref=f2e1239]:
+                        - generic [ref=f2e1240]: Citroën Collection
+                        - generic [ref=f2e1243]: "3"
+                      - listitem [ref=f2e1244]:
+                        - generic [ref=f2e1245]: Restaurant Cap Sabri
+                        - generic [ref=f2e1248]: "1"
+                      - listitem [ref=f2e1249]:
+                        - generic [ref=f2e1250]: Messaad
+                        - generic [ref=f2e1253]: "5"
+                      - listitem [ref=f2e1254]:
+                        - generic [ref=f2e1255]: Hotel El Djazaïr
+                        - generic [ref=f2e1258]: "2"
+                      - listitem [ref=f2e1259]:
+                        - generic [ref=f2e1260]: Assekrem / Hoggar
+                        - generic [ref=f2e1263]: "7"
+                      - listitem [ref=f2e1264]:
+                        - generic [ref=f2e1265]: Restaurant Étoile
+                        - generic [ref=f2e1268]: "1"
+                  - generic [ref=f2e1269]:
+                    - generic [ref=f2e1270]:
+                      - generic "OpenStreetMap of Algeria with TEXA itinerary" [ref=f2e1271]:
+                        - generic:
+                          - generic:
+                            - img:
+                              - generic [ref=f2e1272] [cursor=pointer]
+                          - generic:
+                            - button [ref=f2e1273] [cursor=pointer]
+                            - button [ref=f2e1275] [cursor=pointer]
+                            - button [ref=f2e1277] [cursor=pointer]
+                            - button [ref=f2e1279] [cursor=pointer]
+                            - button [ref=f2e1281] [cursor=pointer]
+                            - button "1" [ref=f2e1283] [cursor=pointer]
+                            - button "2" [ref=f2e1285] [cursor=pointer]
+                            - button "3" [ref=f2e1287] [cursor=pointer]
+                        - generic [ref=f2e1289]:
+                          - generic [ref=f2e1290]:
+                            - button "Zoom in" [ref=f2e1291] [cursor=pointer]: +
+                            - button "Zoom out" [ref=f2e1292] [cursor=pointer]: −
+                          - generic [ref=f2e1293]:
+                            - link "Leaflet" [ref=f2e1294] [cursor=pointer]:
+                              - /url: https://leafletjs.com
+                            - text: "| ©"
+                            - link "OpenStreetMap" [ref=f2e1299] [cursor=pointer]:
+                              - /url: https://www.openstreetmap.org/copyright
+                            - text: contributors
+                      - generic: OpenStreetMap · Chlef → Tlemcen → Adrar
+                    - generic [ref=f2e1300]:
+                      - generic [ref=f2e1301]: Plan
+                      - button "Carte" [ref=f2e1302] [cursor=pointer]
+                  - complementary [ref=f2e1303]:
+                    - generic [ref=f2e1304]:
+                      - generic [ref=f2e1313]:
+                        - generic [ref=f2e1314]: Your 3-Day Journey
+                        - generic [ref=f2e1315]: Chlef → Tlemcen → Adrar
+                      - generic [ref=f2e1316]: 3 days
+                    - generic [ref=f2e1328]:
+                      - generic [ref=f2e1329]:
+                        - generic [ref=f2e1330]: "1"
+                        - generic [ref=f2e1333]:
+                          - paragraph [ref=f2e1334]: Day 1 — Chlef
+                          - paragraph [ref=f2e1335]:
+                            - generic [ref=f2e1336]: Flight
+                            - generic [ref=f2e1339]: 1 night
+                          - paragraph [ref=f2e1345]:
+                            - generic [ref=f2e1349]: Mediterranean coast
+                      - generic [ref=f2e1358]:
+                        - generic [ref=f2e1359]: "2"
+                        - generic [ref=f2e1362]:
+                          - paragraph [ref=f2e1363]: Day 2 — Tlemcen
+                          - paragraph [ref=f2e1364]:
+                            - generic [ref=f2e1365]: Scenic drive
+                            - generic [ref=f2e1371]: 2 nights
+                          - paragraph [ref=f2e1377]:
+                            - generic [ref=f2e1381]: El Mechouar Palace + Mansourah ruins
+                      - generic [ref=f2e1396]:
+                        - generic [ref=f2e1397]: "3"
+                        - generic [ref=f2e1399]:
+                          - paragraph [ref=f2e1400]: Day 3 — Adrar
+                          - paragraph [ref=f2e1401]:
+                            - generic [ref=f2e1402]: Flight + transfer
+                            - generic [ref=f2e1405]: 2 nights
+                          - paragraph [ref=f2e1411]:
+                            - generic [ref=f2e1415]: Oasis / desert
+                    - button "Export itinerary" [ref=f2e1426] [cursor=pointer]
+          - generic [ref=f2e415]:
+            - generic [ref=f2e416]:
+              - img "Ministry of Tourism and Handicrafts" [ref=f2e417]
+              - img "TEXA" [ref=f2e418]
+              - generic [ref=f2e419]: Web · Tourism
+            - heading "TEXA — Tourism Explorer" [level=3] [ref=f2e420]
+            - paragraph [ref=f2e421]: Multi-agent platform for tourism and exploration planning in Algeria — Ministry of Tourism and Handicrafts.
+            - generic [ref=f2e422]:
+              - generic [ref=f2e423]: Multi-agent
+              - generic [ref=f2e424]: Next.js
+              - generic [ref=f2e425]: Mapping
+              - generic [ref=f2e426]: Itineraries
+        - generic [ref=f2e427]:
+          - generic [ref=f2e428]:
+            - generic [ref=f2e429]:
+              - img "Algérie Poste" [ref=f2e430]
+              - generic [ref=f2e431]: Mobile · E-commerce
+            - heading "E-Store Manager" [level=3] [ref=f2e432]
+            - paragraph [ref=f2e433]: Professional mobile app for e-store management — Algérie Poste.
+            - generic [ref=f2e434]:
+              - generic [ref=f2e435]: Flutter
+              - generic [ref=f2e436]: Firebase
+              - generic [ref=f2e437]: E-commerce
+          - generic "eposte.demo/store" [ref=f2e439]:
+            - generic [ref=f2e446]:
+              - generic [ref=f2e447]:
+                - img "Algérie Poste" [ref=f2e448]
+                - generic [ref=f2e449]:
+                  - paragraph [ref=f2e450]: E-Store Manager
+                  - paragraph [ref=f2e451]: Algérie Poste · seller demo
+              - generic [ref=f2e457]:
+                - generic [ref=f2e458]:
+                  - generic [ref=f2e459]:
+                    - paragraph [ref=f2e460]: Revenue
+                    - paragraph [ref=f2e461]: 2.4M DA
+                    - paragraph [ref=f2e462]: +12% vs last month
+                  - generic [ref=f2e463]:
+                    - paragraph [ref=f2e464]: Orders
+                    - paragraph [ref=f2e465]: 1,284
+                    - paragraph [ref=f2e466]: +8% this week
+                  - generic [ref=f2e467]:
+                    - paragraph [ref=f2e468]: Products
+                    - paragraph [ref=f2e469]: "356"
+                    - paragraph [ref=f2e470]: 24 low stock
+                - generic [ref=f2e471]:
+                  - generic [ref=f2e472]:
+                    - paragraph [ref=f2e473]: Recent orders
+                    - generic [ref=f2e474]: See all
+                  - list [ref=f2e475]:
+                    - listitem [ref=f2e476]:
+                      - generic [ref=f2e477]:
+                        - paragraph [ref=f2e478]: "#DZ-9041"
+                        - paragraph [ref=f2e479]: Yasmine B.
+                      - generic [ref=f2e480]: Delivered
+                      - generic [ref=f2e481]: 4,800 DA
+                    - listitem [ref=f2e482]:
+                      - generic [ref=f2e483]:
+                        - paragraph [ref=f2e484]: "#DZ-9040"
+                        - paragraph [ref=f2e485]: Mohamed K.
+                      - generic [ref=f2e486]: Shipped
+                      - generic [ref=f2e487]: 12,300 DA
+                    - listitem [ref=f2e488]:
+                      - generic [ref=f2e489]:
+                        - paragraph [ref=f2e490]: "#DZ-9039"
+                        - paragraph [ref=f2e491]: Sara L.
+                      - generic [ref=f2e492]: Pending
+                      - generic [ref=f2e493]: 2,150 DA
+                    - listitem [ref=f2e494]:
+                      - generic [ref=f2e495]:
+                        - paragraph [ref=f2e496]: "#DZ-9038"
+                        - paragraph [ref=f2e497]: Amine T.
+                      - generic [ref=f2e498]: Delivered
+                      - generic [ref=f2e499]: 7,900 DA
+                    - listitem [ref=f2e500]:
+                      - generic [ref=f2e501]:
+                        - paragraph [ref=f2e502]: "#DZ-9037"
+                        - paragraph [ref=f2e503]: Lina M.
+                      - generic [ref=f2e504]: Cancelled
+                      - generic [ref=f2e505]: 3,400 DA
+                - generic [ref=f2e506]:
+                  - generic [ref=f2e507]:
+                    - paragraph [ref=f2e508]: Top products
+                    - generic [ref=f2e509]: Manage
+                  - generic [ref=f2e510]:
+                    - generic [ref=f2e511]:
+                      - generic [ref=f2e512]: "4.9"
+                      - paragraph [ref=f2e516]: EMS Pack 5kg
+                      - paragraph [ref=f2e517]: 1,200 DA
+                    - generic [ref=f2e518]:
+                      - generic [ref=f2e519]: "4.8"
+                      - paragraph [ref=f2e523]: Stamp Set 2024
+                      - paragraph [ref=f2e524]: 850 DA
+                    - generic [ref=f2e525]:
+                      - generic [ref=f2e526]: "4.7"
+                      - paragraph [ref=f2e530]: Post Box M
+                      - paragraph [ref=f2e531]: 2,400 DA
+                    - generic [ref=f2e532]:
+                      - generic [ref=f2e533]: "4.9"
+                      - paragraph [ref=f2e537]: Express Label
+                      - paragraph [ref=f2e538]: 300 DA
+              - navigation [ref=f2e539]:
+                - generic [ref=f2e540]: Home
+                - generic [ref=f2e544]: Orders
+                - generic [ref=f2e549]: Products
+                - generic [ref=f2e555]: Settings
+        - generic [ref=f2e561]:
+          - generic "ramy.demo/sentiment" [ref=f2e563]:
+            - generic [ref=f2e571]:
+              - generic [ref=f2e572]:
+                - generic [ref=f2e581]:
+                  - generic [ref=f2e582]: Ramy Insights
+                  - generic [ref=f2e583]: Sentiment predictions · live demo, nothing is stored
+                - generic [ref=f2e584]: LIVE
+              - generic [ref=f2e586]:
+                - generic [ref=f2e587]:
+                  - generic [ref=f2e588]: SENTIMENT PREDICTION
+                  - button "Analyze" [ref=f2e595] [cursor=pointer]
+                - paragraph [ref=f2e598]: Send a text, then press Analyze
+              - generic [ref=f2e600]:
+                - paragraph [ref=f2e601]: Try it — messages stay in this session only.
+                - generic [ref=f2e602]:
+                  - button "Ramy Cola is the best drink ever!" [ref=f2e603] [cursor=pointer]
+                  - button "The delivery was late and the bottle leake…" [ref=f2e604] [cursor=pointer]
+              - generic [ref=f2e606]:
+                - textbox "Chat message" [ref=f2e607]:
+                  - /placeholder: Ask something to try it live…
+                - button "Send" [disabled] [ref=f2e608]
+          - generic [ref=f2e614]:
+            - generic [ref=f2e615]:
+              - img "Ramy" [ref=f2e616]
+              - generic [ref=f2e617]: AI · Sentiment
+            - heading "Ramy Insights" [level=3] [ref=f2e618]
+            - paragraph [ref=f2e619]: Sentiment-analysis engine with a live verdict meter — type any product feedback, press Analyze, and watch the prediction.
+            - generic [ref=f2e620]:
+              - generic [ref=f2e621]: LLMs
+              - generic [ref=f2e622]: NLP
+              - generic [ref=f2e623]: Transformers
+              - generic [ref=f2e624]: Python
+        - generic [ref=f2e625]:
+          - generic [ref=f2e626]:
+            - generic [ref=f2e627]:
+              - img "Voxtra" [ref=f2e628]
+              - generic [ref=f2e629]: Web · Speech AI
+            - heading "Voxtra — Speech Transcription" [level=3] [ref=f2e630]
+            - paragraph [ref=f2e631]: Audio library with waveform transcripts — open a file to read it, record with your mic, or summarize with AI. Nothing is stored.
+            - generic [ref=f2e632]:
+              - generic [ref=f2e633]: Web Speech API
+              - generic [ref=f2e634]: STT
+              - generic [ref=f2e635]: LLMs
+              - generic [ref=f2e636]: Next.js
+          - generic "voxtra.demo/transcribe" [ref=f2e638]:
+            - generic [ref=f2e639]:
+              - generic [ref=f2e640]: voxtra.demo/transcribe
+              - generic [ref=f2e1430]:
+                - generic [ref=f2e1432]:
+                  - img "Voxtra" [ref=f2e1433]
+                  - generic [ref=f2e1434]:
+                    - button "Add audio" [ref=f2e1436] [cursor=pointer]
+                    - button "Grid view" [ref=f2e1440] [cursor=pointer]
+                    - button "History" [ref=f2e1446] [cursor=pointer]
+                - generic [ref=f2e1451]:
+                  - paragraph [ref=f2e1452]: Audio Files
+                  - paragraph [ref=f2e1453]: 3 files total
+                  - generic [ref=f2e1454]:
+                    - generic [ref=f2e1455]:
+                      - generic [ref=f2e1456]: Title
+                      - generic [ref=f2e1457]: Actions
+                    - button "(ChatGPT) تطبيقات الذكاء الاصطناعي و “تشات-جي.بي.تي.” في التعليم ar_chunk_3" [ref=f2e1458] [cursor=pointer]
+                    - 'button "مقدمة للبرمجة بلغة جافا Java - الجزء 3 - محاضرة 4 - رواق : مقدمة للبرمجة بلغة جافا ar_chunk_11" [ref=f2e1466] [cursor=pointer]'
+                    - 'button "المحاضرة 7 الجزء 2 : مقدمة في علم التسويق - رواق ar_chunk_1" [ref=f2e1474] [cursor=pointer]'
+                  - generic [ref=f2e1482]: Showing 1 to 3 of 3 entries
+                  - paragraph [ref=f2e1489]: Click a file to open its transcript
+      - generic [ref=f2e647]:
+        - heading "More projects" [level=3] [ref=f2e648]
+        - paragraph [ref=f2e649]: Filter the archive — click any card for details.
+        - generic [ref=f2e650]:
+          - button "All8" [pressed] [ref=f2e651] [cursor=pointer]
+          - button "AI/ML5" [ref=f2e652] [cursor=pointer]
+          - button "Data3" [ref=f2e653] [cursor=pointer]
+        - region "More projects coverflow" [ref=f2e654]:
+          - generic [ref=f2e655]:
+            - button "Show RAG System for Algérie Poste (APN)":
+              - generic:
+                - img "RAG System for Algérie Poste (APN)"
+              - generic:
+                - generic: AI/ML · 2025
+                - generic: RAG System for Algérie Poste (APN)
+                - generic: Retrieval-Augmented Generation system designed for intelligent document querying and knowledge access at APN scale.
+                - generic:
+                  - generic: LangChain
+                  - generic: Vector DB
+                  - generic: LLMs
+            - button "Show MGRPO — Multi-Modal GRPO" [ref=f2e656] [cursor=pointer]:
+              - img "MGRPO — Multi-Modal GRPO" [ref=f2e658]
+              - generic [ref=f2e659]:
+                - generic [ref=f2e660]: AI/ML · 2025
+                - generic [ref=f2e661]: MGRPO — Multi-Modal GRPO
+                - generic [ref=f2e662]: Extension of GRPO with multi-modal capabilities integrating text, images, and structured data for advanced reasoning.
+                - generic [ref=f2e663]:
+                  - generic [ref=f2e664]: Deep Learning
+                  - generic [ref=f2e665]: Multi-modal AI
+                  - generic [ref=f2e666]: Transformers
+            - button "Show Oil & Gas Production Forecasting" [ref=f2e667] [cursor=pointer]:
+              - img "Oil & Gas Production Forecasting" [ref=f2e669]
+              - generic [ref=f2e670]:
+                - generic [ref=f2e671]: Data · 2025
+                - generic [ref=f2e672]: Oil & Gas Production Forecasting
+                - generic [ref=f2e673]: ARIMA-based time series model for forecasting Algeria's oil and gas production and revenue.
+                - generic [ref=f2e674]:
+                  - generic [ref=f2e675]: Python
+                  - generic [ref=f2e676]: ARIMA
+                  - generic [ref=f2e677]: Time Series
+            - button "Show Sleep Stages Classification" [ref=f2e678] [cursor=pointer]:
+              - img "Sleep Stages Classification" [ref=f2e680]
+              - generic [ref=f2e681]:
+                - generic [ref=f2e682]: Data · 2025
+                - generic [ref=f2e683]: Sleep Stages Classification
+                - generic [ref=f2e684]: Stacked ensemble learning for classifying sleep stages from physiological time series data.
+                - generic [ref=f2e685]:
+                  - generic [ref=f2e686]: Python
+                  - generic [ref=f2e687]: ML
+                  - generic [ref=f2e688]: Signal Processing
+            - button "Open details for News Popularity Prediction" [ref=f2e689] [cursor=pointer]:
+              - img "News Popularity Prediction" [ref=f2e691]
+              - generic [ref=f2e692]:
+                - generic [ref=f2e693]: Data · 2025
+                - generic [ref=f2e694]: News Popularity Prediction
+                - generic [ref=f2e695]: Regression models to predict news article popularity from the UCI dataset with NLP features.
+                - generic [ref=f2e696]:
+                  - generic [ref=f2e697]: Python
+                  - generic [ref=f2e698]: Regression
+                  - generic [ref=f2e699]: NLP
+                - generic [ref=f2e700]: Click to open details →
+            - button "Show Book Recommendation Engine" [ref=f2e701] [cursor=pointer]:
+              - img "Book Recommendation Engine" [ref=f2e703]
+              - generic [ref=f2e704]:
+                - generic [ref=f2e705]: AI/ML · 2025
+                - generic [ref=f2e706]: Book Recommendation Engine
+                - generic [ref=f2e707]: KNN-based recommendation system for personalized book suggestions.
+                - generic [ref=f2e708]:
+                  - generic [ref=f2e709]: Python
+                  - generic [ref=f2e710]: KNN
+                  - generic [ref=f2e711]: Recommendation
+            - button "Show SMS Text Classifier" [ref=f2e712] [cursor=pointer]:
+              - img "SMS Text Classifier" [ref=f2e714]
+              - generic [ref=f2e715]:
+                - generic [ref=f2e716]: AI/ML · 2025
+                - generic [ref=f2e717]: SMS Text Classifier
+                - generic [ref=f2e718]: Neural network for classifying SMS messages into spam and ham categories.
+                - generic [ref=f2e719]:
+                  - generic [ref=f2e720]: Python
+                  - generic [ref=f2e721]: Neural Networks
+                  - generic [ref=f2e722]: NLP
+            - button "Show Constraint Programming for Agri Planning" [ref=f2e723] [cursor=pointer]:
+              - img "Constraint Programming for Agri Planning" [ref=f2e725]
+              - generic [ref=f2e726]:
+                - generic [ref=f2e727]: AI/ML · 2024
+                - generic [ref=f2e728]: Constraint Programming for Agri Planning
+                - generic [ref=f2e729]: Constraint programming for optimizing crop planning and resource allocation.
+                - generic [ref=f2e730]:
+                  - generic [ref=f2e731]: Python
+                  - generic [ref=f2e732]: Optimization
+                  - generic [ref=f2e733]: CP
+            - button "Previous project" [ref=f2e734] [cursor=pointer]
+            - button "Next project" [ref=f2e737] [cursor=pointer]
+          - generic [ref=f2e740]:
+            - paragraph [ref=f2e741]: 5 / 8 — drag, swipe, or use ← → keys
+            - tablist "Choose project" [ref=f2e742]:
+              - tab "Go to RAG System for Algérie Poste (APN)" [ref=f2e743] [cursor=pointer]
+              - tab "Go to MGRPO — Multi-Modal GRPO" [ref=f2e744] [cursor=pointer]
+              - tab "Go to Oil & Gas Production Forecasting" [ref=f2e745] [cursor=pointer]
+              - tab "Go to Sleep Stages Classification" [ref=f2e746] [cursor=pointer]
+              - tab "Go to News Popularity Prediction" [selected] [ref=f2e747] [cursor=pointer]
+              - tab "Go to Book Recommendation Engine" [ref=f2e748] [cursor=pointer]
+              - tab "Go to SMS Text Classifier" [ref=f2e749] [cursor=pointer]
+              - tab "Go to Constraint Programming for Agri Planning" [ref=f2e750] [cursor=pointer]
+    - generic [ref=f2e751]:
+      - generic [aria-hidden]: RESEARCH
+      - generic [ref=f2e752]:
+        - generic [ref=f2e753]:
+          - heading "Research & papers" [level=2] [ref=f2e754]
+          - paragraph [ref=f2e755]: Selected studies and drafts — examples being replaced with publications.
+        - generic [ref=f2e756]:
+          - article [ref=f2e757]:
+            - generic [ref=f2e758]:
+              - generic [ref=f2e765]:
+                - generic [ref=f2e766]: Energy Analytics
+                - generic [ref=f2e767]: "2025"
+              - paragraph [ref=f2e771]: PDF · Research draft
+            - generic [ref=f2e775]:
+              - paragraph [ref=f2e778]: LLM Reasoning — Research Draft
+              - 'heading "MGRPO: Multi-Modal Group Relative Policy Optimization" [level=3] [ref=f2e781]'
+              - paragraph [ref=f2e782]: Guerroudj Abdennour et al. — 2025
+              - generic [ref=f2e783]:
+                - paragraph [ref=f2e784]: Abstract
+                - paragraph [ref=f2e785]: Extending GRPO with multi-modal critics that fuse text, image, and structured evidence for advanced reasoning tasks.
+              - generic [ref=f2e786]:
+                - generic [ref=f2e787]: RL
+                - generic [ref=f2e788]: Multi-modal
+                - generic [ref=f2e789]: Transformers
+              - generic [ref=f2e790]:
+                - generic [ref=f2e791]: Soon
+                - button "More info" [ref=f2e792] [cursor=pointer]
+          - article [ref=f2e795]:
+            - generic [ref=f2e796]:
+              - generic [ref=f2e810]:
+                - generic [ref=f2e811]: Biomedical AI
+                - generic [ref=f2e812]: "2025"
+              - paragraph [ref=f2e816]: PDF · Research draft
+            - generic [ref=f2e820]:
+              - paragraph [ref=f2e823]: Biomedical Signal Processing — Preprint
+              - heading "Stacked Ensembles for Sleep-Stage Classification" [level=3] [ref=f2e826]
+              - paragraph [ref=f2e827]: Guerroudj Abdennour et al. — 2025
+              - generic [ref=f2e828]:
+                - paragraph [ref=f2e829]: Abstract
+                - paragraph [ref=f2e830]: Stacked ensemble learning over physiological time series with spectral and Hjorth features for five-stage sleep classification.
+              - generic [ref=f2e831]:
+                - generic [ref=f2e832]: Ensembles
+                - generic [ref=f2e833]: Signal Processing
+                - generic [ref=f2e834]: Health
+              - generic [ref=f2e835]:
+                - link "Read" [ref=f2e836] [cursor=pointer]:
+                  - /url: https://colab.research.google.com/drive/1xOeaHCSjtY-pKOtnRnj6Sn94jL1Vw1Dp
+                - button "More info" [ref=f2e840] [cursor=pointer]
+          - article [ref=f2e843]:
+            - generic [ref=f2e844]:
+              - generic [ref=f2e851]:
+                - generic [ref=f2e852]: NLP · Media
+                - generic [ref=f2e853]: "2025"
+              - paragraph [ref=f2e857]: PDF · Research draft
+            - generic [ref=f2e861]:
+              - paragraph [ref=f2e864]: Applied Energy Analytics — Working Paper
+              - heading "ARIMA-Based Forecasting of Algeria's Oil & Gas Production" [level=3] [ref=f2e867]
+              - paragraph [ref=f2e868]: Guerroudj Abdennour et al. — 2025
+              - generic [ref=f2e869]:
+                - paragraph [ref=f2e870]: Abstract
+                - paragraph [ref=f2e871]: Time-series modeling of national hydrocarbon output and revenue with ARIMA baselines, exogenous regressors, and rolling-origin evaluation.
+              - generic [ref=f2e872]:
+                - generic [ref=f2e873]: Time Series
+                - generic [ref=f2e874]: ARIMA
+                - generic [ref=f2e875]: Energy
+              - generic [ref=f2e876]:
+                - link "Read" [ref=f2e877] [cursor=pointer]:
+                  - /url: https://colab.research.google.com/drive/13N31tkvfJZf7nM9U0O8qBLgqnhOpqzue
+                - button "More info" [ref=f2e881] [cursor=pointer]
+        - paragraph [ref=f2e884]: Full publication list coming soon — reach out for drafts and notebooks.
+    - region "Journals and conferences" [ref=f2e885]:
+      - generic [ref=f2e886]:
+        - generic [ref=f2e887]:
+          - heading "Journals & conferences" [level=2] [ref=f2e888]
+          - paragraph [ref=f2e889]: Where I publish and present.
+        - generic [ref=f2e891]:
+          - generic [ref=f2e893]:
+            - generic [ref=f2e894]: Journal
+            - paragraph [ref=f2e897]: JMLR — Journal of Machine Learning Research
+            - paragraph [ref=f2e898]: Target journal — forthcoming
+            - generic [ref=f2e899]: 01 / 06
+          - generic [ref=f2e901]:
+            - generic [ref=f2e902]: Journal
+            - paragraph [ref=f2e907]: Journal name — forthcoming
+            - paragraph [ref=f2e908]: Add your journal here
+            - generic [ref=f2e909]: 02 / 06
+          - generic [ref=f2e911]:
+            - generic [ref=f2e912]: Journal
+            - paragraph [ref=f2e917]: Journal name — forthcoming
+            - paragraph [ref=f2e918]: Add your journal here
+            - generic [ref=f2e919]: 03 / 06
+          - generic [ref=f2e921]:
+            - generic [ref=f2e922]: Conference
+            - paragraph [ref=f2e925]: CVPR — Computer Vision & Pattern Recognition
+            - paragraph [ref=f2e926]: Target conference — forthcoming
+            - generic [ref=f2e927]: 04 / 06
+          - generic [ref=f2e929]:
+            - generic [ref=f2e930]: Conference
+            - paragraph [ref=f2e936]: Conference name — forthcoming
+            - paragraph [ref=f2e937]: Add your conference here
+            - generic [ref=f2e938]: 05 / 06
+          - generic [ref=f2e940]:
+            - generic [ref=f2e941]: Conference
+            - paragraph [ref=f2e947]: Conference name — forthcoming
+            - paragraph [ref=f2e948]: Add your conference here
+            - generic [ref=f2e949]: 06 / 06
+        - paragraph [aria-hidden] [ref=f2e950]: Auto-rotating showcase · hover to pause
+    - generic [ref=f2e952]:
+      - generic [ref=f2e953]:
+        - heading "Certifications & Experience" [level=2] [ref=f2e954]
+        - paragraph [ref=f2e955]: Validated by industry leaders — telecoms, energy, academia and global platforms. Click any card to view the certificate.
+      - generic [ref=f2e958]:
+        - link "2026 — Algeria Post Algeria Post Certificate" [ref=f2e959] [cursor=pointer]:
+          - /url: /certificates/Algerie post.pdf
+          - generic [ref=f2e965]:
+            - generic [ref=f2e966]: 2026 — Algeria Post
+            - generic [ref=f2e967]: Algeria Post Certificate
+        - link "2026 — BMS BMS Certificate" [ref=f2e971] [cursor=pointer]:
+          - /url: /certificates/BMS.pdf
+          - generic [ref=f2e977]:
+            - generic [ref=f2e978]: 2026 — BMS
+            - generic [ref=f2e979]: BMS Certificate
+        - link "2025 — Sonatrach Sonatrach Certificate" [ref=f2e983] [cursor=pointer]:
+          - /url: /certificates/Sonatrach.pdf
+          - generic [ref=f2e989]:
+            - generic [ref=f2e990]: 2025 — Sonatrach
+            - generic [ref=f2e991]: Sonatrach Certificate
+        - link "2025 — Algeria Telecom Algeria Telecom Certificate" [ref=f2e995] [cursor=pointer]:
+          - /url: /certificates/algerie telecom.pdf
+          - generic [ref=f2e1001]:
+            - generic [ref=f2e1002]: 2025 — Algeria Telecom
+            - generic [ref=f2e1003]: Algeria Telecom Certificate
+        - link "2025 — HackerRank Software Engineer Certificate" [ref=f2e1007] [cursor=pointer]:
+          - /url: /certificates/software_engineer certificate.pdf
+          - generic [ref=f2e1013]:
+            - generic [ref=f2e1014]: 2025 — HackerRank
+            - generic [ref=f2e1015]: Software Engineer Certificate
+        - link "2025 — Cisco Networking Academy Ethical Hacking Certificate" [ref=f2e1019] [cursor=pointer]:
+          - /url: /certificates/Ethical Hacking Certificat.pdf
+          - generic [ref=f2e1025]:
+            - generic [ref=f2e1026]: 2025 — Cisco Networking Academy
+            - generic [ref=f2e1027]: Ethical Hacking Certificate
+        - link "2025 — APN APN Certificate" [ref=f2e1031] [cursor=pointer]:
+          - /url: /certificates/APN.pdf
+          - generic [ref=f2e1037]:
+            - generic [ref=f2e1038]: 2025 — APN
+            - generic [ref=f2e1039]: APN Certificate
+    - generic [ref=f2e1044]:
+      - generic [ref=f2e1045]:
+        - heading "Let's work together" [level=2] [ref=f2e1046]
+        - paragraph [ref=f2e1047]: Have an AI product, RAG system or standout experience in mind? My inbox is always open.
+      - generic [ref=f2e1048]:
+        - generic [ref=f2e1049]:
+          - generic [ref=f2e1050]:
+            - generic [ref=f2e1051]:
+              - generic [ref=f2e1052]: Name
+              - textbox "Name" [ref=f2e1053]:
+                - /placeholder: Your name
+            - generic [ref=f2e1054]:
+              - generic [ref=f2e1055]: Email
+              - textbox "Email" [ref=f2e1056]:
+                - /placeholder: your.email@example.com
+          - generic [ref=f2e1057]:
+            - generic [ref=f2e1058]: Message
+            - textbox "Message" [ref=f2e1059]:
+              - /placeholder: Tell me about your project...
+          - button "Send Message" [ref=f2e1060] [cursor=pointer]
+        - generic [ref=f2e1064]:
+          - link "Email guerroudjabdennour1@gmail.com" [ref=f2e1065] [cursor=pointer]:
+            - /url: mailto:guerroudjabdennour1@gmail.com
+            - generic [ref=f2e1070]:
+              - generic [ref=f2e1071]: Email
+              - generic [ref=f2e1072]: guerroudjabdennour1@gmail.com
+          - link "GitHub @AbdennourGuerroudj" [ref=f2e1073] [cursor=pointer]:
+            - /url: https://github.com/AbdennourGuerroudj
+            - generic [ref=f2e1078]:
+              - generic [ref=f2e1079]: GitHub
+              - generic [ref=f2e1080]: "@AbdennourGuerroudj"
+          - link "LinkedIn Abdennour Guerroudj" [ref=f2e1081] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/abdennour-guerroudj/
+            - generic [ref=f2e1087]:
+              - generic [ref=f2e1088]: LinkedIn
+              - generic [ref=f2e1089]: Abdennour Guerroudj
+          - generic [ref=f2e1090]:
+            - paragraph [ref=f2e1091]: Prefer the short version?
+            - paragraph [ref=f2e1092]: Download my resume and let's schedule a call this week.
+            - link "Download CV" [ref=f2e1093] [cursor=pointer]:
+              - /url: /assets/docs/cv.pdf
+    - generic [ref=f2e1095]:
+      - generic [ref=f2e1096]:
+        - generic [ref=f2e1097]:
+          - paragraph [ref=f2e1098]: Guerroudj Abdennour
+          - paragraph [ref=f2e1099]: AI Engineer & Full-Stack Developer
+        - generic [ref=f2e1100]:
+          - link "GitHub" [ref=f2e1101] [cursor=pointer]:
+            - /url: https://github.com/AbdennourGuerroudj
+          - link "LinkedIn" [ref=f2e1105] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/abdennour-guerroudj/
+          - link "Email" [ref=f2e1110] [cursor=pointer]:
+            - /url: mailto:guerroudjabdennour1@gmail.com
+          - button "Back to top" [ref=f2e1114] [cursor=pointer]
+      - generic [ref=f2e1117]:
+        - paragraph [ref=f2e1118]: © 2026 Guerroudj Abdennour. All rights reserved.
+        - paragraph [ref=f2e1119]: Built with Next.js · Space Grotesk
+    - button "Open portfolio assistant" [ref=f2e1120] [cursor=pointer]
+  - alert [ref=f2e1496]

@@ -156,9 +156,9 @@ export default function FemtoMedRag({ system }: { system: string }) {
           ))}
         </ul>
         <div className="flex items-center gap-2 border-t border-stone-200/70 px-3 py-2">
-          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#F3D9CF] text-[10px] font-extrabold text-slate-700">SG</span>
+          <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#F3D9CF] text-[10px] font-extrabold text-slate-700">GA</span>
           <span className="min-w-0 leading-tight">
-            <span className="block truncate text-[11px] font-bold text-slate-900">Samir Guenchi</span>
+            <span className="block truncate text-[11px] font-bold text-slate-900">Guerroudj Abdennour</span>
             <span className="block text-[9px] text-slate-500">Patient</span>
           </span>
         </div>
@@ -199,7 +199,7 @@ export default function FemtoMedRag({ system }: { system: string }) {
           {msgs.length === 0 ? (
             <div className="mx-auto flex h-full max-w-xl flex-col items-center justify-center py-6 text-center">
               <Stethoscope size={18} className="mb-2 text-teal-600" />
-              <h4 className="font-serif text-[26px] font-medium tracking-tight text-slate-900">Good afternoon, Samir.</h4>
+              <h4 className="font-serif text-[26px] font-medium tracking-tight text-slate-900">Good afternoon, Abdennour.</h4>
               <p className="mt-1 text-[12px] text-slate-500">Last time you mentioned dizziness. How is it now?</p>
               <p className="mt-3 rounded-full bg-[#F4EFE7] px-3 py-1.5 text-[10.5px] font-medium text-slate-600">
                 I remember: <b>PSA 6.8 ng/mL</b> · dizziness, headache <span className="text-slate-400">+10 more</span>

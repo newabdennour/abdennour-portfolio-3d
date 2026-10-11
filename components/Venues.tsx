@@ -23,54 +23,26 @@ const slides: Slide[] = [
   ...conferences.map((c) => ({ kind: "Conference" as const, ...c })),
 ];
 
+// Ring shows logo images only — no cards, no text.
+const logoSlides = slides.filter((s) => s.logo);
+
+function hideImg(e: React.SyntheticEvent<HTMLImageElement>) {
+  e.currentTarget.style.display = "none";
+}
+
 function RingCard({ slide, index, total }: { slide: Slide; index: number; total: number }) {
-  const isJournal = slide.kind === "Journal";
   return (
     <div
-      className="venue3d-card"
+      className="venue3d-card venue3d-logo"
       style={{ "--i": index, "--n": total } as React.CSSProperties}
     >
-      <div
-        className={`flex h-full flex-col rounded-2xl border p-5 text-left shadow-xl ${
-          isJournal
-            ? "border-amber-200 bg-[#fffdf4]"
-            : "border-slate-200 bg-white"
-        }`}
-      >
-        <span className="flex items-center gap-2.5">
-          {slide.logo ? (
-            /* eslint-disable-next-line @next/next/no-img-element */
-            <img
-              src={slide.logo}
-              alt={`${slide.name} logo`}
-              className="h-10 w-10 rounded-xl border border-slate-200 bg-white object-contain p-0.5 shadow-md"
-              onError={(e) => { e.currentTarget.style.display = "none"; }}
-            />
-          ) : (
-            <span
-              className={`grid h-10 w-10 place-items-center rounded-xl text-white shadow-md ${
-                isJournal
-                  ? "bg-gradient-to-br from-amber-500 to-amber-700"
-                  : "bg-gradient-to-br from-slate-800 to-slate-950"
-              }`}
-            >
-              {isJournal ? <BookOpen size={18} /> : <Mic size={18} />}
-            </span>
-          )}
-          <span
-            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold ${
-              isJournal ? "bg-amber-100 text-amber-800" : "bg-slate-900 text-white"
-            }`}
-          >
-            {slide.kind}
-          </span>
-        </span>
-        <p className="mt-3 text-base font-bold leading-snug text-slate-900">{slide.name}</p>
-        <p className="mt-1 text-xs text-slate-500">{slide.note}</p>
-        <span className="mt-auto pt-4 text-[11px] font-semibold uppercase tracking-widest text-slate-400">
-          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-        </span>
-      </div>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={slide.logo}
+        alt={`${slide.name} logo`}
+        className="h-24 w-24 rounded-2xl border border-slate-200 bg-white object-contain p-1.5 shadow-[0_18px_40px_-16px_rgba(15,23,42,0.4)]"
+        onError={hideImg}
+      />
     </div>
   );
 }
@@ -84,16 +56,15 @@ export default function Venues() {
             Journals & conferences
           </h2>
           <p className="mt-2 text-slate-600">
-            Where I publish and present — edit the list in{" "}
-            <code className="rounded bg-slate-100 px-1">components/Venues.tsx</code>.
+            Where I publish and present.
           </p>
         </div>
 
-        {/* CSS-3D rotating ring (desktop, motion-safe) */}
+        {/* CSS-3D rotating ring (desktop, motion-safe) — logos only */}
         <div aria-hidden className="venue3d-scene mx-auto hidden max-w-5xl md:block">
           <div className="venue3d-ring">
-            {slides.map((s, i) => (
-              <RingCard key={`${s.kind}-${i}`} slide={s} index={i} total={slides.length} />
+            {logoSlides.map((s, i) => (
+              <RingCard key={`${s.kind}-${i}`} slide={s} index={i} total={logoSlides.length} />
             ))}
           </div>
         </div>
@@ -114,12 +85,12 @@ export default function Venues() {
                   <img
                     src={s.logo}
                     alt={`${s.name} logo`}
-                    className="h-8 w-8 rounded-lg border border-slate-200 bg-white object-contain p-0.5"
-                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                    className="h-10 w-10 rounded-xl border border-slate-200 bg-white object-contain p-0.5 shadow-md"
+                    onError={hideImg}
                   />
                 ) : (
-                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
-                    {s.kind === "Journal" ? <BookOpen size={16} /> : <Mic size={16} />}
+                  <span className="grid h-10 w-10 place-items-center rounded-xl bg-slate-900 text-white">
+                    {s.kind === "Journal" ? <BookOpen size={18} /> : <Mic size={18} />}
                   </span>
                 )}
                 {s.kind}

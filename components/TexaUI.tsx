@@ -1,19 +1,22 @@
 import { useState } from "react";
 import TexaMap from "./TexaMap";
 import {
-  Search,
-  MapPin,
-  Landmark,
+  BedDouble,
+  Car,
   Castle,
-  TreePine,
-  Waves,
+  ChevronRight,
+  Landmark,
+  MapPin,
   MountainSnow,
   Plane,
+  Search,
+  Tent,
   TrainFront,
-  ChevronRight,
+  TreePine,
+  Waves,
   CalendarDays,
-  Map as MapIcon,
   Footprints,
+  X,
 } from "lucide-react";
 
 const ministryLogo = encodeURI("/top-projects/tp1/Ministry of Tourism and Handicrafts logo.jpg");
@@ -50,21 +53,33 @@ const myPlan = [
 const days = [
   {
     day: "Day 1 — Chlef",
-    meta: "4 stops · 6.2 km walk",
-    desc: "Old town, market & river promenade.",
-    grad: "from-sky-400 to-blue-600",
+    color: "text-emerald-700",
+    dot: "bg-emerald-600",
+    transport: { icon: Plane, label: "Flight" },
+    stay: "1 night",
+    place: "Mediterranean coast",
+    grad: "from-sky-400 to-blue-700",
+    thumb: Waves,
   },
   {
     day: "Day 2 — Tlemcen",
-    meta: "5 stops · Art & history",
-    desc: "Mansourah, Mechouar & waterfalls.",
-    grad: "from-emerald-400 to-teal-600",
+    color: "text-blue-700",
+    dot: "bg-blue-700",
+    transport: { icon: Car, label: "Scenic drive" },
+    stay: "2 nights",
+    place: "El Mechouar Palace + Mansourah ruins",
+    grad: "from-amber-500 to-stone-700",
+    thumb: Castle,
   },
   {
     day: "Day 3 — Adrar",
-    meta: "3 stops · Desert escape",
-    desc: "Ksars, dunes & sunset viewpoint.",
-    grad: "from-amber-400 to-orange-600",
+    color: "text-amber-600",
+    dot: "bg-amber-500",
+    transport: { icon: Plane, label: "Flight + transfer" },
+    stay: "2 nights",
+    place: "Oasis / desert",
+    grad: "from-orange-400 to-rose-600",
+    thumb: Tent,
   },
 ];
 
@@ -125,7 +140,7 @@ export default function TexaUI(): JSX.Element {
               <Footprints size={11} /> Itinéraire (3)
             </button>
             <button onClick={() => setTab("carte")} aria-pressed={tab === "carte"} className={tabBtn(tab === "carte")}>
-              <MapIcon size={11} /> Carte (69)
+              <MapPin size={11} /> Carte (69)
             </button>
           </div>
 
@@ -212,42 +227,55 @@ export default function TexaUI(): JSX.Element {
           </section>
         )}
 
-        {/* Right journey panel 300px */}
-        <aside className="flex w-[300px] shrink-0 flex-col gap-2 overflow-hidden border-l border-slate-200 bg-white p-2.5">
-          <div>
-            <p className="flex items-center gap-1 text-[12px] font-bold">
-              <CalendarDays size={12} className="text-blue-600" /> Your 3-Day Journey
-            </p>
-            <p className="mt-0.5 text-[11px] font-semibold text-blue-700">
-              Chlef → Tlemcen → Adrar
-            </p>
-            <p className="text-[10px] text-slate-500">3 days · 12 stops · 480 km</p>
+        {/* Right journey panel — 3-day timeline */}
+        <aside className="flex w-[300px] shrink-0 flex-col overflow-hidden border-l border-slate-200 bg-white">
+          <div className="flex shrink-0 items-start gap-2 border-b border-slate-100 px-3 py-2.5">
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-emerald-700 text-white">
+              <Landmark size={14} />
+            </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block text-[12px] font-extrabold tracking-tight text-slate-900">Your 3-Day Journey</span>
+              <span className="block truncate text-[10px] text-slate-500">Chlef → Tlemcen → Adrar</span>
+            </span>
+            <span className="ml-auto flex shrink-0 items-center gap-1 rounded-md bg-emerald-50 px-1.5 py-1 text-[10px] font-bold text-emerald-700">
+              <CalendarDays size={11} /> 3 days
+            </span>
+            <X size={13} className="mt-1 shrink-0 text-slate-400" />
           </div>
-          <div className="flex min-h-0 flex-1 flex-col gap-2 overflow-hidden">
-            {days.map((d) => (
-              <div
-                key={d.day}
-                className="flex gap-2 rounded-lg border border-slate-200 p-1.5"
-              >
-                <div
-                  className={`h-[86px] w-[86px] shrink-0 rounded-md bg-gradient-to-br ${d.grad}`}
-                />
-                <div className="min-w-0">
-                  <p className="text-[11px] font-bold">{d.day}</p>
-                  <p className="text-[10px] font-medium text-slate-500">{d.meta}</p>
-                  <p className="mt-0.5 line-clamp-2 text-[10px] leading-snug text-slate-600">
-                    {d.desc}
-                  </p>
-                  <span className="mt-1 inline-block rounded-full bg-blue-50 px-2 py-px text-[10px] font-semibold text-blue-700">
-                    View details
+          <div className="min-h-0 flex-1 overflow-hidden px-3 py-2">
+            {days.map((d, i) => (
+              <div key={d.day} className="flex gap-2">
+                <div className="flex flex-col items-center">
+                  <span className={`grid h-6 w-6 shrink-0 place-items-center rounded-full text-[11px] font-extrabold text-white ${d.dot}`}>
+                    {i + 1}
                   </span>
+                  {i < days.length - 1 && <span className="w-px flex-1 bg-emerald-200/70" style={{ minHeight: 34 }} />}
+                </div>
+                <div className="min-w-0 flex-1 pb-3">
+                  <p className={`text-[11.5px] font-extrabold ${d.color}`}>{d.day}</p>
+                  <p className="mt-0.5 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-[10px] text-slate-600">
+                    <span className="inline-flex items-center gap-0.5"><d.transport.icon size={10} className="text-slate-500" /> {d.transport.label}</span>
+                    <span className="inline-flex items-center gap-0.5"><BedDouble size={10} className="text-slate-500" /> {d.stay}</span>
+                  </p>
+                  <p className="mt-0.5 flex items-center gap-0.5 truncate text-[10px] text-slate-500">
+                    <MapPin size={10} className="shrink-0 text-slate-400" />
+                    <span className="truncate">{d.place}</span>
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-start gap-0.5">
+                  <span className={`grid h-[54px] w-[64px] place-items-center overflow-hidden rounded-lg bg-gradient-to-br ${d.grad}`}>
+                    <d.thumb size={18} className="text-white/90" />
+                  </span>
+                  <ChevronRight size={13} className="mt-5 text-slate-400" />
                 </div>
               </div>
             ))}
           </div>
-          <button className="rounded-md bg-blue-600 py-1.5 text-[11px] font-bold text-white">
-            Export itinerary
-          </button>
+          <div className="shrink-0 border-t border-slate-100 p-2.5">
+            <button className="w-full rounded-md bg-blue-600 py-1.5 text-[11px] font-bold text-white">
+              Export itinerary
+            </button>
+          </div>
         </aside>
       </div>
     </div>

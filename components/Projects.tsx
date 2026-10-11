@@ -5,6 +5,7 @@ import SectionHeading from "./SectionHeading";
 import ProjectDialog from "./ProjectDialog";
 import ProjectScroller from "./ProjectScroller";
 import ChatPanel from "./ChatPanel";
+import FemtoMedRag from "./FemtoMedRag";
 import TexaUI from "./TexaUI";
 import EPosteUI from "./EPosteUI";
 import VoxtraUI from "./VoxtraUI";
@@ -94,8 +95,10 @@ export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
   // Archive excludes anything already showcased above (Featured Projects)
   // to avoid duplication: featured flag + keyword match for the live demos.
+  // Web & Mobile are hidden from the archive on request.
   const archive = projects.filter((p) => {
     if (p.featured) return false;
+    if (p.category === "Web" || p.category === "Mobile") return false;
     const t = `${p.title} ${p.description}`.toLowerCase();
     return !(
       t.includes("voxtra") ||
@@ -109,6 +112,7 @@ export default function Projects() {
     );
   });
   const developed = cat === "All" ? archive : archive.filter((p) => p.category === cat);
+  const visibleCats = categories.filter((c) => c !== "Web" && c !== "Mobile");
 
   return (
     <>
@@ -132,24 +136,15 @@ export default function Projects() {
                 </div>
                 <h3 className="font-display mt-4 text-2xl font-bold tracking-tight text-slate-900">FemtoCare — Medical Agents</h3>
                 <p className="mt-2 leading-relaxed text-slate-600">
-                  Multi-agent clinical demo coordinating triage, literature, and safety agents — try it live, nothing is stored.
+                  MedRAG clinical demo coordinating triage, literature, and safety agents — try it live, nothing is stored.
                 </p>
                 <TechChips tech={["Multi-agent", "RAG", "Gemini", "Next.js"]} />
               </div>
               <div className="min-w-0">
                 <BrowserFrame label="femtocare.demo/chat" tilt="left">
                   <div className="aspect-video min-h-[380px] w-full">
-                    <ChatPanel
-                      system="You are FemtoCare, a medical multi-agent demo assistant. Answer concisely with markdown. You coordinate triage, literature, and safety agents."
-                      title="FemtoCare — Medical Agents"
-                      subtitle="Multi-agent clinical demo"
-                      accent="blue"
-                      samples={["What are first-line options for community pneumonia?", "Summarize RAG safety guardrails"]}
-                      agents={[
-                        { name: "Triage Agent", desc: "Routes symptoms to urgency levels and the right specialist path." },
-                        { name: "Literature Agent", desc: "Grounds every answer in retrieved clinical guidelines and papers." },
-                        { name: "Safety Agent", desc: "Screens outputs for contraindications and safe-dosage guardrails." },
-                      ]}
+                    <FemtoMedRag
+                      system="You are FemtoCare (MedRAG), a medical multi-agent demo assistant. You coordinate triage, literature, and safety agents. Answer concisely with markdown."
                     />
                   </div>
                 </BrowserFrame>
@@ -243,7 +238,7 @@ export default function Projects() {
                 </div>
                 <h3 className="font-display mt-4 text-2xl font-bold tracking-tight text-slate-900">Voxtra — Speech Transcription</h3>
                 <p className="mt-2 leading-relaxed text-slate-600">
-                  Browser-native speech-to-text — press Dictate, speak, watch words appear live, then summarize with AI. No upload, nothing stored.
+                  Audio library with waveform transcripts — open a file to read it, record with your mic, or summarize with AI. Nothing is stored.
                 </p>
                 <TechChips tech={["Web Speech API", "STT", "LLMs", "Next.js"]} />
               </div>
@@ -260,7 +255,7 @@ export default function Projects() {
             <h3 className="font-display text-center text-2xl font-bold tracking-tight text-slate-900">More projects</h3>
             <p className="mt-2 text-center text-sm text-slate-500">Filter the archive — click any card for details.</p>
             <div className="mb-8 mt-6 flex flex-wrap justify-center gap-2">
-              {categories.map((c) => {
+              {visibleCats.map((c) => {
                 const count = c === "All" ? archive.length : archive.filter((p) => p.category === c).length;
                 return (
                   <button

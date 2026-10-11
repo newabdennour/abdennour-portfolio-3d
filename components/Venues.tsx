@@ -1,21 +1,22 @@
+"use client";
 import { BookOpen, Mic } from "lucide-react";
 
 // Edit these lists with your real journals & conferences.
 // They render as a CSS-only 3D rotating ring (no WebGL, no network) with a
 // static grid fallback on mobile / reduced-motion.
 const journals = [
-  { name: "Journal name — forthcoming", note: "Add your journal here" },
+  { name: "JMLR — Journal of Machine Learning Research", note: "Target journal — forthcoming", logo: "/venues/jmlr.jpg" },
   { name: "Journal name — forthcoming", note: "Add your journal here" },
   { name: "Journal name — forthcoming", note: "Add your journal here" },
 ];
 
 const conferences = [
-  { name: "Conference name — forthcoming", note: "Add your conference here" },
+  { name: "CVPR — Computer Vision & Pattern Recognition", note: "Target conference — forthcoming", logo: "/venues/cvpr.jpg" },
   { name: "Conference name — forthcoming", note: "Add your conference here" },
   { name: "Conference name — forthcoming", note: "Add your conference here" },
 ];
 
-type Slide = { kind: "Journal" | "Conference"; name: string; note: string };
+type Slide = { kind: "Journal" | "Conference"; name: string; note: string; logo?: string };
 
 const slides: Slide[] = [
   ...journals.map((j) => ({ kind: "Journal" as const, ...j })),
@@ -36,13 +37,33 @@ function RingCard({ slide, index, total }: { slide: Slide; index: number; total:
             : "border-slate-200 bg-white"
         }`}
       >
-        <span
-          className={`inline-flex w-fit items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold ${
-            isJournal ? "bg-amber-100 text-amber-800" : "bg-slate-900 text-white"
-          }`}
-        >
-          {isJournal ? <BookOpen size={12} /> : <Mic size={12} />}
-          {slide.kind}
+        <span className="flex items-center gap-2.5">
+          {slide.logo ? (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img
+              src={slide.logo}
+              alt={`${slide.name} logo`}
+              className="h-10 w-10 rounded-xl border border-slate-200 bg-white object-contain p-0.5 shadow-md"
+              onError={(e) => { e.currentTarget.style.display = "none"; }}
+            />
+          ) : (
+            <span
+              className={`grid h-10 w-10 place-items-center rounded-xl text-white shadow-md ${
+                isJournal
+                  ? "bg-gradient-to-br from-amber-500 to-amber-700"
+                  : "bg-gradient-to-br from-slate-800 to-slate-950"
+              }`}
+            >
+              {isJournal ? <BookOpen size={18} /> : <Mic size={18} />}
+            </span>
+          )}
+          <span
+            className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-bold ${
+              isJournal ? "bg-amber-100 text-amber-800" : "bg-slate-900 text-white"
+            }`}
+          >
+            {slide.kind}
+          </span>
         </span>
         <p className="mt-3 text-base font-bold leading-snug text-slate-900">{slide.name}</p>
         <p className="mt-1 text-xs text-slate-500">{slide.note}</p>
@@ -88,9 +109,19 @@ export default function Venues() {
               className="rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_10px_28px_-16px_rgba(15,23,42,0.18)]"
             >
               <p className="flex items-center gap-2 text-sm font-bold text-slate-900">
-                <span className="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
-                  {s.kind === "Journal" ? <BookOpen size={16} /> : <Mic size={16} />}
-                </span>
+                {s.logo ? (
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    src={s.logo}
+                    alt={`${s.name} logo`}
+                    className="h-8 w-8 rounded-lg border border-slate-200 bg-white object-contain p-0.5"
+                    onError={(e) => { e.currentTarget.style.display = "none"; }}
+                  />
+                ) : (
+                  <span className="grid h-8 w-8 place-items-center rounded-lg bg-slate-900 text-white">
+                    {s.kind === "Journal" ? <BookOpen size={16} /> : <Mic size={16} />}
+                  </span>
+                )}
                 {s.kind}
               </p>
               <p className="mt-2 text-sm font-bold text-slate-900">{s.name}</p>

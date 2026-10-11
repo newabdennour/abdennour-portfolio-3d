@@ -1,23 +1,57 @@
 "use client";
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, BookOpen, ChevronDown } from "lucide-react";
+import { ArrowUpRight, BookOpen, Boxes, Brain, ChevronDown, FileText, Newspaper, ShieldCheck, TrendingUp } from "lucide-react";
 import { papers, featuredPapers, type Paper } from "@/data/portfolio";
 
 const tilts = ["md:-rotate-1", "md:rotate-1", "md:rotate-[0.6deg]"];
+
+// Cover art per card — gradient + icon composition so every paper
+// and article has a visual asset without external images.
+const COVERS = [
+  { grad: "from-sky-600 via-blue-700 to-indigo-950", Icon: TrendingUp, tag: "Energy Analytics" },
+  { grad: "from-violet-600 via-purple-700 to-indigo-950", Icon: Brain, tag: "Biomedical AI" },
+  { grad: "from-rose-600 via-red-700 to-stone-900", Icon: Newspaper, tag: "NLP · Media" },
+  { grad: "from-emerald-600 via-teal-700 to-slate-900", Icon: ShieldCheck, tag: "Security" },
+  { grad: "from-amber-500 via-orange-600 to-stone-900", Icon: Boxes, tag: "LLM Reasoning" },
+];
 
 function PaperCard({ paper, tilt, index }: { paper: Paper; tilt: string; index: number }) {
   const [open, setOpen] = useState(false);
   const reduce = useReducedMotion();
   const hasLink = paper.link !== "#";
+  const cover = COVERS[index % COVERS.length];
   return (
     <motion.article
       initial={reduce ? { opacity: 0 } : { opacity: 0, y: 40, rotate: 0 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: index * 0.12 }}
-      className={`relative rounded-xl bg-[#fffdf4] p-6 pt-8 shadow-[0_20px_44px_-20px_rgba(60,30,0,0.45)] md:p-7 ${tilt}`}
+      className={`relative overflow-hidden rounded-xl bg-[#fffdf4] shadow-[0_20px_44px_-20px_rgba(60,30,0,0.45)] ${tilt}`}
     >
+      {/* Paper cover asset */}
+      <div className={`relative h-36 overflow-hidden bg-gradient-to-br ${cover.grad}`}>
+        <span aria-hidden className="absolute -right-6 -top-8 h-32 w-32 rounded-full bg-white/10" />
+        <span aria-hidden className="absolute -bottom-10 right-10 h-24 w-24 rounded-full bg-black/15" />
+        <span aria-hidden className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,.35)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.35)_1px,transparent_1px)] [background-size:18px_18px]" />
+        <cover.Icon size={72} strokeWidth={1.2} className="absolute -bottom-2 right-3 text-white/25" aria-hidden />
+        <div className="absolute left-4 top-3 flex items-center gap-1.5">
+          <span className="rounded-md bg-white/15 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-sm">
+            {cover.tag}
+          </span>
+          <span className="rounded-md bg-black/25 px-2 py-0.5 font-mono text-[10px] font-bold text-white/90">
+            {paper.year}
+          </span>
+        </div>
+        <div className="absolute bottom-3 left-4 right-4">
+          <div className="h-1.5 w-3/4 rounded-full bg-white/70" />
+          <div className="mt-1.5 h-1.5 w-1/2 rounded-full bg-white/40" />
+          <p className="mt-1.5 flex items-center gap-1 text-[10px] font-semibold text-white/80">
+            <FileText size={10} /> PDF · Research draft
+          </p>
+        </div>
+      </div>
+      <div className="p-6 pt-5 md:p-7 md:pt-5">
       <span aria-hidden className="absolute -top-3 left-1/2 h-7 w-24 -translate-x-1/2 rotate-[-2deg] bg-[rgba(233,213,166,0.9)] shadow" />
       <span aria-hidden className="absolute -top-1.5 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full bg-gradient-to-br from-slate-500 to-slate-800 shadow" />
       <p className="flex items-center gap-1.5 font-mono text-[11px] tracking-widest text-amber-700">
@@ -65,6 +99,7 @@ function PaperCard({ paper, tilt, index }: { paper: Paper; tilt: string; index: 
         <button onClick={() => setOpen(!open)} aria-expanded={open} className="inline-flex items-center gap-1 text-sm font-semibold text-amber-800 hover:text-amber-900">
           {open ? "Less info" : "More info"} <ChevronDown size={15} className={`transition-transform ${open ? "rotate-180" : ""}`} />
         </button>
+      </div>
       </div>
     </motion.article>
   );

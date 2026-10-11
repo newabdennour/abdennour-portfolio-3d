@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Bot, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Sparkles, X } from "lucide-react";
 import ChatPanel from "./ChatPanel";
 
 const SYSTEM = `You are the portfolio assistant for Guerroudj Abdennour — AI & Full-Stack Developer (Algeria, remote worldwide).
@@ -22,40 +23,96 @@ export default function AssistantFab() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open ]);
+  }, [open]);
 
   return (
     <>
-      {open && (
-        <div className="fixed bottom-24 right-4 z-[90] h-[520px] max-h-[70vh] w-[min(92vw,380px)] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_30px_80px_-20px_rgba(15,23,42,0.5)]">
-          <button
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="fab-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22 }}
             onClick={() => setOpen(false)}
-            aria-label="Close assistant"
-            className="absolute right-2 top-2 z-10 grid h-8 w-8 place-items-center rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200"
-          >
-            <X size={16} />
-          </button>
-          <ChatPanel
-            system={SYSTEM}
-            title="Ask about Abdennour"
-            subtitle="Portfolio assistant"
-            accent="blue"
-            placeholder="Ask about projects, skills, contact…"
-            samples={["What are his top AI projects?", "What certifications does he have?", "How do I contact him?"]}
+            className="fixed inset-0 z-[88] bg-slate-950/25 backdrop-blur-[2px]"
+            aria-hidden
           />
-        </div>
-      )}
-      <button
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            key="fab-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Portfolio assistant"
+            initial={{ opacity: 0, y: 32, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.94 }}
+            transition={{ type: "spring", stiffness: 380, damping: 32 }}
+            style={{ transformOrigin: "bottom right" }}
+            className="fixed bottom-20 right-4 z-[90] flex h-[540px] max-h-[72vh] w-[min(92vw,360px)] flex-col overflow-hidden rounded-3xl border border-white/40 bg-white/95 shadow-[0_40px_90px_-20px_rgba(15,23,42,0.45)] backdrop-blur-xl sm:right-5"
+          >
+            <div className="flex shrink-0 items-center gap-2.5 border-b border-slate-100 bg-gradient-to-r from-slate-900 via-slate-900 to-indigo-950 px-4 py-3">
+              <span className="relative grid h-8 w-8 place-items-center rounded-xl bg-gradient-to-br from-indigo-400 to-violet-500 text-white shadow-lg">
+                <Sparkles size={15} />
+                <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-slate-900 bg-emerald-400" />
+              </span>
+              <span className="min-w-0 leading-tight">
+                <span className="block text-[13px] font-bold tracking-tight text-white">Abdennour AI</span>
+                <span className="block text-[10px] font-medium text-slate-300">Online · asks about me</span>
+              </span>
+              <button
+                onClick={() => setOpen(false)}
+                aria-label="Close assistant"
+                className="ml-auto grid h-7 w-7 place-items-center rounded-full text-slate-300 transition hover:bg-white/10 hover:text-white"
+              >
+                <X size={15} />
+              </button>
+            </div>
+            <div className="min-h-0 flex-1">
+              <ChatPanel
+                system={SYSTEM}
+                title="Ask about Abdennour"
+                subtitle="Portfolio assistant"
+                accent="blue"
+                placeholder="Ask about projects, skills, contact…"
+                samples={["What are his top AI projects?", "What certifications does he have?", "How do I contact him?"]}
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.button
         onClick={() => setOpen((v) => !v)}
         aria-label={open ? "Close portfolio assistant" : "Open portfolio assistant"}
         aria-expanded={open}
-        className="fixed bottom-5 right-5 z-[80] grid h-14 w-14 place-items-center rounded-full bg-slate-900 text-white shadow-[0_16px_40px_-10px_rgba(15,23,42,0.6)] transition hover:bg-slate-700"
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.9 }}
+        animate={open ? { rotate: 90 } : { rotate: 0 }}
+        transition={{ type: "spring", stiffness: 400, damping: 22 }}
+        className="fixed bottom-5 right-5 z-[91] grid h-11 w-11 place-items-center rounded-full bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-800 text-white shadow-[0_14px_36px_-8px_rgba(30,27,75,0.65)] ring-1 ring-white/20"
       >
-        {open ? <X size={22} /> : <Bot size={24} />}
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.span
+            key={open ? "x" : "spark"}
+            initial={{ opacity: 0, scale: 0.5, rotate: -45 }}
+            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            exit={{ opacity: 0, scale: 0.5, rotate: 45 }}
+            transition={{ duration: 0.16 }}
+            className="grid place-items-center"
+          >
+            {open ? <X size={18} /> : <Sparkles size={19} />}
+          </motion.span>
+        </AnimatePresence>
         {!open && (
-          <span className="absolute -right-0.5 -top-0.5 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500" aria-hidden="true" />
+          <span className="absolute inset-0 -z-10 animate-ping rounded-full bg-indigo-500/30" aria-hidden="true" />
         )}
-      </button>
+      </motion.button>
     </>
   );
 }

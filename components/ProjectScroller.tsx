@@ -8,7 +8,6 @@ function hideImg(e: SyntheticEvent<HTMLImageElement>) {
   e.currentTarget.style.display = "none";
 }
 
-const AUTOPLAY_MS = 4500;
 const SWIPE_THRESHOLD = 40;
 const MAX_VISIBLE = 3;
 
@@ -22,7 +21,6 @@ export default function ProjectScroller({
   resetKey?: string;
 }) {
   const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
   const [fallback, setFallback] = useState(false);
   const startX = useRef<number | null>(null);
   const count = projects.length;
@@ -51,15 +49,8 @@ export default function ProjectScroller({
     };
   }, []);
 
-  // Auto-advance, paused on hover/focus. Skipped for reduced motion.
-  useEffect(() => {
-    if (fallback || paused || count <= 1) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const id = window.setInterval(() => {
-      setIndex((i) => (i + 1) % count);
-    }, AUTOPLAY_MS);
-    return () => window.clearInterval(id);
-  }, [fallback, paused, count]);
+  // Manual-only: no auto-advance. The user changes slides
+  // with arrows, dots, drag/swipe, or keyboard.
 
   if (count === 0) {
     return <p className="py-10 text-center text-sm text-slate-500">No projects in this category yet.</p>;
@@ -131,10 +122,6 @@ export default function ProjectScroller({
       <div
         className="relative mx-auto h-[440px] max-w-5xl cursor-grab select-none active:cursor-grabbing"
         style={{ perspective: 1400, touchAction: "pan-y" }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
         onPointerDown={onPointerDown}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}

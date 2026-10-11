@@ -209,16 +209,14 @@ section[id] {
 .marquee-row {
   display: flex;
   width: max-content;
-  margin-inline: auto;
+  margin: 0;
   transform: rotateX(18deg);
   transform-style: preserve-3d;
 }
-/* Viewport-width wrapper: edge fade lives here so cards dissolve at the
-   screen edges (mask on the moving row would travel with the cards) */
+/* Viewport-width wrapper: clips the oversized row so no page
+   scrollbar appears. No fade — every card stays fully opaque. */
 .marquee-mask {
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 /* margin (not gap) so each duplicated half is exactly 50% wide → seamless loop */
 .marquee-row > * { margin-right: 12px; }@keyframes marquee-left {

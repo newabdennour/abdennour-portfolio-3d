@@ -275,6 +275,7 @@ export type Company = { name: string; logo: string; tag: string };
 export const companies: Company[] = [
   { name: "FEMTO-ST Institute", logo: "/companies/FEMTO-ST.jpg", tag: "Research · France" },
   { name: "Ministry of Higher Education (MESRS)", logo: "/companies/mesrs.png", tag: "Institution" },
+  { name: "Ministry of Tourism and Handicrafts", logo: "/top-projects/tp1/Ministry of Tourism and Handicrafts logo.jpg", tag: "Institution" },
   { name: "Algerian People's National Assembly", logo: "/companies/Algerian People's National Assembly.png", tag: "Institution" },
   { name: "Algérie Poste", logo: "/companies/algerie post.png", tag: "Post & Logistics" },
   { name: "Algérie Télécom", logo: "/companies/algerie telecome.png", tag: "Telecom" },

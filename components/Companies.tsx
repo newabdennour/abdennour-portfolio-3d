@@ -34,6 +34,12 @@ export default function Companies() {
   const staticMode = reduce || isMobile;
   const rowA = companies.slice(0, 6);
   const rowB = companies.slice(6);
+  // 3 identical sets per half (6 sets total): the row stays wider than
+  // 2x any viewport, so the -50% loop never exposes a blank gap.
+  const halfA = [...rowA, ...rowA, ...rowA];
+  const halfB = [...rowB, ...rowB, ...rowB];
+  const loopA = [...halfA, ...halfA];
+  const loopB = [...halfB, ...halfB];
   return (
     <section id="companies" className="paper-bg relative py-20 md:py-24">
       <div className="container-x">
@@ -51,12 +57,12 @@ export default function Companies() {
       ) : (
         <div className="marquee-mask [perspective:1200px]">
           <div className="marquee-row animate-[marquee-left_42s_linear_infinite] hover:[animation-play-state:paused]">
-            {[...rowA, ...rowA].map((c, i) => (
+            {loopA.map((c, i) => (
               <LogoCard key={`${c.name}-${i}`} {...c} />
             ))}
           </div>
           <div className="marquee-row mt-4 animate-[marquee-right_48s_linear_infinite] hover:[animation-play-state:paused]">
-            {[...rowB, ...rowB].map((c, i) => (
+            {loopB.map((c, i) => (
               <LogoCard key={`${c.name}-${i}`} {...c} />
             ))}
           </div>

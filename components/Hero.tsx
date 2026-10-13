@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
+import Image from "next/image";
 import { ArrowDown, CalendarCheck, Download, Github, MapPin } from "lucide-react";
 import { profile } from "@/data/portfolio";
 
@@ -76,8 +77,15 @@ export default function Hero() {
               className="flex flex-wrap items-center gap-5"
             >
               <div className="polaroid w-36 shrink-0 -rotate-3 md:w-44">
-                <div className="grid aspect-square place-items-center bg-slate-900 font-display text-4xl font-bold text-white md:text-5xl">
-                  GA
+                <div className="relative aspect-square overflow-hidden bg-slate-900">
+                  <Image
+                    src="/profile.png"
+                    alt="Portrait of Abdennour Guerroudj"
+                    fill
+                    sizes="(max-width: 768px) 144px, 176px"
+                    className="object-cover"
+                    priority
+                  />
                 </div>
                 <p className="font-hand mt-2 text-center text-lg text-slate-700">Abdennour G.</p>
               </div>

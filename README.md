@@ -47,6 +47,6 @@ npm run build
 ## 👤 Author
 
 **Guerroudj Abdennour** — AI Engineer & Full-Stack Developer
-- Email: guerroudjabdennour1@gmail.com
-- GitHub: https://github.com/AbdennourGuerroudj
+- Email: abdennour.guerroudj@ensia.edu.dz
+- GitHub: https://github.com/newabdennour
 - LinkedIn: https://www.linkedin.com/in/abdennour-guerroudj/

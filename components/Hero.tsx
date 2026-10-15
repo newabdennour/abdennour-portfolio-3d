@@ -46,7 +46,6 @@ const nowBuilding = [
 const indexRows = [
   { k: "now", v: "open for AI & full-stack missions" },
   { k: "focus", v: "RAG systems · LLM apps · mobile AI" },
-  { k: "stack", v: "Next.js · Flutter · PyTorch · LangChain" },
   { k: "open to", v: "AI products · RAG systems · engineering projects" },
 ];
 
@@ -202,7 +201,6 @@ export default function Hero() {
             {[
               { label: "Top projects", href: "#work" },
               { label: "Companies", href: "#companies" },
-              { label: "Research", href: "#research" },
               { label: "Journey", href: "#journey" },
               { label: "Contact", href: "#contact" },
             ].map((l) => (

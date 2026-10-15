@@ -33,7 +33,7 @@ export default function Contact() {
 
   const cards = [
     { icon: Mail, label: "Email", value: profile.email, href: `mailto:${profile.email}` },
-    { icon: Github, label: "GitHub", value: "@AbdennourGuerroudj", href: profile.github },
+    { icon: Github, label: "GitHub", value: "@newabdennour", href: profile.github },
     { icon: Linkedin, label: "LinkedIn", value: "Abdennour Guerroudj", href: profile.linkedin },
   ];
 

@@ -194,7 +194,7 @@ export default function Projects() {
                 </div>
                 <h3 className="font-display mt-4 text-2xl font-bold tracking-tight text-slate-900">E-Store Manager</h3>
                 <p className="mt-2 leading-relaxed text-slate-600">
-                  Professional mobile app for e-store management — Algérie Poste.
+                  Professional mobile app for e-store management — Algérie Poste. Fully navigable demo: switch tabs, filter orders, update stock, create orders.
                 </p>
                 <TechChips tech={["Flutter", "Firebase", "E-commerce"]} />
               </div>

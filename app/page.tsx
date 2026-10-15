@@ -5,8 +5,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import Companies from "@/components/Companies";
 import Projects from "@/components/Projects";
-import Research from "@/components/Research";
-import Venues from "@/components/Venues";
 import Timeline from "@/components/Timeline";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -26,8 +24,9 @@ export default function Page() {
       <Hero />
       <Companies />
       <Projects />
-      <Research />
-      <Venues />
+      {/* Research & Venues hidden for now — uncomment to re-enable */}
+      {/* <Research /> */}
+      {/* <Venues /> */}
       <Timeline />
       <Contact />
       <Footer />

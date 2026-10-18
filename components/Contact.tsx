@@ -5,10 +5,15 @@ import { Send, Mail, Github, Linkedin, CheckCircle2, Loader2 } from "lucide-reac
 import SectionHeading from "./SectionHeading";
 import { profile } from "@/data/portfolio";
 
+// Public by design: a Web3Forms access key only allows submitting TO the
+// inbox it is linked to (abdennour.guerroudj@ensia.edu.dz). Not a secret.
+const WEB3FORMS_ACCESS_KEY = "ce2faa09-4d94-4b64-8ee4-1bf6fcab0e5d";
+const WEB3FORMS_ENDPOINT = "https://api.web3forms.com/submit";
+
 export default function Contact() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState({ name: "", email: "", message: "" });
-  const [status, setStatus] = useState<"idle" | "sending" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   const validate = () => {
     const e = { name: "", email: "", message: "" };
@@ -20,15 +25,32 @@ export default function Contact() {
     return !e.name && !e.email && !e.message;
   };
 
-  const submit = (ev: React.FormEvent) => {
+  const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
     setStatus("sending");
-    setTimeout(() => {
+    const payload = new FormData();
+    payload.append("access_key", WEB3FORMS_ACCESS_KEY);
+    payload.append("name", form.name.trim());
+    payload.append("email", form.email.trim());
+    payload.append("message", form.message.trim());
+    payload.append("subject", `Portfolio contact from ${form.name.trim()}`);
+    payload.append("from_name", "Portfolio contact form");
+    payload.append("botcheck", ""); // honeypot field: left empty by humans
+    try {
+      const res = await fetch(WEB3FORMS_ENDPOINT, {
+        method: "POST",
+        body: payload,
+        signal: AbortSignal.timeout(15000),
+      });
+      const data = await res.json().catch(() => null);
+      if (!res.ok || !data?.success) throw new Error("send failed");
       setStatus("sent");
       setForm({ name: "", email: "", message: "" });
       setTimeout(() => setStatus("idle"), 4500);
-    }, 1100);
+    } catch {
+      setStatus("error");
+    }
   };
 
   const cards = [
@@ -124,6 +146,21 @@ export default function Contact() {
                   className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-center text-sm font-medium text-emerald-700"
                 >
                   Thank you — please also reach me directly at {profile.email}.
+                </motion.p>
+              )}
+              {status === "error" && (
+                <motion.p
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  role="alert"
+                  className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-center text-sm font-medium text-red-700"
+                >
+                  Couldn&apos;t send your message right now. Please email me directly at{" "}
+                  <a href={`mailto:${profile.email}`} className="font-semibold underline underline-offset-2">
+                    {profile.email}
+                  </a>
+                  .
                 </motion.p>
               )}
             </AnimatePresence>
